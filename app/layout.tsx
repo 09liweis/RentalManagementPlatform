@@ -18,13 +18,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <header className="p-4 shadow flex justify-between items-center">
-          <a className="bold">RMP Logo</a>
+          <a className="font-bold text-orange-600 text-xl">RMP Logo</a>
           <nav>Menu</nav>
         </header>
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <footer>Footer</footer>
+
+        <main className="min-h-screen">{children}</main>
+
+        <footer className="p-4 shadow">Footer</footer>
       </body>
     </html>
   );
