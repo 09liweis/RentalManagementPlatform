@@ -23,8 +23,6 @@ export default function RootLayout({
         </header>
 
         <main className="min-h-screen">{children}</main>
-
-        <footer className="p-4 shadow">Footer</footer>
       </body>
     </html>
   );
