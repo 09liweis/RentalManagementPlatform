@@ -1,7 +1,8 @@
 "use client";
+import { Router, useRouter } from "next/router";
 import { useState } from "react";
 
-export default function Login() {
+function Login() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +19,8 @@ export default function Login() {
     const data = await response.json();
 
     if (response.ok) {
-      setLoggedInUser(data);
+      localStorage.setItem("auth-token", data.token);
+      location.href = "/dashboard";
     } else {
       console.error(data.error);
     }
@@ -47,4 +49,6 @@ export default function Login() {
       </button>
     </section>
   );
-}
+};
+
+export default Login;
