@@ -55,6 +55,7 @@ export async function POST(request: NextRequest) {
     //   httpOnly: true,
     // });
     return response;
-  } catch (err) {}
-  return NextResponse.json({ msg: "ok" }, { status: 200 });
+  } catch (err) {
+    return NextResponse.json({ err }, { status: 500 });
+  }
 }
