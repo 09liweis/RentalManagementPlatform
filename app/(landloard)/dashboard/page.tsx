@@ -13,9 +13,18 @@ export default function Dashboard() {
 
   const fetchProperties = async () => {
     try {
-      const response = await fetch("/api/properties");
-      const jsonResponse = await response.json();
-      setProperties(jsonResponse.properties);
+      const response = await fetch("/api/properties",{
+        headers:{
+          "Content-Type":"application/json",
+          'Authorization': `Bearer ${localStorage.getItem("auth-token")}`,
+        }
+      });
+      const {properties,err} = await response.json();
+      if (properties) {
+        setProperties(properties);
+      } else {
+        //TODO:handle err
+      }
     } catch (err) {}
   };
 

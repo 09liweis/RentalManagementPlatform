@@ -1,8 +1,11 @@
 import mongoose from "mongoose";
 const propertySchema = new mongoose.Schema({
+  user:{
+    type:mongoose.Schema.Types.ObjectId,
+    required:true,
+  },
   name: {
     type: String,
-    unique: true,
   },
   address: {
     type: String,

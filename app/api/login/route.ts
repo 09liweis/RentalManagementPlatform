@@ -41,7 +41,11 @@ export async function POST(request: NextRequest) {
       username: existingUser.username,
       email: existingUser.email,
     };
-    const token = jwt.sign(tokenData, "rental-management-platform", {
+    const tokenSecret = process.env.TOKEN_SECRET!;
+    if (!tokenSecret) {
+      return NextResponse.json({ err: "No token secret" }, { status: 500 });
+    }
+    const token = jwt.sign(tokenData, tokenSecret, {
       expiresIn: "1d",
     });
     //TODO: set secret on env, set expired
