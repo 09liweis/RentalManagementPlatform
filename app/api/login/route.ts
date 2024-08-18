@@ -33,13 +33,10 @@ export async function POST(request: NextRequest) {
           { status: 400 },
         );
       }
-      existingUser = { ...existingUser };
     }
 
     const tokenData = {
-      id: existingUser._id,
-      username: existingUser.username,
-      email: existingUser.email,
+      userId: existingUser._id,
     };
     const tokenSecret = process.env.TOKEN_SECRET!;
     if (!tokenSecret) {
