@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     const tokenSecret = process.env.TOKEN_SECRET!;
     const decoded = jwt.verify(authToken, tokenSecret) as { userId: string };
 
-    const properties = await Property.find({});
+    const properties = await Property.find({ user: decoded.userId });
     return NextResponse.json({ properties }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
