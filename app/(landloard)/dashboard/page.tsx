@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import PropertyForm from "@/components/property/propertyForm";
+import Link from "next/link";
 
 interface Property {
+  _id?: string;
   name: string;
 }
 
@@ -13,13 +15,13 @@ export default function Dashboard() {
 
   const fetchProperties = async () => {
     try {
-      const response = await fetch("/api/properties",{
-        headers:{
-          "Content-Type":"application/json",
-          'Authorization': `Bearer ${localStorage.getItem("auth-token")}`,
-        }
+      const response = await fetch("/api/properties", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("auth-token")}`,
+        },
       });
-      const {properties,err} = await response.json();
+      const { properties, err } = await response.json();
       if (properties) {
         setProperties(properties);
       } else {
@@ -39,7 +41,9 @@ export default function Dashboard() {
       )}
       <a onClick={() => setShowPropertyForm(true)}>Add Property</a>
       {properties.map((p) => (
-        <p key={p.name}>{p.name}</p>
+        <Link href={`/dashboard/properties/${p._id}`} key={p.name}>
+          {p.name}
+        </Link>
       ))}
     </>
   );
