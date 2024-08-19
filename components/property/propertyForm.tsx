@@ -11,8 +11,9 @@ export default function PropertyForm({ showPropertyForm }: PropertyFormProps) {
     e.preventDefault();
     await fetch("/api/properties", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+      headers:{
+        "Content-Type":"application/json",
+        'Authorization': `Bearer ${localStorage.getItem("auth-token")}`,
       },
       body: JSON.stringify({ name }),
     });
