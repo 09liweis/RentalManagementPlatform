@@ -1,5 +1,6 @@
 "use client";
 
+import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
 
 export default function PropertyPage({
@@ -13,7 +14,12 @@ export default function PropertyPage({
   const [rooms, setRooms] = useState<any[]>([]);
 
   const fetchRooms = async () => {
-    fetch(`/api/properties/${propertyId}/rooms`);
+    const { rooms, err }: any = fetchData({
+      url: `/api/properties/${propertyId}/rooms`,
+    });
+    if (Array.isArray(rooms)) {
+      setRooms(rooms);
+    }
   };
 
   useEffect(() => {
@@ -21,18 +27,14 @@ export default function PropertyPage({
   }, []);
 
   const handleRoomSubmit = async () => {
-    fetch("/api/rooms", {
+    const { err, msg } = await fetchData({
+      url: `/api/properties/${propertyId}/rooms`,
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("auth-token")}`,
-      },
-      body: JSON.stringify({
-        propertyId,
+      body: {
         name: roomName,
-      }),
+      },
     });
-    setRooms([...rooms, { name: roomName }]);
+    fetchRooms();
     setRoomName("");
   };
 

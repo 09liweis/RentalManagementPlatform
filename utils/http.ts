@@ -1,6 +1,6 @@
 interface FetchDataProp {
   url: string;
-  method: "GET" | "POST" | "PUT" | "DELETE";
+  method?: "GET" | "POST" | "PUT" | "DELETE";
   body?: { [key: string]: any };
 }
 
@@ -10,16 +10,21 @@ export const fetchData = async ({
   body = {},
 }: FetchDataProp) => {
   try {
-    const res = await fetch(url, {
+    const option: any = {
       method,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Auhtorization: `Bearer ${localStorage.getItem("auth-token")}`,
+        Authorization: `Bearer ${localStorage.getItem("auth-token")}`,
       },
-      body: JSON.stringify(body),
-    });
+    };
+    if (method === "POST" || method === "PUT") {
+      option.body = JSON.stringify(body);
+    }
+    const res = await fetch(url, option);
     const data = await res.json();
     return data;
-  } catch (err) {}
+  } catch (err) {
+    return { err };
+  }
 };

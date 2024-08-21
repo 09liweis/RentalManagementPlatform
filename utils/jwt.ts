@@ -10,4 +10,4 @@ export const decodeToken = (request: NextRequest) => {
   const tokenSecret = process.env.TOKEN_SECRET!;
   const decoded = jwt.verify(authToken, tokenSecret) as { userId: string };
   return decoded;
-}
+};
