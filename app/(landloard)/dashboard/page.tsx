@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import PropertyForm from "@/components/property/propertyForm";
 import Link from "next/link";
+import Map from "@/components/common/Map";
 
 interface Property {
   _id?: string;
@@ -45,6 +46,7 @@ export default function Dashboard() {
           {p.name}
         </Link>
       ))}
+      <Map />
     </>
   );
 }
