@@ -14,7 +14,7 @@ export default function PropertyPage({
   const [rooms, setRooms] = useState<any[]>([]);
 
   const fetchRooms = async () => {
-    const { rooms, err }: any = fetchData({
+    const { rooms, err } = await fetchData({
       url: `/api/properties/${propertyId}/rooms`,
     });
     if (Array.isArray(rooms)) {
