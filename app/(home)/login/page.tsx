@@ -3,6 +3,8 @@ import { Router, useRouter } from "next/router";
 import { useState } from "react";
 import Link from "next/link";
 
+import classes from './page.module.css';
+
 function Login() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [email, setEmail] = useState("");
@@ -28,7 +30,7 @@ function Login() {
   };
 
   return (
-    <section className="gap-4 p-10 flex flex-col justify-center text-center">
+    <section className="w-1/2 mx-auto gap-4 p-10 flex flex-col justify-center text-center">
       <h1 className="font-bold text-lg">Please Login as landlord</h1>
       <input
         className="p-3 rounded"
@@ -42,8 +44,8 @@ function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <nav>
-        <Link href={'/forgot-password'}>Forgot Password?</Link>
+      <nav className={classes.link}>
+        <Link href={'/forgot_password'}>Forgot Password?</Link>
       </nav>
 
       <button
