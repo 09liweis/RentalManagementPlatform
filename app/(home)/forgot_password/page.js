@@ -1,4 +1,4 @@
-import classes from './page.module.css';
+import Link from 'next/link';
 
 export default function ForgotPassword() {
   return (
@@ -13,6 +13,7 @@ export default function ForgotPassword() {
           Forgot Password?
         </h2>
         <p className="text-gray-600 text-center mb-6">
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           Don't worry, just enter the email address you registered with and we
           will send you a password reset link.
         </p>
@@ -34,9 +35,9 @@ export default function ForgotPassword() {
           </div>
         </form>
         <div className="text-center mt-6">
-          <a href="/login" className="text-blue-500 hover:underline">
+          <Link href="/login" className="text-blue-500 hover:underline">
             Go back to login
-          </a>
+          </Link>
         </div>
       </div>
     </div>
