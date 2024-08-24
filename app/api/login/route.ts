@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     } else {
       const validPassword = await bcryptjs.compare(
         password,
-        existingUser.password,
+        existingUser.password
       );
 
       if (!validPassword) {
