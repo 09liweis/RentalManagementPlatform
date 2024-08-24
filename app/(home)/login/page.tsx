@@ -1,6 +1,7 @@
 "use client";
 import { Router, useRouter } from "next/router";
 import { useState } from "react";
+import Link from "next/link";
 
 function Login() {
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -40,6 +41,11 @@ function Login() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+
+      <nav>
+        <Link href={'/forgot-password'}>Forgot Password?</Link>
+      </nav>
+
       <button
         type="submit"
         onClick={handleLogin}
