@@ -14,6 +14,9 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+  .card {
+    border:1px solid#fff;
+  }
 }
 
 body {
@@ -41,5 +44,5 @@ body {
 }
 
 .card {
-  @apply shadow p-2 flex;
+  @apply rounded shadow p-2 w-full sm:w-1/2 md:w-1/4 lg:w-1/5;
 }
