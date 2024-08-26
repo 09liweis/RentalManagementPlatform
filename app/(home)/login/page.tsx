@@ -25,7 +25,7 @@ function Login() {
       localStorage.setItem("auth-token", data.token);
       location.href = "/dashboard";
     } else {
-      console.error(data.error);
+      console.error(data.err);
     }
   };
 
