@@ -3,6 +3,7 @@
 import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Room } from "@/types/room";
 
 export default function PropertyPage({
   params,
@@ -12,7 +13,7 @@ export default function PropertyPage({
   const { propertyId } = params;
 
   const [roomName, setRoomName] = useState("");
-  const [rooms, setRooms] = useState<any[]>([]);
+  const [rooms, setRooms] = useState<Room[]>([]);
 
   const fetchRooms = async () => {
     const { rooms, err } = await fetchData({
