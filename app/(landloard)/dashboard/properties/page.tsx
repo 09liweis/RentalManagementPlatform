@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import PropertyForm from "@/components/property/propertyForm";
 import Link from "next/link";
 import { Property } from "@/types/property";
+import { fetchData } from "@/utils/http";
 
 export default function PropertiesPage() {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -10,13 +11,7 @@ export default function PropertiesPage() {
 
   const fetchProperties = async () => {
     try {
-      const response = await fetch("/api/properties", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("auth-token")}`,
-        },
-      });
-      const { properties, err } = await response.json();
+      const { properties, err } = await fetchData({url:'/api/properties'});
       if (properties) {
         setProperties(properties);
       } else {
