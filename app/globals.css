@@ -31,3 +31,15 @@ body {
     text-wrap: balance;
   }
 }
+
+.page-title {
+  @apply text-balance font-bold text-2xl mb-5;
+}
+
+.card-container {
+  @apply flex flex-wrap gap-5;
+}
+
+.card {
+  @apply shadow p-2 flex;
+}
