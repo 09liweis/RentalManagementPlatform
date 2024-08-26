@@ -26,16 +26,18 @@ export default function PropertiesPage() {
 
   return (
     <>
-      <h1>Properties</h1>
+      <h1 className="page-title">Properties</h1>
       {showPropertyForm && (
         <PropertyForm showPropertyForm={setShowPropertyForm} />
       )}
       <a onClick={() => setShowPropertyForm(true)}>Add Property</a>
-      {properties.map((p) => (
-        <Link href={`/dashboard/properties/${p._id}`} key={p.name}>
-          {p.name}
-        </Link>
-      ))}
+      <section className="card-container">
+        {properties.map((p) => (
+          <Link className="card" href={`/dashboard/properties/${p._id}`} key={p.name}>
+            {p.name}
+          </Link>
+        ))}
+      </section>
     </>
   );
 }
