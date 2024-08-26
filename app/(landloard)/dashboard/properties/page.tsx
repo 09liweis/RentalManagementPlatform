@@ -2,11 +2,7 @@
 import { useEffect, useState } from "react";
 import PropertyForm from "@/components/property/propertyForm";
 import Link from "next/link";
-
-interface Property {
-  _id?: string;
-  name: string;
-}
+import { Property } from "@/types/property";
 
 export default function PropertiesPage() {
   const [properties, setProperties] = useState<Property[]>([]);
