@@ -3,6 +3,8 @@
 import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Room } from "@/types/room";
+import {Property} from "@/types/property";
 
 export default function PropertyPage({
   params,
@@ -12,12 +14,16 @@ export default function PropertyPage({
   const { propertyId } = params;
 
   const [roomName, setRoomName] = useState("");
-  const [rooms, setRooms] = useState<any[]>([]);
+  const [property, setProperty] = useState<Property>();
+  const [rooms, setRooms] = useState<Room[]>([]);
 
   const fetchRooms = async () => {
-    const { rooms, err } = await fetchData({
+    const { property,rooms, err } = await fetchData({
       url: `/api/properties/${propertyId}/rooms`,
     });
+    if (property) {
+      setProperty(property);
+    }
     if (Array.isArray(rooms)) {
       setRooms(rooms);
     }
@@ -41,7 +47,7 @@ export default function PropertyPage({
 
   return (
     <>
-      <h1>Property {propertyId}</h1>
+      <h1 className="page-title">Property {property?.name}</h1>
 
       <input
         placeholder="Room Name"
@@ -52,9 +58,9 @@ export default function PropertyPage({
         Add Room
       </a>
 
-      <section>
+      <section className="card-container flex-col">
         {rooms.map((room) => (
-          <Link href={`/dashboard/rooms/${room._id}`} key={room.name}>
+          <Link className="card" href={`/dashboard/rooms/${room._id}`} key={room.name}>
             <p>{room.name}</p>
           </Link>
         ))}

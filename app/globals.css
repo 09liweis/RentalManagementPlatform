@@ -20,6 +20,12 @@ html,body,*{
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+  ::placeholder {
+    color:#000;
+  }
+  .card {
+    @apply bg-gray-800;
+  }
 }
 
 body {
@@ -37,4 +43,16 @@ body {
     /*text-wrap: balance;*/
     text-align: justify;
   }
+}
+
+.page-title {
+  @apply text-balance font-bold text-2xl mb-5;
+}
+
+.card-container {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5;
+}
+
+.card {
+  @apply rounded shadow p-2 w-full;
 }
