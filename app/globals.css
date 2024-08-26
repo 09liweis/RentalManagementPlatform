@@ -14,8 +14,8 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-  ::placeholder {
-    color:#000;
+  input {
+    @apply text-black;
   }
   .card {
     @apply bg-gray-800;
