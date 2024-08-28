@@ -1,5 +1,13 @@
 "use client";
 import { Router, useRouter } from "next/router";
+import {
+  toast,
+  ToastContent,
+  ToastOptions,
+  Slide,
+  Id,
+  Bounce,
+} from "react-toastify";
 import { useState } from "react";
 
 function Login() {
@@ -22,7 +30,17 @@ function Login() {
       localStorage.setItem("auth-token", data.token);
       location.href = "/dashboard";
     } else {
-      console.error(data.error);
+      toast(data.err, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
   };
 
@@ -49,6 +67,6 @@ function Login() {
       </button>
     </section>
   );
-};
+}
 
 export default Login;
