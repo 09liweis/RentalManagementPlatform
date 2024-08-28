@@ -1,16 +1,12 @@
 "use client";
-import { Router, useRouter } from "next/router";
-import {
-  toast,
-  ToastContent,
-  ToastOptions,
-  Slide,
-  Id,
-  Bounce,
-} from "react-toastify";
+import { showToast } from "@/components/common/Toast";
+import { useRouter } from "next/navigation";
+
 import { useState } from "react";
 
 function Login() {
+  const router = useRouter();
+
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,19 +24,9 @@ function Login() {
 
     if (response.ok) {
       localStorage.setItem("auth-token", data.token);
-      location.href = "/dashboard";
+      router.push("/dashboard");
     } else {
-      toast(data.err, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      showToast(data.err);
     }
   };
 
