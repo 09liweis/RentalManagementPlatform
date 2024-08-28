@@ -17,7 +17,7 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
-    const tenants = await Tenant.find({ room: roomId });
+    const tenants = await Tenant.find({ room: roomId }).sort({ startDate: -1 });
     return NextResponse.json({ tenants }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
@@ -33,8 +33,13 @@ export async function POST(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
-    const { name } = await request.json();
-    const newTenant = new Tenant({ name, room: roomId });
+    const { name, startDate, endDate } = await request.json();
+    const newTenant = new Tenant({
+      name,
+      startDate,
+      endDate,
+      room: roomId,
+    });
     await newTenant.save();
     return NextResponse.json({ msg: "added" }, { status: 200 });
   } catch (err) {

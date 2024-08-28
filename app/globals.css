@@ -39,7 +39,7 @@ body {
 }
 
 .sidebar-menu {
-  @apply block p-2 rounded mt-5 duration-300 hover:bg-amber-600;
+  @apply block p-2 rounded mt-5 duration-300 hover:bg-amber-600 hover:text-white;
 }
 .sidebar-menu.active {
   @apply bg-amber-600 text-white;

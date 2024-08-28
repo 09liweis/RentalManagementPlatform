@@ -19,14 +19,16 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
   };
 
   const [name, setName] = useState("");
+  const [startDate, setDate] = useState("");
   const handleSubmit = async () => {
     const { msg, err } = await fetchData({
       url: `/api/rooms/${roomId}/tenants`,
       method: "POST",
-      body: { name, room: roomId },
+      body: { name, startDate },
     });
     fetchTenants();
     setName("");
+    setDate("");
   };
 
   useEffect(() => {
@@ -35,9 +37,10 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
 
   return (
     <>
-      <h1>Room Page {roomId}</h1>
-      <section>
-        <input value={name} onChange={(e) => setName(e.target.value)} />{" "}
+      <h1 className="page-title">Room Page {roomId}</h1>
+      <section className="flex flex-col gap-3">
+        <input placeholder="name" value={name} onChange={(e) => setName(e.target.value)} />
+        <input placeholder="Start Date" type="date" value={startDate} onChange={(e) => setDate(e.target.value)} />
         <button onClick={handleSubmit}>Add Tenant</button>
       </section>
       <section>

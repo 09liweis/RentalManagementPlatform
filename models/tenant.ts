@@ -7,6 +7,12 @@ const tenantSchema = new mongoose.Schema({
   name: {
     type: String,
   },
+  startDate: {
+    type: String,
+  },
+  endDate: {
+    type: String,
+  },
 });
 
 const Tenant =
