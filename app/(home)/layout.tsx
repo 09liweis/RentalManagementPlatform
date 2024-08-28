@@ -10,11 +10,8 @@ export const metadata: Metadata = {
   description: "Will add later",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
+
   return (
     <html lang="en">
       {/*className={inter.className}*/}

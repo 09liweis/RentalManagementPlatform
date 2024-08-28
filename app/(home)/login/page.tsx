@@ -45,7 +45,7 @@ function Login() {
       />
 
       <nav className={classes.link}>
-        <Link href={'/forgot_password'}>Forgot Password?</Link>
+        <Link href="/login/forgot">Forgot Password?</Link>
       </nav>
 
       <button
