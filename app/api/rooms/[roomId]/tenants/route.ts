@@ -39,6 +39,7 @@ export async function POST(request: NextRequest, { params }: ParamsProps) {
       startDate,
       endDate,
       room: roomId,
+      landlord: verified.userId,
     });
     await newTenant.save();
     return NextResponse.json({ msg: "added" }, { status: 200 });
