@@ -51,7 +51,7 @@ export default function PropertyPage({
 
   return (
     <>
-      <h1 className="page-title">Property {property?.name}</h1>
+      <h1 className="page-title">Property: {property?.name}</h1>
 
       <input
         placeholder="Room Name"
