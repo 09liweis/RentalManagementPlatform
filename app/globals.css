@@ -58,5 +58,5 @@ body {
 }
 
 .card {
-  @apply rounded shadow p-2 w-full;
+  @apply rounded shadow p-2 transition hover:scale-105;
 }

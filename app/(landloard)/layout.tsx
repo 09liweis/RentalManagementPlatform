@@ -1,4 +1,5 @@
 "use client";
+import {Suspense} from 'react';
 import { useRouter } from 'next/navigation';
 
 import { Inter } from "next/font/google";
@@ -7,6 +8,7 @@ import "@/app/globals.css";
 import Sidebar from "@/components/dashboard/sidebar";
 import Button from "@/components/common/Button";
 import { showToast } from "@/components/common/Toast";
+import Loading from './dashboard/Loading';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +35,9 @@ export default function RootLayout({
             <span>Logo</span>
             <Button tl="Logout" handleClick={handleLogout} />
           </header>
-          <section className="shadow-lg min-h-screen p-2">{children}</section>
+          <section className="shadow-lg min-h-screen p-2">
+            <Suspense fallback={<Loading/>}>{children}</Suspense>
+          </section>
         </main>
       </body>
     </html>

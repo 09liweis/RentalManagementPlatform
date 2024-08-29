@@ -1,16 +1,20 @@
 "use client";
 
+import LoadingSection from "@/components/common/LoadingSection";
 import { fetchData } from "@/utils/http";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function TenantsPage() {
+  const [loading, setLoading] = useState(false);
   const [tenants, setTenants] = useState([]);
   const fetchTenants = async () => {
+    setLoading(true);
     const { tenants } = await fetchData({ url: `/api/tenants` });
     if (tenants) {
       setTenants(tenants);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -20,13 +24,15 @@ export default function TenantsPage() {
   return (
     <>
       <h1 className="page-title">Tenants Page</h1>
-      <section className="card-container">
-        {tenants.map(({ _id, name }) => (
-          <Link className="card" href={`/dashboard/tenants/${_id}`} key={_id}>
-            {name}
-          </Link>
-        ))}
-      </section>
+      <LoadingSection loading={loading}>
+        <section className="card-container">
+          {tenants.map(({ _id, name }) => (
+            <Link className="card" href={`/dashboard/tenants/${_id}`} key={_id}>
+              {name}
+            </Link>
+          ))}
+        </section>
+      </LoadingSection>
     </>
   );
 }
