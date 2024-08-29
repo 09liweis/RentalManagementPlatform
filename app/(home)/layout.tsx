@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import Link from "next/link";
+import ToastProvider from "@/components/common/ToastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <ToastProvider>
+          <header className="p-4 shadow flex justify-between items-center">
+            <a className="font-bold text-orange-600 text-xl">RMP Logo</a>
+            <nav>
+              <Link href={"/login"}>Login</Link>
+            </nav>
+          </header>
       <header className="p-4 shadow flex justify-between items-center">
         <a className="font-bold text-orange-600 text-xl">RMP Logo</a>
         <nav>
@@ -28,7 +36,8 @@ export default function RootLayout({
         </nav>
       </header>
 
-      <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen">{children}</main>
+        </ToastProvider>
       </body>
     </html>
   );

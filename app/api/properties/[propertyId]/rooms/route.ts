@@ -1,4 +1,5 @@
 import Room from "@/models/room";
+import Property from "@/models/property";
 import { NextRequest, NextResponse } from "next/server";
 import { decodeToken } from "@/utils/jwt";
 
@@ -17,9 +18,10 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
       return NextResponse.json({ err: "Not Login" }, { status: 401 });
     }
 
+    const property = await Property.findOne({ _id: propertyId });
     const rooms = await Room.find({ property: propertyId });
     
-    return NextResponse.json({ rooms }, { status: 200 });
+    return NextResponse.json({ property,rooms }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
   }

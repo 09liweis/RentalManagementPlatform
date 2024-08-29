@@ -1,50 +1,38 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import PropertyForm from "@/components/property/propertyForm";
 import Link from "next/link";
-
-interface Property {
-  _id?: string;
-  name: string;
-}
+import Map from "@/components/common/Map";
 
 export default function Dashboard() {
-  const [properties, setProperties] = useState<Property[]>([]);
-  const [showPropertyForm, setShowPropertyForm] = useState(false);
-
-  const fetchProperties = async () => {
-    try {
-      const response = await fetch("/api/properties", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("auth-token")}`,
-        },
-      });
-      const { properties, err } = await response.json();
-      if (properties) {
-        setProperties(properties);
-      } else {
-        //TODO:handle err
-      }
-    } catch (err) {}
-  };
-
-  useEffect(() => {
-    fetchProperties();
-  }, []);
   return (
     <>
-      <h1>Dashboard</h1>
-      {showPropertyForm && (
-        <PropertyForm showPropertyForm={setShowPropertyForm} />
-      )}
-      <a onClick={() => setShowPropertyForm(true)}>Add Property</a>
-      {properties.map((p) => (
-        <Link href={`/dashboard/properties/${p._id}`} key={p.name}>
-          {p.name}
-        </Link>
-      ))}
+      <h1 className="page-title">Dashboard</h1>
+
+      <section className="card-container">
+        <article className="card">
+          <p>2 Properties</p>
+          <p>8 Rooms</p>
+          <p>7 Tenants</p>
+        </article>
+        <article className="card">
+          <h3>Total Profit</h3>
+          <p>$500</p>
+        </article>
+        <article className="card">
+          <h3>Rent received</h3>
+          <p>$3000</p>
+        </article>
+        <article className="card">
+          <h3>Overdue rent</h3>
+          <p>$300</p>
+        </article>
+        <article className="card">
+          <h3>Utility Cost</h3>
+          <p>$700</p>
+        </article>
+      </section>
+      <Map />
     </>
   );
 }

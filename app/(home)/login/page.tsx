@@ -1,8 +1,12 @@
 "use client";
-import { Router, useRouter } from "next/router";
+import { showToast } from "@/components/common/Toast";
+import { useRouter } from "next/navigation";
+
 import { useState } from "react";
 
 function Login() {
+  const router = useRouter();
+
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,9 +24,9 @@ function Login() {
 
     if (response.ok) {
       localStorage.setItem("auth-token", data.token);
-      location.href = "/dashboard";
+      router.push("/dashboard");
     } else {
-      console.error(data.error);
+      showToast(data.err);
     }
   };
 
@@ -49,6 +53,6 @@ function Login() {
       </button>
     </section>
   );
-};
+}
 
 export default Login;

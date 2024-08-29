@@ -3,7 +3,6 @@ import {number} from "prop-types";
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
   },
   email: {
     type: String,
