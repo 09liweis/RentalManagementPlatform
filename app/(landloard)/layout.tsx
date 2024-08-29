@@ -1,11 +1,15 @@
 "use client";
-import type { Metadata } from "next";
-import { useRouter } from 'next/navigation';
+import { Suspense } from "react";
+import { useRouter } from "next/navigation";
 
 import { Inter } from "next/font/google";
 
-import "../globals.css";
+import "@/app/globals.css";
 import Sidebar from "@/components/dashboard/sidebar";
+import Button from "@/components/common/Button";
+import ToastProvider from "@/components/common/ToastProvider";
+import { showToast } from "@/components/common/Toast";
+import Loading from "./dashboard/Loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,25 +18,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const router = useRouter();
 
   const handleLogout = () => {
+    showToast("Logout Successful");
     localStorage.removeItem("auth-token");
     router.replace("/login");
-  }
-  
+  };
+
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex`}>
-        <Sidebar />
-        <main className="w-4/5 p-2">
-          <header className="flex justify-between p-2 shadow">
-            <span>Logo</span>
-            <a href="#" onClick={handleLogout}>Logout</a>
-          </header>
-          <section className="shadow-lg min-h-screen p-2">{children}</section>
-        </main>
+        <ToastProvider>
+          <Sidebar />
+          <main className="w-4/5 p-2">
+            <header className="flex justify-between p-2 shadow mb-2">
+              <span>Logo</span>
+              <Button tl="Logout" handleClick={handleLogout} />
+            </header>
+            <section className="shadow-lg min-h-screen p-2">
+              <Suspense fallback={<Loading />}>{children}</Suspense>
+            </section>
+          </main>
+        </ToastProvider>
       </body>
     </html>
   );

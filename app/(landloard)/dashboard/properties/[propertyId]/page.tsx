@@ -4,7 +4,8 @@ import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Room } from "@/types/room";
-import {Property} from "@/types/property";
+import { Property } from "@/types/property";
+import LoadingSection from "@/components/common/LoadingSection";
 
 export default function PropertyPage({
   params,
@@ -13,12 +14,14 @@ export default function PropertyPage({
 }) {
   const { propertyId } = params;
 
+  const [loading, setLoading] = useState(false);
   const [roomName, setRoomName] = useState("");
   const [property, setProperty] = useState<Property>();
   const [rooms, setRooms] = useState<Room[]>([]);
 
   const fetchRooms = async () => {
-    const { property,rooms, err } = await fetchData({
+    setLoading(true);
+    const { property, rooms, err } = await fetchData({
       url: `/api/properties/${propertyId}/rooms`,
     });
     if (property) {
@@ -27,6 +30,7 @@ export default function PropertyPage({
     if (Array.isArray(rooms)) {
       setRooms(rooms);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -47,7 +51,7 @@ export default function PropertyPage({
 
   return (
     <>
-      <h1 className="page-title">Property {property?.name}</h1>
+      <h1 className="page-title">Property: {property?.name}</h1>
 
       <input
         placeholder="Room Name"
@@ -58,13 +62,19 @@ export default function PropertyPage({
         Add Room
       </a>
 
-      <section className="card-container flex-col">
-        {rooms.map((room) => (
-          <Link className="card" href={`/dashboard/rooms/${room._id}`} key={room.name}>
-            <p>{room.name}</p>
-          </Link>
-        ))}
-      </section>
+      <LoadingSection loading={loading}>
+        <section className="card-container flex-col">
+          {rooms.map((room) => (
+            <Link
+              className="card"
+              href={`/dashboard/rooms/${room._id}`}
+              key={room.name}
+            >
+              <p>{room.name}</p>
+            </Link>
+          ))}
+        </section>
+      </LoadingSection>
     </>
   );
 }
