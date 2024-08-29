@@ -4,7 +4,17 @@ const tenantSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
+  landlord:{
+    type:mongoose.Schema.Types.ObjectId,
+    required:true,
+  },
   name: {
+    type: String,
+  },
+  startDate: {
+    type: String,
+  },
+  endDate: {
     type: String,
   },
 });

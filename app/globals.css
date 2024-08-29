@@ -20,8 +20,8 @@ html,body,*{
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-  ::placeholder {
-    color:#000;
+  input {
+    @apply text-black;
   }
   .card {
     @apply bg-gray-800;
@@ -30,12 +30,12 @@ html,body,*{
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
 }
 
 @layer utilities {
@@ -45,14 +45,25 @@ body {
   }
 }
 
+.button {
+  @apply p-2 rounded bg-red-400 text-white cursor-pointer transition hover:scale-105;
+}
+
+.sidebar-menu {
+  @apply block p-2 rounded mt-5 duration-300 hover:bg-amber-600 hover:text-white;
+}
+.sidebar-menu.active {
+  @apply bg-amber-600 text-white;
+}
+
 .page-title {
   @apply text-balance font-bold text-2xl mb-5;
 }
 
 .card-container {
-  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5;
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5;
 }
 
 .card {
-  @apply rounded shadow p-2 w-full;
+  @apply rounded shadow p-2 transition hover:scale-105;
 }

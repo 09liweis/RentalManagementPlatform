@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
       if (!validPassword) {
         return NextResponse.json(
-          { error: "Invalid password" },
+          { err: "Invalid password" },
           { status: 400 },
         );
       }

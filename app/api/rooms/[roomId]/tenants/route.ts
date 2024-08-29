@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decodeToken } from "@/utils/jwt";
 import Tenant from "@/models/tenant";
+import Room from "@/models/room";
 
 interface ParamsProps {
   params: {
@@ -17,8 +18,9 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
-    const tenants = await Tenant.find({ room: roomId });
-    return NextResponse.json({ tenants }, { status: 200 });
+    const tenants = await Tenant.find({ room: roomId }).sort({ startDate: -1 });
+    const room = await Room.findOne({ _id: roomId });
+    return NextResponse.json({ tenants, room }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
   }
@@ -33,8 +35,14 @@ export async function POST(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
-    const { name } = await request.json();
-    const newTenant = new Tenant({ name, room: roomId });
+    const { name, startDate, endDate } = await request.json();
+    const newTenant = new Tenant({
+      name,
+      startDate,
+      endDate,
+      room: roomId,
+      landlord: verified.userId,
+    });
     await newTenant.save();
     return NextResponse.json({ msg: "added" }, { status: 200 });
   } catch (err) {

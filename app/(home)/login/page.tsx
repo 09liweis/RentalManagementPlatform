@@ -1,11 +1,12 @@
 "use client";
-import { Router, useRouter } from "next/router";
-import { useState } from "react";
-import Link from "next/link";
+import { showToast } from "@/components/common/Toast";
+import { useRouter } from "next/navigation";
 
-import classes from './page.module.css';
+import { useState } from "react";
 
 function Login() {
+  const router = useRouter();
+
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,15 +23,16 @@ function Login() {
     const data = await response.json();
 
     if (response.ok) {
+      showToast("Login Successful");
       localStorage.setItem("auth-token", data.token);
-      location.href = "/dashboard";
+      router.push("/dashboard");
     } else {
-      console.error(data.err);
+      showToast(data.err);
     }
   };
 
   return (
-    <section className="w-1/2 mx-auto gap-4 p-10 flex flex-col justify-center text-center">
+    <section className="gap-4 p-10 flex flex-col justify-center text-center">
       <h1 className="font-bold text-lg">Please Login as landlord</h1>
       <input
         className="p-3 rounded"
@@ -43,11 +45,6 @@ function Login() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-
-      <nav className={classes.link}>
-        <Link href="/login/forgot">Forgot Password?</Link>
-      </nav>
-
       <button
         type="submit"
         onClick={handleLogin}
@@ -57,6 +54,6 @@ function Login() {
       </button>
     </section>
   );
-};
+}
 
 export default Login;
