@@ -23,6 +23,7 @@ function Login() {
     const data = await response.json();
 
     if (response.ok) {
+      showToast("Login Successful");
       localStorage.setItem("auth-token", data.token);
       router.push("/dashboard");
     } else {
