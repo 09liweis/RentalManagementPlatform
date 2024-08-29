@@ -4,11 +4,11 @@ export default function ResetPassword() {
   return (
     <div
       className="relative flex items-center justify-center min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: "url('/images/backgroundImage1.jpg')" }}>
+      style={{ backgroundImage: "url('/images/backgroundImage.jpg')" }}>
       <div className="absolute inset-0 bg-blue-500 opacity-70"></div>
 
       <div className="absolute top-32 md:top-24 flex flex-col items-center">
-        <img src="/images/backgroundImage1.jpg" alt="Logo" className="w-16 h-16 mb-4 md:w-24 md:h-24" /> {/* 替换为正确的 logo 路径 */}
+        <img src="/images/backgroundImage.jpg" alt="Logo" className="w-16 h-16 mb-4 md:w-24 md:h-24" /> {/* 替换为正确的 logo 路径 */}
         <h6 className="text-2xl md:text-3xl font-bold text-white tracking-wide">RentalStudio</h6>
       </div>
 
