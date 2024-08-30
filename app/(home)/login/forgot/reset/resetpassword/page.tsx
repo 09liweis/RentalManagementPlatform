@@ -1,3 +1,4 @@
+//login/forgot/reset/resetpassword
 "use client";
 
 import { useRouter } from 'next/navigation';
