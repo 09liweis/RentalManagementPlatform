@@ -1,26 +1,37 @@
 // api/sendemail/route.ts
 
-import { NextResponse } from 'next/server';
-import { ServerClient } from 'postmark';
+import {NextResponse} from 'next/server';
+import {ServerClient} from 'postmark';
 import jwt from 'jsonwebtoken';
 
-const client = new ServerClient(process.env.POSTMARK_SERVER_TOKEN);
+const client = new ServerClient(process.env.POSTMARK_SERVER_TOKEN || "");
 const JWT_SECRET = process.env.JWT_SECRET;
+const EMAIL_URL =  process.env.POSTMARK_SENDER_EMAIL;
 
 export async function POST(req: Request) {
   try {
-    const { email } = await req.json();
+    const {email} = await req.json();
 
     if (!email) {
-      return NextResponse.json({ error: 'Sorry, Email Address is necessary.' }, { status: 400 });
+      return NextResponse.json({error: 'Sorry, Email Address is necessary.'}, {status: 400});
+    }
+
+    // todo
+    if (!JWT_SECRET) {
+      throw new Error("")
+    }
+
+    // todo
+    if(!EMAIL_URL){
+      throw new Error("");
     }
 
     // 生成 JWT Token，设置有效期为1小时
-    const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({email}, JWT_SECRET, {expiresIn: '1h'});
 
     // 创建邮件内容，使用生成的 token 替换链接中的 your_token_here
     const emailContent = {
-      From: process.env.POSTMARK_SENDER_EMAIL,
+      From: EMAIL_URL,
       To: email,
       Subject: 'Reset your password',
       HtmlBody: `
@@ -51,15 +62,20 @@ export async function POST(req: Request) {
     `,
     };
 
+    // todo
+    if (!emailContent){
+      throw new Error("");
+    }
+
     try {
       console.log('Sending email with Postmark...');
       await client.sendEmail(emailContent);
-      return NextResponse.json({ message: 'The verification code has been sent to your email' }, { status: 200 });
-    } catch (error) {
+      return NextResponse.json({message: 'The verification code has been sent to your email'}, {status: 200});
+    } catch (error:any) {
       console.error('Error sending email:', error.message, error.response);
-      return NextResponse.json({ error: 'Error sending email' }, { status: 500 });
+      return NextResponse.json({error: 'Error sending email'}, {status: 500});
     }
   } catch (error) {
-    return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+    return NextResponse.json({error: 'Invalid request'}, {status: 400});
   }
 }
