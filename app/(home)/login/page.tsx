@@ -47,8 +47,10 @@ function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <nav className={classes.link}>
-        <Link href="/login/forgot">Forgot Password?</Link>
+      <nav className="text-right">
+        <Link href="/login/forgot" className="border-b border-black text-black hover:border-black hover:text-black">
+          Forgot Password?
+        </Link>
       </nav>
 
       <button
@@ -63,3 +65,5 @@ function Login() {
 }
 
 export default Login;
+
+
