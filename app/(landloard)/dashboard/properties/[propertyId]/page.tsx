@@ -6,6 +6,8 @@ import Link from "next/link";
 import { Room } from "@/types/room";
 import { Property } from "@/types/property";
 import LoadingSection from "@/components/common/LoadingSection";
+import Input from "@/components/common/Input";
+import Button from "@/components/common/Button";
 
 export default function PropertyPage({
   params,
@@ -53,14 +55,13 @@ export default function PropertyPage({
     <>
       <h1 className="page-title">Property: {property?.name}</h1>
 
-      <input
+      <Input
+        type="text"
         placeholder="Room Name"
         value={roomName}
         onChange={(e) => setRoomName(e.target.value)}
       />
-      <a href="#" onClick={handleRoomSubmit}>
-        Add Room
-      </a>
+      <Button tl={"Add Room"} handleClick={handleRoomSubmit} />
 
       <LoadingSection loading={loading}>
         <section className="card-container flex-col">
