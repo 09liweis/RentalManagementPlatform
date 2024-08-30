@@ -1,8 +1,8 @@
 //login/forgot/reset/resetpassword/page.tsx
 "use client";
 
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import {useRouter} from 'next/navigation';
+import {useEffect, useState} from 'react';
 
 export default function ResetPassword() {
   const router = useRouter();
@@ -39,7 +39,7 @@ export default function ResetPassword() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ token, password }),
+      body: JSON.stringify({token, password}),
     });
 
     if (response.ok) {
@@ -49,7 +49,7 @@ export default function ResetPassword() {
       let data;
       try {
         data = await response.json();
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error parsing JSON response:', error.message);
         setMessage('An error occurred while processing your request.');
         return;
@@ -64,7 +64,7 @@ export default function ResetPassword() {
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-cover bg-center"
-         style={{ backgroundImage: "url('/images/backgroundImage.jpg')" }}>
+         style={{backgroundImage: "url('/images/backgroundImage.jpg')"}}>
 
       <div className="absolute inset-0 bg-blue-500 opacity-70"></div>
 
