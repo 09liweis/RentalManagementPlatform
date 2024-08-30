@@ -1,8 +1,9 @@
 "use client";
 import { showToast } from "@/components/common/Toast";
 import { useRouter } from "next/navigation";
-
 import { useState } from "react";
+import  Link  from "next/link";
+import classes from './page.module.css';
 
 function Login() {
   const router = useRouter();
@@ -45,6 +46,11 @@ function Login() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+
+      <nav className={classes.link}>
+        <Link href="/login/forgot">Forgot Password?</Link>
+      </nav>
+
       <button
         type="submit"
         onClick={handleLogin}

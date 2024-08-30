@@ -9,10 +9,11 @@ export default function ForgotPassword() {
   const [message, setMessage] = useState('');
   const router = useRouter();
 
+  // @ts-ignore
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/verification', {
+    const response = await fetch('/api/sendemail', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +57,7 @@ export default function ForgotPassword() {
           <div>
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
+              className="w-full bg-orange-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
             >
               Reset Password
             </button>
@@ -64,7 +65,7 @@ export default function ForgotPassword() {
         </form>
         {message && <p className="text-center mt-4 text-green-500">{message}</p>}
         <div className="text-center mt-6">
-          <Link href="/login" className="text-blue-500 hover:underline">
+          <Link href="/login" className="text-orange-500 hover:underline">
             Go back to login
           </Link>
         </div>
