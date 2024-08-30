@@ -31,9 +31,6 @@ export default function RootLayout({
         <nav>
           <Link href={'/login'}>Login</Link>
         </nav>
-        <nav>
-          <Link href={'/signUp'}>Sign up</Link>
-        </nav>
       </header>
 
           <main className="min-h-screen">{children}</main>

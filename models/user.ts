@@ -21,17 +21,14 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  role: {
-    type: number,
-    default: false,
-  },
+  role: number,
   forgotPasswardToken: String,
   forgotPasswardTokenExpiry: Date,
   verifyToken: String,
   verifyTokenExpiry: Date,
   createTime: Date,
   createUser: String,
-  // 0 for not delete, 1 for delete
+  // 0 for valid, 1 for delete
   isDelete: number,
 });
 
