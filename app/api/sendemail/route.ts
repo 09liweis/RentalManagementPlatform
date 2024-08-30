@@ -1,5 +1,3 @@
-//app/api/email/route.ts
-
 import { NextResponse } from 'next/server';
 import { ServerClient } from 'postmark';
 const client = new ServerClient(process.env.POSTMARK_SERVER_TOKEN);
@@ -43,6 +41,7 @@ export async function POST(req: Request) {
           </a> if you have any questions.
         </p>
         <p style="color: #4a5568; margin-top: 16px;">Thanks,</p>
+        <p style="color: #4a5568; margin-top: 16px;">The RentalManagementPlatform Team</p>
       </div>
     </div>
   `,

@@ -52,6 +52,7 @@ export default function ResetPassword() {
   };
 
   if (!token && !message) {
+    console.log("token: ",{token},";","message:",{message});
     return <p>Loading...</p>; // 或者显示其他加载状态
   }
 
