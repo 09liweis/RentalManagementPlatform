@@ -1,5 +1,6 @@
 "use client";
 import { showToast } from "@/components/common/Toast";
+import Input from "@/components/common/Input";
 import { useRouter } from "next/navigation";
 
 import { useState } from "react";
@@ -34,18 +35,17 @@ function Login() {
   return (
     <section className="gap-4 p-10 flex flex-col justify-center text-center">
       <h1 className="font-bold text-lg">Please Login as landlord</h1>
-      <input
-        className="input"
-        placeholder="email"
-        value={email}
+      <Input
+        type="email"
         onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        value={email}
       />
-      <input
+      <Input
         type="password"
-        className="input"
-        placeholder="password"
-        value={password}
         onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        value={password}
       />
       <button
         type="submit"
