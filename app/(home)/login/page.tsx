@@ -35,13 +35,15 @@ function Login() {
     <section className="gap-4 p-10 flex flex-col justify-center text-center">
       <h1 className="font-bold text-lg">Please Login as landlord</h1>
       <input
-        className="p-3 rounded"
+        className="input"
+        placeholder="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
         type="password"
-        className="p-3 rounded"
+        className="input"
+        placeholder="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />

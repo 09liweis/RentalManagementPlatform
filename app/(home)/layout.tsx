@@ -23,7 +23,7 @@ export default function RootLayout({
           <header className="p-4 shadow flex justify-between items-center">
             <a className="font-bold text-orange-600 text-xl">RMP Logo</a>
             <nav>
-              <Link href={"/login"}>Login</Link>
+              <Link className="text-orange-600" href={"/login"}>Login</Link>
             </nav>
           </header>
 
