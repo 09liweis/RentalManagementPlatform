@@ -1,4 +1,4 @@
-//login/forgot/reset/resetpassword
+//login/forgot/reset/resetpassword/page.tsx
 "use client";
 
 import { useRouter } from 'next/navigation';
@@ -12,17 +12,16 @@ export default function ResetPassword() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    if (router.isReady) {
-      const queryToken = router.query.token as string;
-      if (queryToken) {
-        setToken(queryToken);
-      } else {
-        setMessage('Invalid or missing token');
-      }
+    const searchParams = new URLSearchParams(window.location.search);
+    const queryToken = searchParams.get('token');
+    if (queryToken) {
+      setToken(queryToken);
+    } else {
+      setMessage('Invalid or missing token');
     }
-  }, [router.isReady, router.query]);
+  }, []);
 
-  const handleResetPassword = async (e) => {
+  const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -35,7 +34,7 @@ export default function ResetPassword() {
       return;
     }
 
-    const response = await fetch('/api/sendemail', {
+    const response = await fetch('/api/sendemail/resetdata', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -47,14 +46,20 @@ export default function ResetPassword() {
       setMessage('Password reset successful');
       router.push('/login');
     } else {
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (error) {
+        console.error('Error parsing JSON response:', error.message);
+        setMessage('An error occurred while processing your request.');
+        return;
+      }
       setMessage(`Error: ${data.error}`);
     }
   };
 
   if (!token && !message) {
-    console.log("token: ",{token},";","message:",{message});
-    return <p>Loading...</p>; // 或者显示其他加载状态
+    return <p>Loading...</p>;
   }
 
   return (
