@@ -4,7 +4,7 @@ export const metadata = {
   // description: '',
 };
 
-export default function ForgotPasswordLayout({ children }) {
+export default function ForgotPasswordLayout({children}: { children: any }) {
   return <>
     {children}
   </>;
