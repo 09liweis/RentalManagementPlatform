@@ -1,9 +1,9 @@
 "use client";
 import { showToast } from "@/components/common/Toast";
+import Input from "@/components/common/Input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import  Link  from "next/link";
-import classes from './page.module.css';
 
 function Login() {
   const router = useRouter();
@@ -35,16 +35,17 @@ function Login() {
   return (
     <section className="gap-4 p-10 flex flex-col justify-center text-center">
       <h1 className="font-bold text-lg">Please Login as landlord</h1>
-      <input
-        className="p-3 rounded"
-        value={email}
+      <Input
+        type="email"
         onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        value={email}
       />
-      <input
+      <Input
         type="password"
-        className="p-3 rounded"
-        value={password}
         onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        value={password}
       />
 
       <nav className="text-right">
@@ -65,6 +66,7 @@ function Login() {
   );
 }
 
+// @ts-ignore
 export default Login;
 
 

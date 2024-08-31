@@ -30,12 +30,12 @@ html,body,*{
 
 body {
   color: rgb(var(--foreground-rgb));
-  /* background: linear-gradient(
+  background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb)); */
+    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
@@ -43,6 +43,10 @@ body {
     /*text-wrap: balance;*/
     text-align: justify;
   }
+}
+
+.input {
+  @apply p-2 bg-gray-100 rounded-lg border-2 border-gray-200 focus:border-gray-500;
 }
 
 .button {
