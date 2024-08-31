@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decodeToken } from "@/utils/jwt";
+import Property from "@/models/property";
+import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
 
@@ -22,7 +24,9 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
       startDate: -1,
     });
     const tenant = await Tenant.findOne({ _id: tenantId });
-    return NextResponse.json({ tenant, rents }, { status: 200 });
+    const room = await Room.findOne({ _id: tenant.room });
+    const property = await Property.findOne({ _id: room.property });
+    return NextResponse.json({ tenant, rents,room,property }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
   }

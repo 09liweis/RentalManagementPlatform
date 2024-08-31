@@ -12,10 +12,11 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
   const [loading, setLoading] = useState(false);
   const [tenants, setTenants] = useState<any[]>([]);
   const [room, setRoom] = useState<any>({});
+  const [property, setProperty] = useState<any>({});
 
   const fetchTenants = async () => {
     setLoading(true);
-    const { tenants, room, err } = await fetchData({
+    const { tenants, room, property, err } = await fetchData({
       url: `/api/rooms/${roomId}/tenants`,
     });
     if (err) {
@@ -23,6 +24,7 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
     } else {
       setTenants(tenants);
       setRoom(room);
+      setProperty(property);
     }
     setLoading(false);
   };
@@ -51,7 +53,8 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
 
   return (
     <>
-      <h1 className="page-title">Room: {room?.name}</h1>
+      <Link href={`/dashboard/properties/${property?._id}`} className="page-title">Property: {property?.name}</Link>
+      <h2>Room: {room?.name}</h2>
       <section className="flex flex-col gap-3">
         <Input
           type="text"

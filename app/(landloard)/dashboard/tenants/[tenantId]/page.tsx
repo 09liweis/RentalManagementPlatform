@@ -6,6 +6,7 @@ import { fetchData } from "@/utils/http";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function TenantPage({
   params,
@@ -16,10 +17,12 @@ export default function TenantPage({
 
   const [rents, setRents] = useState([]);
   const [tenant, setTenant] = useState<any>({});
+  const [room, setRoom] = useState<any>({});
+  const [property, setProperty] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const fetchRents = async () => {
     setLoading(true);
-    const { rents, tenant, err } = await fetchData({
+    const { rents, tenant, room,property, err } = await fetchData({
       url: `/api/tenants/${tenantId}/rents`,
     });
     setLoading(false);
@@ -28,6 +31,8 @@ export default function TenantPage({
     } else {
       setRents(rents);
       setTenant(tenant);
+      setRoom(room);
+      setProperty(property);
     }
   };
 
@@ -51,6 +56,8 @@ export default function TenantPage({
 
   return (
     <>
+      <Link className="page-title" href={`/dashboard/properties/${property?._id}`}>Property: {property?.name}</Link>
+      <Link className="page-title" href={`/dashboard/rooms/${room?._id}`}>Room: {room?.name}</Link>
       <h1 className="page-title">Tenant {tenant?.name}</h1>
 
       <section>
