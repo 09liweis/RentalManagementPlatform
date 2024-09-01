@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { fetchData } from "@/utils/http";
+import Input from "@/components/common/Input";
+import Button from "@/components/common/Button";
 import { showToast } from "@/components/common/Toast";
 import LoadingSection from "@/components/common/LoadingSection";
 
@@ -10,10 +12,11 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
   const [loading, setLoading] = useState(false);
   const [tenants, setTenants] = useState<any[]>([]);
   const [room, setRoom] = useState<any>({});
+  const [property, setProperty] = useState<any>({});
 
   const fetchTenants = async () => {
     setLoading(true);
-    const { tenants, room, err } = await fetchData({
+    const { tenants, room, property, err } = await fetchData({
       url: `/api/rooms/${roomId}/tenants`,
     });
     if (err) {
@@ -21,6 +24,7 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
     } else {
       setTenants(tenants);
       setRoom(room);
+      setProperty(property);
     }
     setLoading(false);
   };
@@ -49,20 +53,22 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
 
   return (
     <>
-      <h1 className="page-title">Room: {room?.name}</h1>
+      <Link href={`/dashboard/properties/${property?._id}`} className="page-title">Property: {property?.name}</Link>
+      <h2>Room: {room?.name}</h2>
       <section className="flex flex-col gap-3">
-        <input
-          placeholder="name"
+        <Input
+          type="text"
+          placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <input
-          placeholder="Start Date"
+        <Input
           type="date"
+          placeholder="Start Date"
           value={startDate}
           onChange={(e) => setDate(e.target.value)}
         />
-        <button onClick={handleSubmit}>Add Tenant</button>
+        <Button tl={"Add Tenant"} handleClick={handleSubmit} />
       </section>
 
       <LoadingSection loading={loading}>

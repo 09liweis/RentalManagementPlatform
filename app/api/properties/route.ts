@@ -21,11 +21,14 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { name } = await request.json();
-
     const verified = decodeToken(request);
     if (!verified) {
       return NextResponse.json({ err: "Not Login" }, { status: 401 });
+    }
+
+    const { name } = await request.json();
+    if (!name?.trim()) {
+      return NextResponse.json({ err: "Property name is required" }, { status: 400 })
     }
 
     const newProperty = new Property({ name, user: verified.userId });

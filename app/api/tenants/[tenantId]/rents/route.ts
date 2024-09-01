@@ -1,17 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decodeToken } from "@/utils/jwt";
-import Tenant from "@/models/tenant";
-import Room from "@/models/room";
 import Property from "@/models/property";
+import Room from "@/models/room";
+import Tenant from "@/models/tenant";
+import Rent from "@/models/rent";
 
 interface ParamsProps {
   params: {
-    roomId: string;
+    tenantId: string;
   };
 }
 
 export async function GET(request: NextRequest, { params }: ParamsProps) {
-  const { roomId } = params;
+  const { tenantId } = params;
 
   const verified = decodeToken(request);
   if (!verified) {
@@ -19,17 +20,20 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
-    const tenants = await Tenant.find({ room: roomId }).sort({ startDate: -1 });
-    const room = await Room.findOne({ _id: roomId });
+    const rents = await Rent.find({ tenant: tenantId }).sort({
+      startDate: -1,
+    });
+    const tenant = await Tenant.findOne({ _id: tenantId });
+    const room = await Room.findOne({ _id: tenant.room });
     const property = await Property.findOne({ _id: room.property });
-    return NextResponse.json({ tenants, room, property }, { status: 200 });
+    return NextResponse.json({ tenant, rents,room,property }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
   }
 }
 
 export async function POST(request: NextRequest, { params }: ParamsProps) {
-  const { roomId } = params;
+  const { tenantId } = params;
 
   const verified = decodeToken(request);
   if (!verified) {
@@ -37,15 +41,15 @@ export async function POST(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
-    const { name, startDate, endDate } = await request.json();
-    const newTenant = new Tenant({
-      name,
+    const { amount, startDate } = await request.json();
+    const tenant = await Tenant.findOne({ _id: tenantId });
+    const newRent = new Rent({
+      amount,
       startDate,
-      endDate,
-      room: roomId,
-      landlord: verified.userId,
+      tenant: tenantId,
+      room: tenant.room,
     });
-    await newTenant.save();
+    await newRent.save();
     return NextResponse.json({ msg: "added" }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
