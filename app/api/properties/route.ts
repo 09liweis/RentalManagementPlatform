@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     }
 
     const { name } = await request.json();
-    if (!name) {
+    if (!name?.trim()) {
       return NextResponse.json({ err: "Property name is required" }, { status: 400 })
     }
 

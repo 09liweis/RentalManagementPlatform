@@ -1,5 +1,7 @@
 "use client";
+import { fetchData } from "@/utils/http";
 import { useState } from "react";
+import { showToast } from "../common/Toast";
 
 interface PropertyFormProps {
   showPropertyForm: Function;
@@ -9,15 +11,9 @@ export default function PropertyForm({ showPropertyForm }: PropertyFormProps) {
   const [name, setName] = useState("");
   const handlePropertySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await fetch("/api/properties", {
-      method: "POST",
-      headers:{
-        "Content-Type":"application/json",
-        'Authorization': `Bearer ${localStorage.getItem("auth-token")}`,
-      },
-      body: JSON.stringify({ name }),
-    });
+    const {msg, err} = await fetchData({url:"/api/properties", method:"POST", body:{name}});
     showPropertyForm(false);
+    showToast(err || msg);
   };
   return (
     <section className="absolute flex flex-col w-full h-full justify-center items-center top-0 left-0">

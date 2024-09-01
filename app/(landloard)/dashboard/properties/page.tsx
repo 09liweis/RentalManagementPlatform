@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Property } from "@/types/property";
 import { fetchData } from "@/utils/http";
 import LoadingSection from "@/components/common/LoadingSection";
+import { showToast } from "@/components/common/Toast";
 
 export default function PropertiesPage() {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -18,7 +19,7 @@ export default function PropertiesPage() {
       if (properties) {
         setProperties(properties);
       } else {
-        //TODO:handle err
+        showToast(err);
       }
     } catch (err) {}
     setLoading(false);
