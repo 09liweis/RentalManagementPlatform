@@ -50,6 +50,15 @@ export default function TenantPage({
     fetchRents();
   };
 
+  const handleDeleteRent = async (rentId: string) => {
+    const { msg, err } = await fetchData({
+      url: `/api/rents/${rentId}`,
+      method: "DELETE",
+    });
+    showToast(msg || err);
+    fetchRents();
+  }
+
   useEffect(() => {
     fetchRents();
   }, []);
@@ -79,9 +88,10 @@ export default function TenantPage({
       <LoadingSection loading={loading}>
         <section className="card-container">
           {rents.map(({ _id, amount, startDate }) => (
-            <div className="card" key={_id}>
-              {startDate}: ${amount}
-            </div>
+            <article className="card" key={_id}>
+              <span>{startDate}: ${amount}</span>
+              <Button tl="Delete" handleClick={() => handleDeleteRent(_id)} />
+            </article>
           ))}
         </section>
       </LoadingSection>
