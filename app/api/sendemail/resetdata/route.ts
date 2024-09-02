@@ -3,7 +3,7 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import dbConnect from '../../../../config/db';
+// import dbConnect from '../../../../config/db';
 import User from '../../../../models/user';
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     }
 
     // 连接数据库
-    await dbConnect();
+    // await dbConnect();
 
     // 使用 email 查找用户
     const user = await User.findOne({ email: decoded.email });
