@@ -11,16 +11,10 @@ export async function POST(request: NextRequest) {
     let existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      //register
-      const salt = await bcryptjs.genSalt(10);
-      const hashedPassword = await bcryptjs.hash(password, salt);
-
-      const newUser = new User({
-        email,
-        password: hashedPassword,
-      });
-
-      existingUser = await newUser.save();
+      return NextResponse.json(
+        { err: "User not found, please sign up" },
+        { status: 400 },
+      )
     } else {
       const validPassword = await bcryptjs.compare(
         password,
