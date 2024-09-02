@@ -3,6 +3,19 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "@/models/user";
 
+/**
+ * @swagger
+ * /api/login:
+ *   post:
+ *     description: Landlord Login
+ *     responses:
+ *       200:
+ *         description: Login successfully!
+ *       400:
+ *         description: User not found, please sign up
+ *       401:
+ *         description: Invalid password
+ */
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
@@ -24,7 +37,7 @@ export async function POST(request: NextRequest) {
       if (!validPassword) {
         return NextResponse.json(
           { err: "Invalid password" },
-          { status: 400 },
+          { status: 401 },
         );
       }
     }
