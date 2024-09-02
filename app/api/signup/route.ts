@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken";
 import User from "@/models/user";
 
+/**
+ * @swagger
+ * /api/signup:
+ *   post:
+ *     description: Sign up landlord
+ *     responses:
+ *       200:
+ *         description: Sign up successfully!
+ *       400:
+ *         description: Email Already Registered
+ */
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
