@@ -20,14 +20,17 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ToastProvider>
-          <header className="p-4 shadow flex justify-between items-center">
-            <a className="font-bold text-orange-600 text-xl">RMP Logo</a>
-            <nav>
-              <Link className="text-orange-600" href={"/login"}>Login</Link>
-            </nav>
-          </header>
+            <header className="p-4 shadow flex justify-between items-center">
+                <a className="font-bold text-orange-600 text-xl">RMP Logo</a>
+                <nav>
+                    <Link href={'/login'}>Login</Link>
+                </nav>
+                <nav>
+                    <Link href={'/signup'}>Signup</Link>
+                </nav>
+            </header>
 
-          <main className="min-h-screen">{children}</main>
+            <main className="min-h-screen">{children}</main>
         </ToastProvider>
       </body>
     </html>
