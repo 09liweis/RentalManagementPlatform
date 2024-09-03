@@ -15,13 +15,15 @@ export default function PropertiesPage() {
   const fetchProperties = async () => {
     setLoading(true);
     try {
-      const { properties, err } = await fetchData({url:'/api/properties'});
+      const { properties, err } = await fetchData({ url: "/api/properties" });
       if (properties) {
         setProperties(properties);
       } else {
-        showToast(err);
+        showToast(err.toString());
       }
-    } catch (err) {}
+    } catch (err) {
+      showTost(err);
+    }
     setLoading(false);
   };
 
@@ -39,7 +41,11 @@ export default function PropertiesPage() {
       <LoadingSection loading={loading}>
         <section className="card-container">
           {properties.map((p) => (
-            <Link className="card" href={`/dashboard/properties/${p._id}`} key={p.name}>
+            <Link
+              className="card"
+              href={`/dashboard/properties/${p._id}`}
+              key={p.name}
+            >
               {p.name}
             </Link>
           ))}
