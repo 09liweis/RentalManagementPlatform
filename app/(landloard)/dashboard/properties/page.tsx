@@ -22,7 +22,7 @@ export default function PropertiesPage() {
         showToast(err.toString());
       }
     } catch (err) {
-      showTost(err);
+      
     }
     setLoading(false);
   };

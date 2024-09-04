@@ -4,31 +4,24 @@ import Input from "@/components/common/Input";
 import { useRouter } from "next/navigation";
 
 import { useState } from "react";
+import useUserStore from "@/stores/userStore";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 function Login() {
+  const { login } = useUserStore();
   const router = useRouter();
 
-  const [loggedInUser, setLoggedInUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    const response = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      showToast("Login Successful");
-      localStorage.setItem("auth-token", data.token);
+    setLoading(true);
+    const { err } = await login({ email, password });
+    if (!err) {
       router.push("/dashboard");
     } else {
-      showToast(data.err);
+      setLoading(false);
     }
   };
 
@@ -50,9 +43,10 @@ function Login() {
       <button
         type="submit"
         onClick={handleLogin}
+        disabled={loading}
         className="rounded bg-red-400 text-white p-3"
       >
-        Login
+        {loading ? <LoadingSpinner /> : "Login"}
       </button>
     </section>
   );
