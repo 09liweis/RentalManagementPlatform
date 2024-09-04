@@ -2,33 +2,24 @@
 import { useEffect, useState } from "react";
 import PropertyForm from "@/components/property/propertyForm";
 import Link from "next/link";
-import { Property } from "@/types/property";
-import { fetchData } from "@/utils/http";
 import LoadingSection from "@/components/common/LoadingSection";
-import { showToast } from "@/components/common/Toast";
+import usePropertyStore from "@/stores/propertyStore";
 
 export default function PropertiesPage() {
-  const [properties, setProperties] = useState<Property[]>([]);
+  const {properties,propertiesFetched,fetchProperties} = usePropertyStore();
   const [showPropertyForm, setShowPropertyForm] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const fetchProperties = async () => {
+  const fetchPropertiesAsync = async () => {
     setLoading(true);
-    try {
-      const { properties, err } = await fetchData({ url: "/api/properties" });
-      if (properties) {
-        setProperties(properties);
-      } else {
-        showToast(err.toString());
-      }
-    } catch (err) {
-      
-    }
+    await fetchProperties()
     setLoading(false);
   };
 
   useEffect(() => {
-    fetchProperties();
+    if (!propertiesFetched) {
+      fetchPropertiesAsync();
+    }
   }, []);
 
   return (
