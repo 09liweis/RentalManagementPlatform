@@ -1,20 +1,34 @@
 "use client";
 import { fetchData } from "@/utils/http";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { showToast } from "../common/Toast";
+import { Property } from "@/types/property";
+import usePropertyStore from "@/stores/propertyStore";
 
 interface PropertyFormProps {
   showPropertyForm: Function;
+  property: Property;
 }
 
-export default function PropertyForm({ showPropertyForm }: PropertyFormProps) {
-  const [name, setName] = useState("");
+export default function PropertyForm({ showPropertyForm,property }: PropertyFormProps) {
+  const {fetchProperties} = usePropertyStore();
+  
+  const [curProperty, setCurProperty] = useState<Property>({name:""});
+
+  useEffect(()=>(setCurProperty(property)),[property]);
+  
   const handlePropertySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    
     e.preventDefault();
-    const {msg, err} = await fetchData({url:"/api/properties", method:"POST", body:{name}});
+    const method = curProperty._id ? "PUT" : "POST";
+    const url = curProperty._id ? `/api/properties/${curProperty._id}` : `/api/properties`;
+    const {msg, err} = await fetchData({url, method, body:curProperty});
     showPropertyForm(false);
     showToast(err || msg);
+    fetchProperties();
+    setCurProperty({name:""});
   };
+  
   return (
     <section className="absolute flex flex-col w-full h-full justify-center items-center top-0 left-0">
       <form
@@ -23,9 +37,9 @@ export default function PropertyForm({ showPropertyForm }: PropertyFormProps) {
       >
         <h1>Property Form</h1>
         <input
-          placeholder="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          placeholder="Name"
+          value={curProperty?.name}
+          onChange={(e) => setCurProperty({...curProperty,name:e.target.value})}
         />
         <button>Add Property</button>
         <button onClick={() => showPropertyForm(false)}>Cancel</button>

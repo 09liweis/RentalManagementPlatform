@@ -4,6 +4,7 @@ import PropertyForm from "@/components/property/propertyForm";
 import Link from "next/link";
 import LoadingSection from "@/components/common/LoadingSection";
 import usePropertyStore from "@/stores/propertyStore";
+import { Property } from "@/types/property";
 
 export default function PropertiesPage() {
   const {properties,propertiesFetched,fetchProperties} = usePropertyStore();
@@ -22,23 +23,30 @@ export default function PropertiesPage() {
     }
   }, []);
 
+  const [property, setProperty] = useState<Property>({name:""});
+  const handlePropertyEdit = (property: any) => {
+    setProperty(property);
+    setShowPropertyForm(true);
+  }
+
   return (
     <>
       <h1 className="page-title">Properties</h1>
       {showPropertyForm && (
-        <PropertyForm showPropertyForm={setShowPropertyForm} />
+        <PropertyForm property={property} showPropertyForm={setShowPropertyForm} />
       )}
       <a onClick={() => setShowPropertyForm(true)}>Add Property</a>
       <LoadingSection loading={loading}>
         <section className="card-container">
           {properties.map((p) => (
-            <Link
-              className="card"
-              href={`/dashboard/properties/${p._id}`}
-              key={p.name}
-            >
-              {p.name}
-            </Link>
+            <article key={p._id} className="card">
+              <Link
+                href={`/dashboard/properties/${p._id}`}
+              >
+                {p.name}
+              </Link>
+              <span className="text-red-400" onClick={()=>handlePropertyEdit(p)}>Edit</span>
+            </article>
           ))}
         </section>
       </LoadingSection>
