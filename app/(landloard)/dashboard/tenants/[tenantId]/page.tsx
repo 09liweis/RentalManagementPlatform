@@ -8,6 +8,12 @@ import Button from "@/components/common/Button";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
+const RENT_FIELDS = [
+  {placeholder: "Amount", name:"amount",inputType:"number"},
+  {placeholder: "Date", name:"startDate",inputType:"date"},
+  {placeholder: "Status", name:"status",inputType:"text"}
+];
+
 export default function TenantPage({
   params,
 }: {
@@ -40,8 +46,9 @@ export default function TenantPage({
   const handleRentSubmit = async (e: any) => {
     e.preventDefault();
     const method = rent?._id ? "PUT" : "POST";
+    const url = rent?._id ? `/api/rents/${rent?._id}` : `/api/tenants/${tenantId}/rents`
     const { msg, err } = await fetchData({
-      url: `/api/tenants/${tenantId}/rents`,
+      url,
       method,
       body: rent,
     });
@@ -69,27 +76,25 @@ export default function TenantPage({
       <Link className="page-title" href={`/dashboard/rooms/${room?._id}`}>Room: {room?.name}</Link>
       <h1 className="page-title">Tenant {tenant?.name}</h1>
 
-      <section>
-        <Input
-          placeholder="Amount"
-          value={rent?.amount || ""}
-          type="number"
-          onChange={(e) => setRent({ ...rent, amount: e.target.value })}
-        />
-        <Input
-          placeholder="Start Date"
-          value={rent?.startDate || ""}
-          type="date"
-          onChange={(e) => setRent({ ...rent, startDate: e.target.value })}
-        />
+      <section className="flex flex-col gap-3">
+        {RENT_FIELDS.map(({placeholder,inputType,name})=>
+          <Input
+            placeholder={placeholder}
+            value={rent[name] || ""}
+            type={inputType}
+            onChange={(e) => setRent({ ...rent, [name]: e.target.value })}
+          />
+        )}
         <Button tl="Add Rent" handleClick={handleRentSubmit} />
       </section>
 
       <LoadingSection loading={loading}>
         <section className="card-container">
-          {rents.map(({ _id, amount, startDate }) => (
+          {rents.map(({ _id, amount, startDate,status }) => (
             <article className="card" key={_id}>
-              <span>{startDate}: ${amount}</span>
+              <p>{startDate}: ${amount}</p>
+              <p>Status: {status}</p>
+              <Button tl="Edit" handleClick={()=>setRent({_id,amount,startDate,status})} />
               <Button tl="Delete" handleClick={() => handleDeleteRent(_id)} />
             </article>
           ))}

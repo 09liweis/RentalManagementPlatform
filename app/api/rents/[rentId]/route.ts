@@ -11,33 +11,29 @@ interface ParamsProps {
   };
 }
 
-export async function GET(request: NextRequest, { params }: ParamsProps) {
-  const { rentId } = params;
-
+export async function PUT(request: NextRequest, { params }: ParamsProps) {
+  const {rentId} = params;
+  
   const verified = decodeToken(request);
   if (!verified) {
     return NextResponse.json({ err: "Not Login" }, { status: 401 });
   }
 
-  try {
-    
-  } catch (err) {
-    return NextResponse.json({ err }, { status: 500 });
-  }
-}
-
-export async function POST(request: NextRequest, { params }: ParamsProps) {
-  const { rentId } = params;
-
-  const verified = decodeToken(request);
-  if (!verified) {
-    return NextResponse.json({ err: "Not Login" }, { status: 401 });
+  if (!rentId) {
+    return NextResponse.json({ err: "Rent Id is required" }, { status: 400 });
   }
 
   try {
-    const { amount, startDate } = await request.json();
+    const foundRent = await Rent.findOne({ _id: rentId });
+    if (!foundRent) {
+      return NextResponse.json({ err: "Rent not found" }, { status: 404 });
+    }
+
+    const {status} = await request.json();
+    foundRent.status = status;
+    await foundRent.save();
     
-    return NextResponse.json({ msg: "added" }, { status: 200 });
+    return NextResponse.json({ msg: "updated" }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
   }
