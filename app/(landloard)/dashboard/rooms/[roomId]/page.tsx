@@ -32,6 +32,7 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
   const [tenant, setTenant] = useState<any>({});
   const tenantFields = [
     {field:"name",inputType:"text",placeholder:"Name"},
+    {field:"deposit",inputType:"number",placeholder:"Deposit"},
     {field:"startDate",inputType:"date",placeholder:"Start Date"},
     {field:"endDate",inputType:"date",placeholder:"End Date"},
   ];

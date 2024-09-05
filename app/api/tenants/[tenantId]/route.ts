@@ -30,10 +30,11 @@ export async function PUT(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
-    const { name, startDate, endDate } = await request.json();
+    const { name, startDate, endDate, deposit } = await request.json();
     const tenant = await Tenant.findOne({ _id: tenantId });
     //update tenant
     tenant.name = name;
+    tenant.deposit = deposit;
     tenant.startDate = startDate;
     tenant.endDate = endDate;
     await tenant.save();
