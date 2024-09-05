@@ -43,7 +43,7 @@ body {
 }
 
 .button {
-  @apply p-2 rounded bg-red-400 text-white cursor-pointer transition hover:scale-105;
+  @apply p-2 text-center rounded bg-red-400 text-white cursor-pointer transition hover:scale-105;
 }
 
 .sidebar-menu {
@@ -58,9 +58,9 @@ body {
 }
 
 .card-container {
-  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5;
+  @apply mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5;
 }
 
 .card {
-  @apply rounded shadow p-2 transition hover:scale-105;
+  @apply rounded shadow-lg p-2 transition hover:scale-105;
 }

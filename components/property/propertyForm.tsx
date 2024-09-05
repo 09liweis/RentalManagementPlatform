@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { showToast } from "../common/Toast";
 import { Property } from "@/types/property";
 import usePropertyStore from "@/stores/propertyStore";
+import Button from "@/components/common/Button";
+import Input from "@/components/common/Input";
 
 interface PropertyFormProps {
   showPropertyForm: Function;
@@ -30,18 +32,14 @@ export default function PropertyForm({ showPropertyForm,property }: PropertyForm
   };
   
   return (
-    <section className="absolute flex flex-col w-full h-full justify-center items-center top-0 left-0">
+    <section className="z-10 absolute flex flex-col w-full h-full justify-center items-center top-0 left-0">
       <form
-        className="flex flex-col gap-5 p-2 shadow-lg bg-white rounded"
+        className="w-full sm:w-3/4 md:w-1/2 lg:w-3/4 flex flex-col gap-5 p-2 shadow-lg bg-white rounded"
         onSubmit={handlePropertySubmit}
       >
         <h1>Property Form</h1>
-        <input
-          placeholder="Name"
-          value={curProperty?.name}
-          onChange={(e) => setCurProperty({...curProperty,name:e.target.value})}
-        />
-        <button>Add Property</button>
+        <Input type="text" placeholder="Name" value={curProperty?.name} onChange={(e) => setCurProperty({...curProperty,name:e.target.value})} />
+        <Button tl={`Add Property`} handleClick={()=>{}} />
         <button onClick={() => showPropertyForm(false)}>Cancel</button>
       </form>
     </section>
