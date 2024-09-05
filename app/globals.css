@@ -47,10 +47,10 @@ body {
 }
 
 .sidebar-menu {
-  @apply block p-2 rounded mt-5 duration-300 hover:bg-amber-600 hover:text-white;
+  @apply block p-2 rounded mt-5 duration-300 hover:bg-red-400 hover:text-white;
 }
 .sidebar-menu.active {
-  @apply bg-amber-600 text-white;
+  @apply bg-red-400 text-white;
 }
 
 .page-title {
@@ -62,5 +62,5 @@ body {
 }
 
 .card {
-  @apply rounded shadow-lg p-2 transition hover:scale-105;
+  @apply bg-white rounded shadow-lg p-2 transition hover:scale-105;
 }
