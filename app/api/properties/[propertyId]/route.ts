@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import {OK, UNAUTHORIZED} from "@/contants/httpStatus";
 import { decodeToken } from "@/utils/jwt";
 import Property from "@/models/property";
 import Room from "@/models/room";
@@ -23,7 +24,7 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   const { propertyId } = params;
   const verified = decodeToken(request);
   if (!verified) {
-    return NextResponse.json({ err: "Not Login" }, { status: 401 });
+    return NextResponse.json({ err: "Not Login" }, { status: UNAUTHORIZED });
   }
   try {
 
@@ -48,7 +49,7 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
       totalRents += rent.amount;
     });
     
-    return NextResponse.json({ property,rooms,rents,totalRents,receivedRents,pendingRents }, { status: 200 });
+    return NextResponse.json({ property,rooms,rents,totalRents,receivedRents,pendingRents }, { status: OK });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
   }
