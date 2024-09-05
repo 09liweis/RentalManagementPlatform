@@ -9,6 +9,7 @@ import LoadingSection from "@/components/common/LoadingSection";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import { showToast } from "@/components/common/Toast";
+import RentCards from "@/components/dashboard/RentCards";
 
 export default function PropertyPage({
   params,
@@ -20,26 +21,26 @@ export default function PropertyPage({
   const [loading, setLoading] = useState(false);
   const [property, setProperty] = useState<Property>();
   const [rooms, setRooms] = useState<Room[]>([]);
+  const [rents, setRents] = useState<any>({});
 
-  const fetchRooms = async () => {
+  const fetchProperty = async () => {
     setLoading(true);
-    const { property, rooms, err } = await fetchData({
-      url: `/api/properties/${propertyId}/rooms`,
+    const { property, rooms, err, totalRents,receivedRents,pendingRents } = await fetchData({
+      url: `/api/properties/${propertyId}`,
     });
-    if (property) {
-      setProperty(property);
-    }
-    if (Array.isArray(rooms)) {
-      setRooms(rooms);
-    }
     if (err) {
       showToast(err);
+    } else {
+      setProperty(property);
+      setRooms(rooms);
+      setRents({totalRents,receivedRents,pendingRents});
     }
+    
     setLoading(false);
   };
 
   useEffect(() => {
-    fetchRooms();
+    fetchProperty();
   }, []);
 
   const [roomName, setRoomName] = useState("");
@@ -52,7 +53,7 @@ export default function PropertyPage({
       method,
       body: room,
     });
-    fetchRooms();
+    fetchProperty();
     showToast(err || msg);
     setRoom({name:'',property:''});
   };
@@ -60,6 +61,8 @@ export default function PropertyPage({
   return (
     <>
       <h1 className="page-title">Property: {property?.name}</h1>
+
+      <RentCards loading={loading} rents={rents} />
 
       <Input
         type="text"
