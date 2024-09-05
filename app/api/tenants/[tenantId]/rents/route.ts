@@ -41,11 +41,12 @@ export async function POST(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
-    const { amount, startDate } = await request.json();
+    const { amount, startDate, status } = await request.json();
     const tenant = await Tenant.findOne({ _id: tenantId });
     const newRent = new Rent({
       amount,
       startDate,
+      status,
       tenant: tenantId,
       room: tenant.room,
     });
