@@ -65,6 +65,7 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
       <section className="flex flex-col gap-3">
         {tenantFields.map(({field,inputType,placeholder})=>
           <Input
+            key={field}
             type={inputType}
             placeholder={placeholder}
             value={tenant[field]||''}

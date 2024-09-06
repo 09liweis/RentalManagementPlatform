@@ -15,7 +15,7 @@ interface PropertyFormProps {
 export default function PropertyForm({ showPropertyForm,property }: PropertyFormProps) {
   const {fetchProperties} = usePropertyStore();
   
-  const [curProperty, setCurProperty] = useState<Property>({name:""});
+  const [curProperty, setCurProperty] = useState<Property>({name:"",_id:""});
 
   useEffect(()=>(setCurProperty(property)),[property]);
   
@@ -38,7 +38,12 @@ export default function PropertyForm({ showPropertyForm,property }: PropertyForm
         onSubmit={handlePropertySubmit}
       >
         <h1>Property Form</h1>
-        <Input type="text" placeholder="Name" value={curProperty?.name} onChange={(e) => setCurProperty({...curProperty,name:e.target.value})} />
+        <Input 
+          type="text" 
+          placeholder="Name" 
+          value={curProperty.name || ''} 
+          onChange={(e) => setCurProperty({ ...curProperty, name: e.target.value })} 
+        />
         <Button tl={`Add Property`} handleClick={()=>{}} />
         <button onClick={() => showPropertyForm(false)}>Cancel</button>
       </form>

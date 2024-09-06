@@ -79,6 +79,7 @@ export default function TenantPage({
       <section className="flex flex-col gap-3">
         {RENT_FIELDS.map(({placeholder,inputType,name})=>
           <Input
+            key={name}
             placeholder={placeholder}
             value={rent[name] || ""}
             type={inputType}

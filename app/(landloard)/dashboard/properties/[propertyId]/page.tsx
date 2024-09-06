@@ -43,7 +43,6 @@ export default function PropertyPage({
     fetchProperty();
   }, []);
 
-  const [roomName, setRoomName] = useState("");
   const [room, setRoom] = useState<Room>({name:'',property:''});
   const handleRoomSubmit = async () => {
     const method = room?._id ? "PUT" : "POST";

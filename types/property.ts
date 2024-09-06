@@ -1,4 +1,4 @@
 export interface Property {
-  _id?: "",
-  name: "",
+  _id?: string,
+  name: string,
 }
