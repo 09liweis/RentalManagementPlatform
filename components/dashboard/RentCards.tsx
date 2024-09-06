@@ -18,15 +18,15 @@ export default function RentCards({ loading, rents }: RentCardsProps) {
       <section className="card-container">
         <article className="card">
           <p className="text-lg font-bold">Total Rents</p>
-          <p>{totalRents}</p>
+          <p>${totalRents}</p>
         </article>
         <article className="card">
           <p className="text-lg font-bold">Received Rents</p>
-          <p>{receivedRents}</p>
+          <p>${receivedRents}</p>
         </article>
         <article className="card">
           <p className="text-lg font-bold">Pending Rents</p>
-          <p>{pendingRents}</p>
+          <p>${pendingRents}</p>
         </article>
       </section>
     </LoadingSection>
