@@ -1,3 +1,5 @@
+//models/user.ts
+
 import mongoose from "mongoose";
 import {number} from "prop-types";
 const userSchema = new mongoose.Schema({

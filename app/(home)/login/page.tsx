@@ -2,8 +2,9 @@
 import { showToast } from "@/components/common/Toast";
 import Input from "@/components/common/Input";
 import { useRouter } from "next/navigation";
-
 import { useState } from "react";
+
+import  Link  from "next/link";
 import useUserStore from "@/stores/userStore";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
@@ -40,6 +41,14 @@ function Login() {
         placeholder="Password"
         value={password}
       />
+
+      <nav className="text-right">
+        <Link href="/login/forgot" className="text-black-800 underline decoration-1 underline-offset-4">
+          Forgot Password?
+        </Link>
+      </nav>
+
+
       <button
         type="submit"
         onClick={handleLogin}
@@ -52,4 +61,7 @@ function Login() {
   );
 }
 
+// @ts-ignore
 export default Login;
+
+
