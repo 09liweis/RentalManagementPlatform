@@ -43,7 +43,7 @@ function Login() {
       />
 
       <nav className="text-right">
-        <Link href="/login/forgot" className="text-black-800 underline decoration-1 underline-offset-4">
+        <Link href="/forgotpassword" className="text-black-800 underline decoration-1 underline-offset-4">
           Forgot Password?
         </Link>
       </nav>
