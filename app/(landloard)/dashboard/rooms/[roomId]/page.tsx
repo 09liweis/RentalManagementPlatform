@@ -12,10 +12,11 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
   const [loading, setLoading] = useState(false);
   const [tenants, setTenants] = useState<any[]>([]);
   const [room, setRoom] = useState<any>({});
+  const [property, setProperty] = useState<any>({});
 
   const fetchTenants = async () => {
     setLoading(true);
-    const { tenants, room, err } = await fetchData({
+    const { tenants, room, property, err } = await fetchData({
       url: `/api/rooms/${roomId}/tenants`,
     });
     if (err) {
@@ -23,25 +24,33 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
     } else {
       setTenants(tenants);
       setRoom(room);
+      setProperty(property);
     }
     setLoading(false);
   };
 
-  const [name, setName] = useState("");
-  const [startDate, setDate] = useState("");
+  const [tenant, setTenant] = useState<any>({});
+  const tenantFields = [
+    {field:"name",inputType:"text",placeholder:"Name"},
+    {field:"deposit",inputType:"number",placeholder:"Deposit"},
+    {field:"startDate",inputType:"date",placeholder:"Start Date"},
+    {field:"endDate",inputType:"date",placeholder:"End Date"},
+  ];
+  
   const handleSubmit = async () => {
+    const method = tenant?._id ? "PUT" : "POST";
+    const url = tenant?._id ? `/api/tenants/${tenant?._id}` : `/api/rooms/${roomId}/tenants`;
     const { msg, err } = await fetchData({
-      url: `/api/rooms/${roomId}/tenants`,
-      method: "POST",
-      body: { name, startDate },
+      url,
+      method,
+      body: tenant,
     });
     if (err) {
       showToast(err);
     } else {
       showToast(msg);
       fetchTenants();
-      setName("");
-      setDate("");
+      setTenant({});
     }
   };
 
@@ -51,33 +60,32 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
 
   return (
     <>
-      <h1 className="page-title">Room: {room?.name}</h1>
+      <Link href={`/dashboard/properties/${property?._id}`} className="page-title">Property: {property?.name}</Link>
+      <h2>Room: {room?.name}</h2>
       <section className="flex flex-col gap-3">
-        <Input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Input
-          type="date"
-          placeholder="Start Date"
-          value={startDate}
-          onChange={(e) => setDate(e.target.value)}
-        />
-        <Button tl={"Add Tenant"} handleClick={handleSubmit} />
+        {tenantFields.map(({field,inputType,placeholder})=>
+          <Input
+            key={field}
+            type={inputType}
+            placeholder={placeholder}
+            value={tenant[field]||''}
+            onChange={(e) => setTenant({...tenant,[field]:e.target.value})}
+          />
+        )}        
+        <Button tl={`${tenant?._id ? 'Update' : 'Add'} Tenant`} handleClick={handleSubmit} />
       </section>
 
       <LoadingSection loading={loading}>
         <section className="card-container">
           {tenants.map((t) => (
+            <article key={t._id} className="card">
             <Link
-              className="card"
               href={`/dashboard/tenants/${t._id}`}
-              key={t._id}
             >
               {t.name}
             </Link>
+              <span className="text-red-400" onClick={()=>setTenant(t)}>Edit</span>
+              </article>
           ))}
         </section>
       </LoadingSection>

@@ -1,8 +1,5 @@
-interface FetchDataProp {
-  url: string;
-  method?: "GET" | "POST" | "PUT" | "DELETE";
-  body?: { [key: string]: any };
-}
+import { FetchDataProp } from "@/types/utils";
+
 
 export const fetchData = async ({
   url,

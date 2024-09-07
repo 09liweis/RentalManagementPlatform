@@ -9,6 +9,10 @@ const rentSchema = new mongoose.Schema({
     required:true,
   },
   amount:Number,
+  status:{
+    type:String,
+    default:'pending'//pending,paid,cancelled
+  },
   startDate: {
     type: String,
   },

@@ -22,8 +22,9 @@ export default function RootLayout({
         <ToastProvider>
           <header className="p-4 shadow flex justify-between items-center">
             <a className="font-bold text-orange-600 text-xl">RMP Logo</a>
-            <nav>
-              <Link className="text-orange-600" href={"/login"}>Login</Link>
+            <nav className="flex gap-3">
+              <Link href={"/signup"}>Signup</Link>
+              <Link href={"/login"}>Login</Link>
             </nav>
           </header>
 

@@ -3,6 +3,19 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "@/models/user";
 
+/**
+ * @swagger
+ * /api/login:
+ *   post:
+ *     description: Landlord Login
+ *     responses:
+ *       200:
+ *         description: Login successfully!
+ *       400:
+ *         description: User not found, please sign up
+ *       401:
+ *         description: Invalid password
+ */
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
@@ -11,16 +24,10 @@ export async function POST(request: NextRequest) {
     let existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      //register
-      const salt = await bcryptjs.genSalt(10);
-      const hashedPassword = await bcryptjs.hash(password, salt);
-
-      const newUser = new User({
-        email,
-        password: hashedPassword,
-      });
-
-      existingUser = await newUser.save();
+      return NextResponse.json(
+        { err: "User not found, please sign up" },
+        { status: 400 },
+      )
     } else {
       const validPassword = await bcryptjs.compare(
         password,
@@ -30,7 +37,7 @@ export async function POST(request: NextRequest) {
       if (!validPassword) {
         return NextResponse.json(
           { err: "Invalid password" },
-          { status: 400 },
+          { status: 401 },
         );
       }
     }

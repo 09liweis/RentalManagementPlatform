@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { decodeToken } from "@/utils/jwt";
 import Tenant from "@/models/tenant";
 import Room from "@/models/room";
+import Property from "@/models/property";
 
 interface ParamsProps {
   params: {
@@ -20,7 +21,8 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   try {
     const tenants = await Tenant.find({ room: roomId }).sort({ startDate: -1 });
     const room = await Room.findOne({ _id: roomId });
-    return NextResponse.json({ tenants, room }, { status: 200 });
+    const property = await Property.findOne({ _id: room.property });
+    return NextResponse.json({ tenants, room, property }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
   }

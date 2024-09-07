@@ -3,7 +3,7 @@
 import { ChangeEvent, FC } from 'react'
 
 interface InputProps {
-  type: 'text' | 'number' | 'email' | 'password' | 'date'
+  type: string//'text' | 'number' | 'email' | 'password' | 'date'
   value: string
   placeholder: string
   disabled?: boolean
