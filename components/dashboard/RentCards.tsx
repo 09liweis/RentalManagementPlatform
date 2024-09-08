@@ -1,32 +1,44 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import LoadingSection from "../common/LoadingSection";
+import { fetchData } from "@/utils/http";
 
 interface RentCardsProps {
-  loading: boolean;
-  rents: {
-    totalRents: number;
-    receivedRents: number;
-    pendingRents: number;
-  };
+  propertyId: string;
 }
 
-export default function RentCards({ loading, rents }: RentCardsProps) {
-  const { totalRents, receivedRents, pendingRents } = rents;
+export default function RentCards({ propertyId }: RentCardsProps) {
+  const [loading, setLoading] = useState(false);
+  const [rent, setRents] = useState<any>({});
+
+  const fetchProperty = async () => {
+    setLoading(true);
+    const { totalRents, receivedRents, pendingRents, err } = await fetchData({
+      url: `/api/properties/${propertyId}/`,
+    });
+    setLoading(false);
+    setRents({ totalRents, receivedRents, pendingRents });
+  };
+
+  useEffect(() => {
+    fetchProperty();
+  }, []);
+
   return (
     <LoadingSection loading={loading}>
       <section className="card-container">
         <article className="card">
-          <p className="text-lg font-bold">Total Rents</p>
-          <p>${totalRents}</p>
+          <p>Total Rents</p>
+          <p className="rent-price">${rent.totalRents}</p>
         </article>
         <article className="card">
-          <p className="text-lg font-bold">Received Rents</p>
-          <p>${receivedRents}</p>
+          <p>Received Rents</p>
+          <p className="rent-price">${rent.receivedRents}</p>
         </article>
         <article className="card">
-          <p className="text-lg font-bold">Pending Rents</p>
-          <p>${pendingRents}</p>
+          <p>Pending Rents</p>
+          <p className="rent-price">${rent.pendingRents}</p>
         </article>
       </section>
     </LoadingSection>

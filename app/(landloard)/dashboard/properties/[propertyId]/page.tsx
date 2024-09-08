@@ -21,27 +21,25 @@ export default function PropertyPage({
   const [loading, setLoading] = useState(false);
   const [property, setProperty] = useState<Property>();
   const [rooms, setRooms] = useState<Room[]>([]);
-  const [rents, setRents] = useState<any>({});
 
-  const fetchProperty = async () => {
+  const fetchPropertyRooms = async () => {
     setLoading(true);
-    const { property, rooms, err, totalRents, receivedRents, pendingRents } =
+    const { property, rooms, err } =
       await fetchData({
-        url: `/api/properties/${propertyId}`,
+        url: `/api/properties/${propertyId}/rooms`,
       });
     if (err) {
       showToast(err);
     } else {
       setProperty(property);
       setRooms(rooms);
-      setRents({ totalRents, receivedRents, pendingRents });
     }
 
     setLoading(false);
   };
 
   useEffect(() => {
-    fetchProperty();
+    fetchPropertyRooms();
   }, []);
 
   const [room, setRoom] = useState<Room>({ name: "", property: "" });
@@ -55,7 +53,7 @@ export default function PropertyPage({
       method,
       body: room,
     });
-    fetchProperty();
+    fetchPropertyRooms();
     showToast(err || msg);
     setRoom({ name: "", property: "" });
   };
@@ -64,7 +62,7 @@ export default function PropertyPage({
     <>
       <h1 className="page-title">Property: {property?.name}</h1>
 
-      <RentCards loading={loading} rents={rents} />
+      <RentCards propertyId={propertyId} />
 
       <LoadingSection loading={loading}>
         <section className="card-container flex-col">
