@@ -4,7 +4,7 @@ import PropertyForm from "@/components/property/propertyForm";
 import Link from "next/link";
 import LoadingSection from "@/components/common/LoadingSection";
 import usePropertyStore from "@/stores/propertyStore";
-import { Property } from "@/types/property";
+import { EMPTY_PROPERTY, Property } from "@/types/property";
 import Button from "@/components/common/Button";
 
 export default function PropertiesPage() {
@@ -24,7 +24,7 @@ export default function PropertiesPage() {
     }
   }, []);
 
-  const [property, setProperty] = useState<Property>({ name: "" });
+  const [property, setProperty] = useState<Property>(EMPTY_PROPERTY);
   const handlePropertyEdit = (property: any) => {
     setProperty(property);
     setShowPropertyForm(true);

@@ -7,6 +7,9 @@ const propertySchema = new mongoose.Schema({
   name: {
     type: String,
   },
+  ptype:{//property type: house, apartment, condo etc
+    type:String,
+  },
   address: {
     type: String,
   },

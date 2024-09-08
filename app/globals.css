@@ -49,6 +49,18 @@ body {
   @apply p-2 bg-gray-100 rounded-lg border-2 border-gray-200 focus:border-gray-500;
 }
 
+.select-options-container {
+  @apply flex gap-2;
+}
+
+.select-option {
+  @apply cursor-pointer p-2 bg-gray-100 rounded-lg border-2 hover:bg-gray-200;
+}
+
+.select-option.active {
+  @apply bg-gray-200;
+}
+
 .button {
   @apply p-2 text-center rounded bg-red-400 text-white cursor-pointer transition hover:scale-105;
 }
