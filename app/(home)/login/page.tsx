@@ -17,7 +17,8 @@ function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setLoading(true);
     const { err } = await login({ email, password });
     if (!err) {
@@ -28,7 +29,7 @@ function Login() {
   };
 
   return (
-    <section className="gap-4 p-10 flex flex-col justify-center text-center">
+    <form onSubmit={handleLogin} className="gap-4 p-10 flex flex-col justify-center text-center">
       <h1 className="font-bold text-lg">Please Login as landlord</h1>
       <Input
         type="email"
@@ -52,13 +53,12 @@ function Login() {
 
       <button
         type="submit"
-        onClick={handleLogin}
         disabled={loading}
-        className="rounded bg-red-400 text-white p-3"
+        className="button"
       >
         {loading ? <LoadingSpinner /> : "Login"}
       </button>
-    </section>
+    </form>
   );
 }
 

@@ -24,7 +24,6 @@ export default function PropertyForm({
   useEffect(() => setCurProperty(property), [property]);
 
   const handlePropertySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(curProperty);
     e.preventDefault();
     const method = curProperty._id ? "PUT" : "POST";
     const url = curProperty._id

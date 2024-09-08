@@ -1,6 +1,6 @@
 "use client";
 
-// import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 import "@/app/globals.css";
 // @ts-ignore
 import { ToastContainer } from "react-toastify";
@@ -10,7 +10,6 @@ interface ToastProviderProps {
 }
 
 export default function ToastProvider({ children }: ToastProviderProps) {
-
   return (
     <>
       {children}

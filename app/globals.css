@@ -81,5 +81,5 @@ body {
 }
 
 .card {
-  @apply dark:text-black bg-white rounded shadow-lg p-2 transition hover:scale-105;
+  @apply dark:shadow-white dark:bg-black bg-white rounded shadow p-2 transition hover:scale-105;
 }
