@@ -25,17 +25,18 @@ export default function PropertyPage({
 
   const fetchProperty = async () => {
     setLoading(true);
-    const { property, rooms, err, totalRents,receivedRents,pendingRents } = await fetchData({
-      url: `/api/properties/${propertyId}`,
-    });
+    const { property, rooms, err, totalRents, receivedRents, pendingRents } =
+      await fetchData({
+        url: `/api/properties/${propertyId}`,
+      });
     if (err) {
       showToast(err);
     } else {
       setProperty(property);
       setRooms(rooms);
-      setRents({totalRents,receivedRents,pendingRents});
+      setRents({ totalRents, receivedRents, pendingRents });
     }
-    
+
     setLoading(false);
   };
 
@@ -43,10 +44,12 @@ export default function PropertyPage({
     fetchProperty();
   }, []);
 
-  const [room, setRoom] = useState<Room>({name:'',property:''});
+  const [room, setRoom] = useState<Room>({ name: "", property: "" });
   const handleRoomSubmit = async () => {
     const method = room?._id ? "PUT" : "POST";
-    const url = room?._id ? `/api/rooms/${room._id}` : `/api/properties/${propertyId}/rooms`;
+    const url = room?._id
+      ? `/api/rooms/${room._id}`
+      : `/api/properties/${propertyId}/rooms`;
     const { err, msg } = await fetchData({
       url,
       method,
@@ -54,7 +57,7 @@ export default function PropertyPage({
     });
     fetchProperty();
     showToast(err || msg);
-    setRoom({name:'',property:''});
+    setRoom({ name: "", property: "" });
   };
 
   return (
@@ -63,29 +66,31 @@ export default function PropertyPage({
 
       <RentCards loading={loading} rents={rents} />
 
-      <Input
-        type="text"
-        placeholder="Room Name"
-        value={room['name']||''}
-        onChange={(e) => setRoom({...room,name:e.target.value})}
-      />
-      <Button tl={`${room?._id ? 'Update' : 'Add' } Room`} handleClick={handleRoomSubmit} />
-
       <LoadingSection loading={loading}>
         <section className="card-container flex-col">
           {rooms.map((room) => (
             <article key={room._id} className="card">
-            <Link
-              href={`/dashboard/rooms/${room._id}`}
-              key={room.name}
-            >
-              <p>{room.name}</p>
-            </Link>
-              <span className="text-red-400" onClick={()=>setRoom(room)}>Edit</span>
-              </article>
+              <Link href={`/dashboard/rooms/${room._id}`} key={room.name}>
+                <p>{room.name}</p>
+              </Link>
+              <span className="text-red-400" onClick={() => setRoom(room)}>
+                Edit
+              </span>
+            </article>
           ))}
         </section>
       </LoadingSection>
+
+      <Input
+        type="text"
+        placeholder="Room Name"
+        value={room["name"] || ""}
+        onChange={(e) => setRoom({ ...room, name: e.target.value })}
+      />
+      <Button
+        tl={`${room?._id ? "Update" : "Add"} Room`}
+        handleClick={handleRoomSubmit}
+      />
     </>
   );
 }
