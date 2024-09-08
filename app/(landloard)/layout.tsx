@@ -10,6 +10,7 @@ import Button from "@/components/common/Button";
 import ToastProvider from "@/components/common/ToastProvider";
 import { showToast } from "@/components/common/Toast";
 import Loading from "./dashboard/Loading";
+import Logo from "@/components/common/Logo";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,8 +33,8 @@ export default function RootLayout({
         <ToastProvider>
           <Sidebar />
           <main className="w-4/5 p-2">
-            <header className="flex justify-between p-2 shadow mb-2">
-              <span>Logo</span>
+            <header className="flex items-center justify-between p-2 shadow mb-2">
+              <Logo/>
               <Button tl="Logout" handleClick={handleLogout} />
             </header>
             <section className="shadow-lg min-h-screen p-2">
