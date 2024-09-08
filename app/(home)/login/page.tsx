@@ -7,6 +7,7 @@ import { useState } from "react";
 import  Link  from "next/link";
 import useUserStore from "@/stores/userStore";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import {EMAIL} from "@/contants/text";
 
 function Login() {
   const { login } = useUserStore();
@@ -32,7 +33,7 @@ function Login() {
       <Input
         type="email"
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
+        placeholder={EMAIL}
         value={email}
       />
       <Input
