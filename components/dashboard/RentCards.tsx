@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import LoadingSection from "../common/LoadingSection";
 import { fetchData } from "@/utils/http";
+import Input from "@/components/common/Input";
 
 interface RentCardsProps {
   propertyId: string;
@@ -11,6 +12,8 @@ interface RentCardsProps {
 export default function RentCards({ propertyId }: RentCardsProps) {
   const [loading, setLoading] = useState(false);
   const [rent, setRents] = useState<any>({});
+
+  const [date, setDate] = useState("");
 
   const fetchProperty = async () => {
     setLoading(true);
@@ -23,24 +26,27 @@ export default function RentCards({ propertyId }: RentCardsProps) {
 
   useEffect(() => {
     fetchProperty();
-  }, []);
+  }, [date]);
 
   return (
-    <LoadingSection loading={loading}>
-      <section className="card-container">
-        <article className="card">
-          <p>Total Rents</p>
-          <p className="rent-price">${rent.totalRents}</p>
-        </article>
-        <article className="card">
-          <p>Received Rents</p>
-          <p className="rent-price">${rent.receivedRents}</p>
-        </article>
-        <article className="card">
-          <p>Pending Rents</p>
-          <p className="rent-price">${rent.pendingRents}</p>
-        </article>
-      </section>
-    </LoadingSection>
+    <>
+      <Input type="month" value={date} placeholder={"Select a month"} onChange={(e)=>setDate(e.target.value)} />
+      <LoadingSection loading={loading}>
+        <section className="card-container">
+          <article className="card">
+            <p>Total Rents</p>
+            <p className="rent-price">${rent.totalRents}</p>
+          </article>
+          <article className="card">
+            <p>Received Rents</p>
+            <p className="rent-price">${rent.receivedRents}</p>
+          </article>
+          <article className="card">
+            <p>Pending Rents</p>
+            <p className="rent-price">${rent.pendingRents}</p>
+          </article>
+        </section>
+      </LoadingSection>
+    </>
   );
 }
