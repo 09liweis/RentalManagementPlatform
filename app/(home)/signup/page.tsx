@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { EMAIL } from "@/contants/text";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import Link from "next/link";
 
 function Signup() {
 
@@ -41,6 +42,7 @@ function Signup() {
         placeholder="Password"
         value={password}
       />
+      <Link href={'/login'}>Already has an account? Login</Link>
       <button
         type="submit"
         onClick={handleSignup}
