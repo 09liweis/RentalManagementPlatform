@@ -1,19 +1,25 @@
 "use client";
 
 import { showToast } from "@/components/common/Toast";
+import Input from "@/components/common/Input";
 import { fetchData } from "@/utils/http";
 import { useRouter } from "next/navigation";
 
 import { useState } from "react";
+import { EMAIL } from "@/contants/text";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 function Signup() {
 
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSignup = async () => {
+    setLoading(true);
     const {msg,err} = await fetchData({url:"/api/signup",method:"POST",body:{email,password}});
+    setLoading(false);
 
     showToast(msg || err);
     if (!err) {
@@ -23,25 +29,24 @@ function Signup() {
   return (
     <section className="gap-4 p-10 flex flex-col justify-center text-center">
       <h1 className="font-bold text-lg">Please Sign up as landlord</h1>
-      <input
-        className="input"
-        placeholder="email"
-        value={email}
+      <Input
+        type="email"
         onChange={(e) => setEmail(e.target.value)}
+        placeholder={EMAIL}
+        value={email}
       />
-      <input
+      <Input
         type="password"
-        className="input"
-        placeholder="password"
-        value={password}
         onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        value={password}
       />
       <button
         type="submit"
         onClick={handleSignup}
         className="rounded bg-red-400 text-white p-3"
       >
-        Signup
+        {loading ? <LoadingSpinner /> : "Sign Up"}
       </button>
     </section>
   );

@@ -15,8 +15,15 @@ import User from "@/models/user";
  */
 export async function POST(request: NextRequest) {
   try {
-    const reqBody = await request.json();
-    const { email, password } = reqBody;
+    const { email, password } = await request.json();
+
+    if (!email.trim()) {
+      return NextResponse.json({ err: "Email is required" }, { status: 400 });
+    }
+
+    if (!password.trim()) {
+      return NextResponse.json({ err: "Password is required" }, { status: 400 });
+    }
 
     let existingUser = await User.findOne({ email });
 
@@ -31,6 +38,7 @@ export async function POST(request: NextRequest) {
       });
 
       existingUser = await newUser.save();
+      return NextResponse.json({ msg: "Sign up successfully!" }, { status: 200 });
     } else {
 
       const response = NextResponse.json(
