@@ -18,7 +18,7 @@ export default function RentCards({ propertyId }: RentCardsProps) {
   const fetchProperty = async () => {
     setLoading(true);
     const { totalRents, receivedRents, pendingRents, err } = await fetchData({
-      url: `/api/properties/${propertyId}/`,
+      url: `/api/properties/${propertyId}?date=${date}`,
     });
     setLoading(false);
     setRents({ totalRents, receivedRents, pendingRents });
