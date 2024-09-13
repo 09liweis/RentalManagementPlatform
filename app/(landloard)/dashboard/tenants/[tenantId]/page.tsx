@@ -93,10 +93,15 @@ export default function TenantPage({
         <section className="card-container">
           {rents.map(({ _id, amount, startDate,status }) => (
             <article className="card" key={_id}>
-              <p>{startDate}: ${amount}</p>
-              <p>Status: {status}</p>
-              <Button tl="Edit" handleClick={()=>setRent({_id,amount,startDate,status})} />
-              <Button tl="Delete" handleClick={() => handleDeleteRent(_id)} />
+              <p className="rent-date">{startDate}</p>
+              <div className="flex justify-between items-center my-2">
+                <p className="text-xl font-semibold">${amount}</p>
+                <p className={`rent-status ${status}`}>{status}</p>
+              </div>
+              <div className="flex justify-between">
+                <Button tl="Edit" handleClick={()=>setRent({_id,amount,startDate,status})} />
+                <Button tp="danger" tl="Delete" handleClick={() => handleDeleteRent(_id)} />
+              </div>
             </article>
           ))}
         </section>

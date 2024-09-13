@@ -61,7 +61,15 @@ body {
 }
 
 .button {
-  @apply px-2 py-1 text-center rounded bg-sky-600 text-white cursor-pointer transition hover:bg-sky-700;
+  @apply px-2 py-1 text-center rounded bg-gray-600 text-white cursor-pointer transition hover:bg-gray-700;
+}
+
+.button.primary {
+  @apply bg-sky-600 hover:bg-sky-700;
+}
+
+.button.danger {
+  @apply bg-red-600 hover:bg-red-700;
 }
 
 .sidebar-menu {
@@ -93,4 +101,20 @@ body {
 
 .rent-price {
   @apply text-3xl font-bold;
+}
+
+.rent-date {
+  @apply text-sm text-gray-500;
+}
+
+.rent-status {
+  @apply capitalize border px-1 rounded-lg;
+}
+
+.rent-status.pending {
+  @apply bg-yellow-300 text-yellow-800;
+}
+
+.rent-status.paid {
+  @apply text-green-600 bg-green-100;
 }
