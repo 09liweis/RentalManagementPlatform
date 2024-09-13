@@ -80,7 +80,15 @@ body {
 }
 
 .card {
-  @apply dark:shadow-white dark:bg-black bg-white rounded shadow p-2 transition hover:scale-[1.01];
+  @apply rounded shadow p-2 transition hover:scale-[1.01];
+}
+
+.tenant-name {
+  @apply text-lg font-semibold cursor-pointer;
+}
+
+.tenant-date {
+  @apply p-1 rounded bg-gray-200 text-gray-800;
 }
 
 .rent-price {

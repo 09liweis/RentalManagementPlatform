@@ -79,13 +79,17 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
         <section className="card-container">
           {tenants.map((t) => (
             <article key={t._id} className="card">
-            <Link
-              href={`/dashboard/tenants/${t._id}`}
-            >
-              {t.name}
-            </Link>
-              <span className="text-red-400" onClick={()=>setTenant(t)}>Edit</span>
-              </article>
+              <div className="flex justify-between">
+                <Link className="tenant-name" href={`/dashboard/tenants/${t._id}`}>
+                  {t.name}
+                </Link>
+                <span className="text-red-400 cursor-pointer" onClick={()=>setTenant(t)}>Edit</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="tenant-date">{t.startDate}</span>
+                {t.endDate && <span className="tenant-date">{t.endDate}</span>}
+              </div>
+            </article>
           ))}
         </section>
       </LoadingSection>
