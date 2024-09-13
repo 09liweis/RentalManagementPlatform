@@ -22,7 +22,7 @@ export default function Sidebar() {
 
   return (
     <aside className="w-1/4 p-2">
-      <section className="shadow-lg min-h-screen p-2 bg-white rounded">
+      <section className="shadow-lg min-h-screen p-2 rounded">
         {DASHBOARD_MENUS.map((menu, index) => (
           <Link
             href={menu.path}
