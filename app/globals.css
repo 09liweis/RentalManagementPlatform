@@ -61,7 +61,7 @@ body {
 }
 
 .button {
-  @apply p-2 text-center rounded bg-red-400 text-white cursor-pointer transition hover:scale-105;
+  @apply px-2 py-1 text-center rounded bg-sky-600 text-white cursor-pointer transition hover:bg-sky-700;
 }
 
 .sidebar-menu {
