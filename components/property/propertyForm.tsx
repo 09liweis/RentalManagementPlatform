@@ -7,6 +7,8 @@ import usePropertyStore from "@/stores/propertyStore";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import SelectGroup from "../common/SelectGroup";
+import FormBackdrop from "../common/form/FormBackdrop";
+import FormTitle from "../common/form/FormTitle";
 
 interface PropertyFormProps {
   showPropertyForm: Function;
@@ -37,12 +39,12 @@ export default function PropertyForm({
   };
 
   return (
-    <section className="bg-slate-950/[0.6] z-10 absolute flex flex-col w-full h-full justify-center items-center top-0 left-0">
+    <FormBackdrop>
       <form
         className="w-full sm:w-3/4 md:w-1/2 lg:w-3/4 flex flex-col gap-5 p-2 shadow-lg bg-white rounded"
         onSubmit={handlePropertySubmit}
       >
-        <h1>Property Form</h1>
+        <FormTitle title="Add New Property" />
         <Input
           type="text"
           placeholder="Name"
@@ -59,9 +61,9 @@ export default function PropertyForm({
             setCurProperty({ ...curProperty, ptype: value })
           }
         />
-        <Button tl={`Add Property`} handleClick={handlePropertySubmit} />
+        <Button tl={`Add`} handleClick={handlePropertySubmit} />
         <button onClick={() => showPropertyForm(false)}>Cancel</button>
       </form>
-    </section>
+    </FormBackdrop>
   );
 }
