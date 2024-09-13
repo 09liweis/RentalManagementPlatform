@@ -4,10 +4,10 @@ import Input from "@/components/common/Input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import  Link  from "next/link";
+import Link from "next/link";
 import useUserStore from "@/stores/userStore";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import {EMAIL} from "@/constants/text";
+import { EMAIL } from "@/constants/text";
 
 function Login() {
   const { login } = useUserStore();
@@ -29,7 +29,10 @@ function Login() {
   };
 
   return (
-    <form onSubmit={handleLogin} className="gap-4 p-10 flex flex-col justify-center text-center">
+    <form
+      onSubmit={handleLogin}
+      className="auth-form"
+    >
       <h1 className="font-bold text-lg">Please Login as landlord</h1>
       <Input
         type="email"
@@ -45,17 +48,15 @@ function Login() {
       />
 
       <nav className="text-right">
-        <Link href="/forgotpassword" className="text-black-800 underline decoration-1 underline-offset-4">
+        <Link
+          href="/forgotpassword"
+          className="text-black-800 underline decoration-1 underline-offset-4"
+        >
           Forgot Password?
         </Link>
       </nav>
 
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="button"
-      >
+      <button type="submit" disabled={loading} className="button">
         {loading ? <LoadingSpinner /> : "Login"}
       </button>
     </form>
@@ -64,5 +65,3 @@ function Login() {
 
 // @ts-ignore
 export default Login;
-
-
