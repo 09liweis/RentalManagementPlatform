@@ -6,7 +6,7 @@ import { fetchData } from "@/utils/http";
 import { useRouter } from "next/navigation";
 
 import { useState } from "react";
-import { EMAIL } from "@/contants/text";
+import { EMAIL } from "@/constants/text";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import Link from "next/link";
 

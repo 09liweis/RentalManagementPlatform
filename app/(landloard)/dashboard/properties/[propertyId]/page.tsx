@@ -67,13 +67,9 @@ export default function PropertyPage({
       <LoadingSection loading={loading}>
         <section className="card-container flex-col">
           {rooms.map((room) => (
-            <article key={room._id} className="card">
-              <Link href={`/dashboard/rooms/${room._id}`} key={room.name}>
-                <p>{room.name}</p>
-              </Link>
-              <span className="text-red-400" onClick={() => setRoom(room)}>
-                Edit
-              </span>
+            <article key={room._id} className="card flex justify-between items-center">
+              <Link className="room-name" href={`/dashboard/rooms/${room._id}`} key={room.name}>{room.name}</Link>
+              <Button tl={'Edit'} handleClick={() => setRoom(room)} />
             </article>
           ))}
         </section>

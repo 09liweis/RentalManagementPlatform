@@ -5,6 +5,7 @@ import Link from "next/link";
 import ToastProvider from "@/components/common/ToastProvider";
 import Logo from "@/components/common/Logo";
 import LangSwitch from "@/components/common/LangSwtich";
+import LinkText from "@/components/common/LinkText";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,8 +26,8 @@ export default function RootLayout({
           <header className="p-4 shadow flex justify-between items-center">
             <Logo />
             <nav className="flex gap-3">
-              <Link href={"/signup"}>Signup</Link>
-              <Link href={"/login"}>Login</Link>
+              <LinkText href={"/signup"} text="Signup" />
+              <LinkText href={"/login"} text="Login" />
               <LangSwitch />
             </nav>
           </header>

@@ -40,6 +40,10 @@ body {
   }
 }
 
+.link {
+  @apply text-red-500;
+}
+
 .form {
   @apply w-full sm:w-3/4 md:w-1/2 lg:w-3/4 flex flex-col gap-5 p-2 shadow-lg bg-white rounded;
 }
@@ -89,6 +93,10 @@ body {
 
 .card {
   @apply rounded shadow p-2 transition hover:scale-[1.01];
+}
+
+.room-name {
+  @apply text-lg font-semibold;
 }
 
 .tenant-name {

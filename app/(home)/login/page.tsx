@@ -7,7 +7,7 @@ import { useState } from "react";
 import  Link  from "next/link";
 import useUserStore from "@/stores/userStore";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import {EMAIL} from "@/contants/text";
+import {EMAIL} from "@/constants/text";
 
 function Login() {
   const { login } = useUserStore();

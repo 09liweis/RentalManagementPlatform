@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import {OK, UNAUTHORIZED} from "@/contants/httpStatus";
+import {OK, UNAUTHORIZED} from "@/constants/httpStatus";
 import { decodeToken } from "@/utils/jwt";
 import Property from "@/models/property";
 import Room from "@/models/room";
