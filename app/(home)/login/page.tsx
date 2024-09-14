@@ -1,6 +1,7 @@
 "use client";
 import { showToast } from "@/components/common/Toast";
 import Input from "@/components/common/Input";
+import Button from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -56,9 +57,7 @@ function Login() {
         </Link>
       </nav>
 
-      <button type="submit" disabled={loading} className="button">
-        {loading ? <LoadingSpinner /> : "Login"}
-      </button>
+      <Button disabled={loading} handleClick={handleLogin} tl={loading ? <LoadingSpinner /> : "Login"} />
     </form>
   );
 }

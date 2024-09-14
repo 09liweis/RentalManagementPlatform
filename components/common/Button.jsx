@@ -1,8 +1,8 @@
 "use client";
 
-export default function Button({tl,handleClick,tp='primary'}) {
+export default function Button({tl,disabled=false,handleClick,tp='primary'}) {
   
   return (
-    <a className={`button ${tp}`} onClick={handleClick}>{tl}</a>
+    <button disabled={disabled} className={`button ${tp}`} onClick={handleClick}>{tl}</button>
   )
 }
