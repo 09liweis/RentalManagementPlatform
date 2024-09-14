@@ -33,6 +33,47 @@ body {
   background: #fff;
 }
 
+/*Home page style*/
+.hero-container {
+  background-color: #d094ea;
+  padding: 100px;
+ 
+}
+.home-page-title {
+  color:white;
+  width: 350px;
+  font-size: 3rem;
+  line-height: 41px;
+  margin-bottom: 20px;
+}
+.home-page-subtitle {
+  color: white;
+  width: 350px;
+  font-size: 1rem;
+}
+
+.video-container {
+  background-color: rgb(91, 209, 215);
+  padding: 100px;
+  text-align: center;
+}
+.video-container-title {
+  color: #804ac4;
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 41px;
+  margin-bottom: 20px;
+} 
+.video-container-subtitle {
+  color: #804ac4;
+  width: 350px;
+  font-size: 1rem;
+  margin: auto;
+} 
+
+
+/*end of Home page style*/
+
 @layer utilities {
   .text-balance {
     /*text-wrap: balance;*/
