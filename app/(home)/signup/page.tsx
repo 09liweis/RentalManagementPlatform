@@ -28,7 +28,7 @@ function Signup() {
     }
   };
   return (
-    <section className="gap-4 p-10 flex flex-col justify-center text-center">
+    <section className="auth-form">
       <h1 className="font-bold text-lg">Please Sign up as landlord</h1>
       <Input
         type="email"

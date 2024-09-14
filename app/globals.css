@@ -117,6 +117,10 @@ body {
   @apply bg-red-600 hover:bg-red-700;
 }
 
+.auth-form {
+  @apply gap-6 p-6 shadow m-auto w-full sm:w-96 flex flex-col justify-center text-center;
+}
+
 .sidebar-menu {
   @apply block p-2 rounded mt-5 duration-300 hover:bg-gray-400 hover:text-white;
 }
