@@ -99,6 +99,10 @@ body {
   @apply rounded shadow p-2 transition hover:scale-[1.01];
 }
 
+.property-name {
+  @apply text-lg font-bold;
+}
+
 .room-name {
   @apply text-lg font-semibold;
 }

@@ -39,22 +39,20 @@ export default function PropertiesPage() {
           showPropertyForm={setShowPropertyForm}
         />
       )}
-      <Button tl={"Add New"} handleClick={() => setShowPropertyForm(true)} />
       <LoadingSection loading={loading}>
         <section className="card-container">
           {properties.map((p) => (
             <article key={p._id} className="card">
-              <Link href={`/dashboard/properties/${p._id}`}>{p.name}</Link>
-              <span
-                className="text-red-400"
-                onClick={() => handlePropertyEdit(p)}
-              >
-                Edit
-              </span>
+              <div className="flex justify-between items-center">
+                <Link className="property-name" href={`/dashboard/properties/${p._id}`}>{p.name}</Link>
+                <Button handleClick={() => handlePropertyEdit(p)} tl="edit"/>                
+              </div>
             </article>
           ))}
         </section>
       </LoadingSection>
+
+      <Button tl={"Add New"} handleClick={() => setShowPropertyForm(true)} />
     </>
   );
 }
