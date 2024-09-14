@@ -41,7 +41,7 @@ export default function PropertyForm({
   return (
     <FormBackdrop>
       <form
-        className="w-full sm:w-3/4 md:w-1/2 lg:w-3/4 flex flex-col gap-5 p-2 shadow-lg bg-white rounded"
+        className="form-container"
         onSubmit={handlePropertySubmit}
       >
         <FormTitle title="Add New Property" />

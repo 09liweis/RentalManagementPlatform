@@ -10,6 +10,7 @@ import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import { showToast } from "@/components/common/Toast";
 import RentCards from "@/components/dashboard/RentCards";
+import FormBackdrop from "@/components/common/form/FormBackdrop";
 
 export default function PropertyPage({
   params,
@@ -43,6 +44,7 @@ export default function PropertyPage({
   }, []);
 
   const [room, setRoom] = useState<Room>({ name: "", property: "" });
+  const [showRoomForm, setShowRoomForm] = useState(false);
   const handleRoomSubmit = async () => {
     const method = room?._id ? "PUT" : "POST";
     const url = room?._id
@@ -75,16 +77,22 @@ export default function PropertyPage({
         </section>
       </LoadingSection>
 
-      <Input
-        type="text"
-        placeholder="Room Name"
-        value={room["name"] || ""}
-        onChange={(e) => setRoom({ ...room, name: e.target.value })}
-      />
-      <Button
-        tl={`${room?._id ? "Update" : "Add"} Room`}
-        handleClick={handleRoomSubmit}
-      />
+      <Button tl={'Add Room'} handleClick={() => setShowRoomForm(true)} />
+      
+      {showRoomForm && <FormBackdrop>
+        <form className="form-container">
+          <Input
+            type="text"
+            placeholder="Room Name"
+            value={room["name"] || ""}
+            onChange={(e) => setRoom({ ...room, name: e.target.value })}
+          />
+          <Button
+            tl={`${room?._id ? "Update" : "Add"} Room`}
+            handleClick={handleRoomSubmit}
+          />
+        </form>
+      </FormBackdrop> }
     </>
   );
 }
