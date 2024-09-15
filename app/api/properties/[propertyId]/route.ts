@@ -2,9 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { OK, UNAUTHORIZED } from "@/constants/httpStatus";
 import { decodeToken } from "@/utils/jwt";
 import Property from "@/models/property";
-import Room from "@/models/room";
-import Tenant from "@/models/tenant";
-import Rent from "@/models/rent";
 import {getStats} from "@/services/stats";
 
 interface ParamsProps {
@@ -20,7 +17,7 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
     return NextResponse.json({ err: "Not Login" }, { status: UNAUTHORIZED });
   }
   try {
-    const date = request.nextUrl.searchParams.get("date");
+    const date = request.nextUrl.searchParams.get("date") ||'';
     const stats = await getStats({ date, propertyId });
 
     return NextResponse.json(stats, { status: OK });

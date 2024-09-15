@@ -3,7 +3,7 @@ import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
 
-const getCurrentYearMonth = (date: string | null) => {
+const getCurrentYearMonth = (date: string|undefined) => {
   if (date) {
     const currentYearMonth = date;
     let [year, month] = date.split("-");
@@ -30,11 +30,17 @@ const getCurrentYearMonth = (date: string | null) => {
   }
 };
 
-export const getStats = async ({ date, userId, propertyId }) => {
+interface Stats {
+  date?:string;
+  userId?:string;
+  propertyId?:string;
+}
+
+export const getStats = async ({ date, userId, propertyId }:Stats) => {
   const { currentYearMonth, nextYearMonth } = getCurrentYearMonth(date);
 
   let property;
-  const propertyQuery = {};
+  const propertyQuery:any = {};
   if (userId) {
     propertyQuery.user = userId;
     property = await Property.find(propertyQuery);
@@ -43,9 +49,9 @@ export const getStats = async ({ date, userId, propertyId }) => {
     property = await Property.findOne(propertyQuery);
   }
 
-  const roomsQuery = {};
+  const roomsQuery:any = {};
   if (userId) {
-    const propertyIds = property.map((prop) => prop._id);
+    const propertyIds = property.map((prop:any) => prop._id);
     roomsQuery.property = { $in: propertyIds };
   } else {
     roomsQuery.property = propertyId;
