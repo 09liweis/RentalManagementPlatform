@@ -18,11 +18,11 @@ export default function RentCards({ propertyId }: RentCardsProps) {
   const fetchProperty = async () => {
     setLoading(true);
     const apiUrl = propertyId ? `/api/properties/${propertyId}?date=${date}` : `/api/overview?date=${date}`;
-    const { totalRents, receivedRents, pendingRents, err } = await fetchData({
+    const { property,rooms,tenants, totalRents, receivedRents, pendingRents, err } = await fetchData({
       url: apiUrl,
     });
     setLoading(false);
-    setRents({ totalRents, receivedRents, pendingRents });
+    setRents({ property,rooms,tenants, totalRents, receivedRents, pendingRents });
   };
 
   useEffect(() => {
@@ -34,6 +34,15 @@ export default function RentCards({ propertyId }: RentCardsProps) {
       <Input type="month" value={date} placeholder={"Select a month"} onChange={(e)=>setDate(e.target.value)} />
       <LoadingSection loading={loading}>
         <section className="card-container">
+          <article className="card">
+            {rent.property && <p><span className="rent-price">{rent.property.length}</span> Properties</p>}
+            {rent.rooms && <p><span className="rent-price">{rent.rooms.length}</span> Rooms</p>}
+            {rent.tenants && <p><span className="rent-price">{rent.tenants.length}</span> Tenants</p>}
+          </article>
+          <article className="card">
+            <p>Total Rents</p>
+            <p className="rent-price">${rent.totalRents}</p>
+          </article>
           <article className="card">
             <p>Total Rents</p>
             <p className="rent-price">${rent.totalRents}</p>
