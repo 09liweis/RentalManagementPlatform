@@ -6,7 +6,7 @@ import { fetchData } from "@/utils/http";
 import Input from "@/components/common/Input";
 
 interface RentCardsProps {
-  propertyId: string;
+  propertyId?: string;
 }
 
 export default function RentCards({ propertyId }: RentCardsProps) {
@@ -17,8 +17,9 @@ export default function RentCards({ propertyId }: RentCardsProps) {
 
   const fetchProperty = async () => {
     setLoading(true);
+    const apiUrl = propertyId ? `/api/properties/${propertyId}?date=${date}` : `/api/overview?date=${date}`;
     const { totalRents, receivedRents, pendingRents, err } = await fetchData({
-      url: `/api/properties/${propertyId}?date=${date}`,
+      url: apiUrl,
     });
     setLoading(false);
     setRents({ totalRents, receivedRents, pendingRents });
