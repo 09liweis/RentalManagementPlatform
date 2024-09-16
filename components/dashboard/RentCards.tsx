@@ -18,11 +18,12 @@ export default function RentCards({ propertyId }: RentCardsProps) {
   const fetchProperty = async () => {
     setLoading(true);
     const apiUrl = propertyId ? `/api/properties/${propertyId}?date=${date}` : `/api/overview?date=${date}`;
-    const { property,rooms,tenants, totalRents, receivedRents, pendingRents, err } = await fetchData({
+    const statsResponse = await fetchData({
       url: apiUrl,
     });
     setLoading(false);
-    setRents({ property,rooms,tenants, totalRents, receivedRents, pendingRents });
+    setRents(statsResponse);
+    setDate(statsResponse.date);
   };
 
   useEffect(() => {

@@ -79,5 +79,5 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
   });
 
 
-  return { property, rooms, tenants, totalRents, receivedRents, pendingRents };
+  return {date:currentYearMonth, property, rooms, tenants, totalRents, receivedRents, pendingRents };
 };
