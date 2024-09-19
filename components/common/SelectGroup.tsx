@@ -21,7 +21,7 @@ export default function SelectGroup({
       {options.map(({ key, text }) => (
         <span
           key={key}
-          className={`select-option ${value === key ? "active" : ""}`}
+          className={`select-option ${(value === key) || (value === text) ? "active" : ""}`}
           onClick={() => handleSelect(key)}
         >
           {text}
