@@ -4,6 +4,7 @@ import Property from "@/models/property";
 import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
+import {RENT_STATUS} from "@/types/rent";
 
 interface ParamsProps {
   params: {
@@ -23,6 +24,12 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
     const rents = await Rent.find({ tenant: tenantId }).sort({
       startDate: -1,
     });
+    
+    rents.forEach((rent)=>{      
+      rent.status = RENT_STATUS[rent.status] || rent.status;
+    });
+    
+    console.log(rents);
     const tenant = await Tenant.findOne({ _id: tenantId });
     const room = await Room.findOne({ _id: tenant.room });
     const property = await Property.findOne({ _id: room.property });

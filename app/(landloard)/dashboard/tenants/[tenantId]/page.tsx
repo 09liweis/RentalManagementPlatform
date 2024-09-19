@@ -7,11 +7,12 @@ import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import SelectGroup from "@/components/common/SelectGroup";
+import { RENT_STATUS_ARRAY } from "@/types/rent";
 
 const RENT_FIELDS = [
   {placeholder: "Amount", name:"amount",inputType:"number"},
   {placeholder: "Date", name:"startDate",inputType:"date"},
-  {placeholder: "Status", name:"status",inputType:"text"}
 ];
 
 export default function TenantPage({
@@ -86,6 +87,14 @@ export default function TenantPage({
             onChange={(e) => setRent({ ...rent, [name]: e.target.value })}
           />
         )}
+        <SelectGroup
+          value={rent.status || ""}
+          label="Rent Status"
+          options={RENT_STATUS_ARRAY}
+          handleSelect={(value) =>
+            setRent({ ...rent, status: value })
+          }
+        />
         <Button tl="Add Rent" handleClick={handleRentSubmit} />
       </section>
 
