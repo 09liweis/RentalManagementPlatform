@@ -4,7 +4,7 @@ import Property from "@/models/property";
 import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
-import {RENT_STATUS} from "@/types/rent";
+import { RENT_STATUS } from "@/types/rent";
 
 interface ParamsProps {
   params: {
@@ -21,19 +21,28 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
-    const rents = await Rent.find({ tenant: tenantId }).sort({
+    let rents = [];
+    const rentsResult = await Rent.find({ tenant: tenantId }).sort({
       startDate: -1,
     });
-    
-    rents.forEach((rent)=>{      
-      rent.status = RENT_STATUS[rent.status] || rent.status;
+
+    rents = rentsResult.map((rent) => {
+      return {
+        _id:rent._id,
+        amount:rent.amount,
+        startDate:rent.startDate,
+        status:rent.status,
+        statusTxt:RENT_STATUS[rent.status] || rent.status
+      }
     });
-    
-    console.log(rents);
+
     const tenant = await Tenant.findOne({ _id: tenantId });
     const room = await Room.findOne({ _id: tenant.room });
     const property = await Property.findOne({ _id: room.property });
-    return NextResponse.json({ tenant, rents,room,property }, { status: 200 });
+    return NextResponse.json(
+      { tenant, rents, room, property },
+      { status: 200 },
+    );
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
   }
