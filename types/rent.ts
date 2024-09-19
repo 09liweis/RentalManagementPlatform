@@ -6,10 +6,14 @@ interface RentStatus {
   [key: string]: string;
 }
 
+export const PENDING = "pending";
+export const PAID = "paid";
+export const CANCELLED = "cancelled";
+
 export const RENT_STATUS: RentStatus = {
-  1: "pending",
-  2: "paid",
-  3: "cancelled",
+  1: PENDING,
+  2: PAID,
+  3: CANCELLED,
 }
 
 function getRentStatusArray() {

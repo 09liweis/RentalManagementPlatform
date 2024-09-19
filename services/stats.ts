@@ -2,6 +2,7 @@ import Property from "@/models/property";
 import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
+import {RENT_STATUS, PENDING, PAID, CANCELLED} from "@/types/rent";
 
 const getCurrentYearMonth = (date: string | undefined) => {
   if (date) {
@@ -70,9 +71,10 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
   let receivedRents = 0;
   let pendingRents = 0;
   rents.forEach((rent) => {
-    if (rent.status === "paid") {
+    const status = RENT_STATUS[rent.status] || rent.status;
+    if (status === PAID) {
       receivedRents += rent.amount;
-    } else if (rent.status === "pending") {
+    } else if (status === PENDING) {
       pendingRents += rent.amount;
     }
     totalRents += rent.amount;
