@@ -2,7 +2,7 @@
 import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
 import { showToast } from "../common/Toast";
-import { EMPTY_PROPERTY, Property } from "@/types/property";
+import { EMPTY_PROPERTY, Property, PROPERTY_PTYPE_ARRAY } from "@/types/property";
 import usePropertyStore from "@/stores/propertyStore";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
@@ -56,7 +56,7 @@ export default function PropertyForm({
         <SelectGroup
           value={curProperty.ptype || ""}
           label="Property Type"
-          options={["house", "apartment", "condo"]}
+          options={PROPERTY_PTYPE_ARRAY}
           handleSelect={(value) =>
             setCurProperty({ ...curProperty, ptype: value })
           }

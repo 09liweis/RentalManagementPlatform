@@ -1,16 +1,32 @@
+interface Option {
+  key: string;
+  text: string;
+}
+
 interface SelectGroupProps {
   label: string;
-  options: string[];
+  options: Option[];
   value: string;
   handleSelect: (value: string) => void;
 }
 
-export default function SelectGroup({label,options,value,handleSelect}:SelectGroupProps) {
+export default function SelectGroup({
+  label,
+  options,
+  value,
+  handleSelect,
+}: SelectGroupProps) {
   return (
     <section className="select-options-container">
-      {options.map((option)=>
-      <span key={option} className={`select-option ${value === option ? "active" : ""}`} onClick={()=>handleSelect(option)}>{option}</span>
-      )}
+      {options.map(({ key, text }) => (
+        <span
+          key={key}
+          className={`select-option ${value === key ? "active" : ""}`}
+          onClick={() => handleSelect(key)}
+        >
+          {text}
+        </span>
+      ))}
     </section>
   );
 }
