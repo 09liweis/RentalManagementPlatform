@@ -1,7 +1,13 @@
 import Link from "next/link";
 import LoadingSection from "@/components/common/LoadingSection";
 
-export default function TenantList({ loading, tenants, onEditClick }) {
+interface TenantListProps {
+  loading: boolean;
+  tenants: any[];
+  onEditClick: (tenant: any) => void;
+}
+
+export default function TenantList({ loading, tenants, onEditClick }:TenantListProps) {
   return (
     <LoadingSection loading={loading}>
       <section className="card-container">

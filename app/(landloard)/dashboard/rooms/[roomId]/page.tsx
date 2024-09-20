@@ -89,7 +89,7 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
       <TenantList
         loading={loading}
         tenants={tenants}
-        onEditClick={(t) => setTenant(t)}
+        onEditClick={setTenant}
       />
     </>
   );
