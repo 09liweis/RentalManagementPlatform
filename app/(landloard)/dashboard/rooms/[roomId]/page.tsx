@@ -6,6 +6,7 @@ import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import { showToast } from "@/components/common/Toast";
 import LoadingSection from "@/components/common/LoadingSection";
+import TenantList from "@/components/tenant/TenantList";
 
 export default function RoomPage({ params }: { params: { roomId: string } }) {
   const { roomId } = params;
@@ -31,15 +32,17 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
 
   const [tenant, setTenant] = useState<any>({});
   const tenantFields = [
-    {field:"name",inputType:"text",placeholder:"Name"},
-    {field:"deposit",inputType:"number",placeholder:"Deposit"},
-    {field:"startDate",inputType:"date",placeholder:"Start Date"},
-    {field:"endDate",inputType:"date",placeholder:"End Date"},
+    { field: "name", inputType: "text", placeholder: "Name" },
+    { field: "deposit", inputType: "number", placeholder: "Deposit" },
+    { field: "startDate", inputType: "date", placeholder: "Start Date" },
+    { field: "endDate", inputType: "date", placeholder: "End Date" },
   ];
-  
+
   const handleSubmit = async () => {
     const method = tenant?._id ? "PUT" : "POST";
-    const url = tenant?._id ? `/api/tenants/${tenant?._id}` : `/api/rooms/${roomId}/tenants`;
+    const url = tenant?._id
+      ? `/api/tenants/${tenant?._id}`
+      : `/api/rooms/${roomId}/tenants`;
     const { msg, err } = await fetchData({
       url,
       method,
@@ -60,39 +63,34 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
 
   return (
     <>
-      <Link href={`/dashboard/properties/${property?._id}`} className="page-title">Property: {property?.name}</Link>
+      <Link
+        href={`/dashboard/properties/${property?._id}`}
+        className="page-title"
+      >
+        Property: {property?.name}
+      </Link>
       <h2>Room: {room?.name}</h2>
       <section className="flex flex-col gap-3">
-        {tenantFields.map(({field,inputType,placeholder})=>
+        {tenantFields.map(({ field, inputType, placeholder }) => (
           <Input
             key={field}
             type={inputType}
             placeholder={placeholder}
-            value={tenant[field]||''}
-            onChange={(e) => setTenant({...tenant,[field]:e.target.value})}
+            value={tenant[field] || ""}
+            onChange={(e) => setTenant({ ...tenant, [field]: e.target.value })}
           />
-        )}        
-        <Button tl={`${tenant?._id ? 'Update' : 'Add'} Tenant`} handleClick={handleSubmit} />
+        ))}
+        <Button
+          tl={`${tenant?._id ? "Update" : "Add"} Tenant`}
+          handleClick={handleSubmit}
+        />
       </section>
 
-      <LoadingSection loading={loading}>
-        <section className="card-container">
-          {tenants.map((t) => (
-            <article key={t._id} className="card">
-              <div className="flex justify-between">
-                <Link className="tenant-name" href={`/dashboard/tenants/${t._id}`}>
-                  {t.name}
-                </Link>
-                <span className="text-red-400 cursor-pointer" onClick={()=>setTenant(t)}>Edit</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="tenant-date">{t.startDate}</span>
-                {t.endDate && <span className="tenant-date">{t.endDate}</span>}
-              </div>
-            </article>
-          ))}
-        </section>
-      </LoadingSection>
+      <TenantList
+        loading={loading}
+        tenants={tenants}
+        onEditClick={(t) => setTenant(t)}
+      />
     </>
   );
 }
