@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ err: "Password is required" }, { status: 400 });
     }
 
-    let existingUser = await User.findOne({ email });
+    let existingUser = await User.findOne({ email:email.toLowerCase() });
 
     if (!existingUser) {
       return NextResponse.json(
