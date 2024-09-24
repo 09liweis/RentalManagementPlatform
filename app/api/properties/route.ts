@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import jwt from "jsonwebtoken";
 import Property from "@/models/property";
 import { decodeToken } from "@/utils/jwt";
+import connect from "@/config/db";
 
 /**
  * @swagger
@@ -51,6 +52,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ err: "Not Login" }, { status: 401 });
     }
 
+    await connect();
+
     const properties = await Property.find({ user: verified.userId });
     return NextResponse.json({ properties }, { status: 200 });
   } catch (err) {
@@ -73,6 +76,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    await connect();
+
     const newProperty = new Property({ name, user: verified.userId });
     await newProperty.save();
     return NextResponse.json({ msg: "added" }, { status: 200 });
@@ -90,6 +95,8 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ err: "Not Login" }, { status: 401 });
     }
 
+    await connect();
+
     await Property.updateOne({ _id }, { name, user: verified.userId });
     return NextResponse.json({ msg: "updated" }, { status: 200 });
   } catch (err) {
@@ -105,6 +112,8 @@ export async function DELETE(request: NextRequest) {
     if (!verified) {
       return NextResponse.json({ err: "Not Login" }, { status: 401 });
     }
+
+    await connect();
 
     await Property.deleteOne({ _id, user: verified.userId });
     return NextResponse.json({ msg: "deleted" }, { status: 200 });

@@ -5,6 +5,7 @@ import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
 import { RENT_STATUS } from "@/types/rent";
+import connect from "@/config/db";
 
 interface ParamsProps {
   params: {
@@ -21,6 +22,7 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
+    await connect();
     let rents = [];
     const rentsResult = await Rent.find({ tenant: tenantId }).sort({
       startDate: -1,
@@ -57,6 +59,7 @@ export async function POST(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
+    await connect();
     const { amount, startDate, status } = await request.json();
     const tenant = await Tenant.findOne({ _id: tenantId });
     const newRent = new Rent({

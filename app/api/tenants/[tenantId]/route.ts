@@ -4,6 +4,7 @@ import Property from "@/models/property";
 import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
+import connect from "@/config/db";
 
 interface ParamsProps {
   params: {
@@ -30,6 +31,7 @@ export async function PUT(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
+    await connect();
     const { name, startDate, endDate, deposit } = await request.json();
     const tenant = await Tenant.findOne({ _id: tenantId });
     //update tenant

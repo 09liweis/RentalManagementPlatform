@@ -4,6 +4,7 @@ import Property from "@/models/property";
 import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
+import connect from "@/config/db";
 
 interface ParamsProps {
   params: {
@@ -24,6 +25,7 @@ export async function PUT(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
+    await connect();
     const foundRent = await Rent.findOne({ _id: rentId });
     if (!foundRent) {
       return NextResponse.json({ err: "Rent not found" }, { status: 404 });
@@ -52,6 +54,7 @@ export async function DELETE(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
+    await connect();
     const foundRent = await Rent.findOne({ _id: rentId });
     if (!foundRent) {
       return NextResponse.json({ err: "Rent not found" }, { status: 404 });

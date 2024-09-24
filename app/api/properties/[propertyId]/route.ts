@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OK, UNAUTHORIZED } from "@/constants/httpStatus";
+import connect from "@/config/db";
 import { decodeToken } from "@/utils/jwt";
 import Property from "@/models/property";
 import {getStats} from "@/services/stats";
@@ -17,6 +18,7 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
     return NextResponse.json({ err: "Not Login" }, { status: UNAUTHORIZED });
   }
   try {
+    await connect();
     const date = request.nextUrl.searchParams.get("date") ||'';
     const stats = await getStats({ date, propertyId });
 
@@ -35,6 +37,7 @@ export async function PUT(request: NextRequest, { params }: ParamsProps) {
   }
 
   try {
+    await connect();
     const { name, ptype } = await request.json();
     const property = await Property.findOne({ _id: propertyId });
     property.name = name;

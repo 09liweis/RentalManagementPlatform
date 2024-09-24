@@ -2,6 +2,7 @@ import Room from "@/models/room";
 import Property from "@/models/property";
 import { NextRequest, NextResponse } from "next/server";
 import { decodeToken } from "@/utils/jwt";
+import connect from "@/config/db";
 
 interface ParamsProps {
   params: {
@@ -17,6 +18,8 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
     if (!verified) {
       return NextResponse.json({ err: "Not Login" }, { status: 401 });
     }
+
+    await connect();
 
     const property = await Property.findOne({ _id: propertyId });
     const rooms = await Room.find({ property: propertyId });
@@ -35,6 +38,8 @@ export async function POST(request: NextRequest, { params }: ParamsProps) {
   if (!verified) {
     return NextResponse.json({ err: "Not Login" }, { status: 401 });
   }
+
+  await connect();
 
   const { name } = await request.json();
   const newRoom = new Room({ name, property: propertyId });

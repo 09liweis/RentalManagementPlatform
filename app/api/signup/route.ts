@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import User from "@/models/user";
+import connect from "@/config/db";
 
 /**
  * @swagger
@@ -24,6 +25,8 @@ export async function POST(request: NextRequest) {
     if (!password.trim()) {
       return NextResponse.json({ err: "Password is required" }, { status: 400 });
     }
+
+    await connect();
 
     let existingUser = await User.findOne({ email });
 
