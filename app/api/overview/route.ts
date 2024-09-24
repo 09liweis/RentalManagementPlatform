@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decodeToken } from "@/utils/jwt";
 import { getStats } from "@/services/stats";
+import connect from "@/config/db";
 
 /**
  * @swagger
@@ -26,6 +27,8 @@ export async function GET(request: NextRequest) {
     if (!verified) {
       return NextResponse.json({ err: "Not Login" }, { status: 401 });
     }
+
+    await connect();
 
     const date = request.nextUrl.searchParams.get("date") || "";
     const stats = await getStats({ userId: verified.userId, date });
