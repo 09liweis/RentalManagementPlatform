@@ -1,4 +1,5 @@
-import { Suspense } from "react";
+"use client";
+import { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { Inter } from "next/font/google";
@@ -10,6 +11,7 @@ import ToastProvider from "@/components/common/ToastProvider";
 import { showToast } from "@/components/common/Toast";
 import Loading from "./dashboard/Loading";
 import Logo from "@/components/common/Logo";
+import { fetchData } from "@/utils/http";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +20,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useEffect(()=>{
+    fetchData({url:'/api/ping'});
+  },[]);
 
   const router = useRouter();
 
