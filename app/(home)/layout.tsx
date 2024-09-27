@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import ToastProvider from "@/components/common/ToastProvider";
-import Logo from "@/components/common/Logo";
-import LangSwitch from "@/components/common/LangSwtich";
-import LinkText from "@/components/common/LinkText";
+import Header from "@/components/common/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,14 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ToastProvider>
-          <header className="p-4 shadow flex justify-between items-center">
-            <Logo />
-            <nav className="flex gap-3">
-              <LinkText href={"/signup"} text="Signup" />
-              <LinkText href={"/login"} text="Login" />
-              <LangSwitch />
-            </nav>
-          </header>
+          <Header />
 
           <main className="min-h-screen flex justify-center items-center">{children}</main>
         </ToastProvider>
