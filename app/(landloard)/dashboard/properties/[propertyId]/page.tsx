@@ -11,6 +11,7 @@ import Button from "@/components/common/Button";
 import { showToast } from "@/components/common/Toast";
 import RentCards from "@/components/dashboard/RentCards";
 import FormBackdrop from "@/components/common/form/FormBackdrop";
+import CostForm from "@/components/property/CostForm";
 
 export default function PropertyPage({
   params,
@@ -60,6 +61,8 @@ export default function PropertyPage({
     setRoom({ name: "", property: "" });
   };
 
+  const [showCostForm, setShowCostForm] = useState(false);
+
   return (
     <>
       <h1 className="page-title">Property: {property?.name}</h1>
@@ -93,6 +96,9 @@ export default function PropertyPage({
           />
         </form>
       </FormBackdrop> }
+
+      <Button tl={'Add Cost'} handleClick={() => setShowCostForm(true)} />
+      {showCostForm && <CostForm showCostForm={setShowCostForm} propertyId={propertyId} />}
     </>
   );
 }
