@@ -11,7 +11,7 @@ const costSchema = new mongoose.Schema({
   date: String,
   amount: Number,
   note: String,
-  tp: Number,//1: water 2:electricity 3:gas 4:repairement 5:other
+  tp: Number,//1: water 2:electricity 3:gas 4:internet 5:other
 });
 
 const Cost =

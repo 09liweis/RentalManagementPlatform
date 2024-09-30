@@ -120,7 +120,7 @@ body {
 }
 
 .select-options-container {
-  @apply flex gap-2;
+  @apply flex gap-2 flex-wrap;
 }
 
 .select-option {

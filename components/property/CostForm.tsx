@@ -9,7 +9,7 @@ import Input from "@/components/common/Input";
 import SelectGroup from "@/components/common/SelectGroup";
 import FormBackdrop from "@/components/common/form/FormBackdrop";
 import FormTitle from "@/components/common/form/FormTitle";
-import { Cost } from "@/types/cost";
+import { Cost, COST_TP_ARRAY } from "@/types/cost";
 
 interface PropertyFormProps {
   propertyId: String;
@@ -49,8 +49,16 @@ export default function CostForm({
       >
         <FormTitle title="Add New Cost" />
         <Input
-          type="text"
-          placeholder="Name"
+          type="number"
+          placeholder="Amount"
+          value={curCost?.amount || ""}
+          onChange={(e) =>
+            setCurCost({ ...curCost, amount: e.target.value })
+          }
+        />
+        <Input
+          type="date"
+          placeholder="Date"
           value={curCost?.date || ""}
           onChange={(e) =>
             setCurCost({ ...curCost, date: e.target.value })
@@ -59,7 +67,7 @@ export default function CostForm({
         <SelectGroup
           value={curCost?.tp || ""}
           label="Property Type"
-          options={PROPERTY_PTYPE_ARRAY}
+          options={COST_TP_ARRAY}
           handleSelect={(value) =>
             setCurCost({ ...curCost, tp: value })
           }

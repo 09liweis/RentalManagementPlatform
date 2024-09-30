@@ -3,6 +3,7 @@ import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
 import {RENT_STATUS, PENDING, PAID, CANCELLED} from "@/types/rent";
+import Cost from "@/models/cost";
 
 const getCurrentYearMonth = (date: string | undefined) => {
   if (date) {
@@ -51,13 +52,17 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
   }
 
   const roomsQuery: any = {};
+  const costQuery: any = {};
   if (userId) {
     const propertyIds = property.map((prop: any) => prop._id);
     roomsQuery.property = { $in: propertyIds };
+    costQuery.property = {$in:propertyIds};
   } else {
     roomsQuery.property = propertyId;
+    costQuery.property = propertyId;
   }
 
+  const costs = await Cost.find(costQuery);
   const rooms = await Room.find(roomsQuery);
   const roomIds = rooms.map((room) => room._id);
   const tenants = await Tenant.find({ room: { $in: roomIds } });
@@ -81,5 +86,5 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
   });
 
 
-  return {date:currentYearMonth, property, rooms, tenants, totalRents, receivedRents, pendingRents };
+  return {date:currentYearMonth, property, rooms, costs, tenants, totalRents, receivedRents, pendingRents };
 };
