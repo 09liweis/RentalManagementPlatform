@@ -7,6 +7,7 @@ interface PropertyState {
   properties: Property[];
   propertiesFetched:boolean;
   fetchProperties: () => void;
+  fetchPropertyStats: ({propertyId,date}:any) => Promise<any>;
 }
 
 const usePropertyStore = create<PropertyState>((set) => ({
@@ -20,6 +21,14 @@ const usePropertyStore = create<PropertyState>((set) => ({
       set({properties,propertiesFetched:true});
     }
   },
+
+  fetchPropertyStats: async ({propertyId, date}:any) => {
+    const apiUrl = propertyId ? `/api/properties/${propertyId}?date=${date}` : `/api/overview?date=${date}`;
+    const statsResponse = await fetchData({
+      url: apiUrl,
+    });
+    return statsResponse;
+  }
 }))
 
 export default usePropertyStore;

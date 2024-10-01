@@ -4,12 +4,16 @@ import { useEffect, useState } from "react";
 import LoadingSection from "../common/LoadingSection";
 import { fetchData } from "@/utils/http";
 import Input from "@/components/common/Input";
+import usePropertyStore from "@/stores/propertyStore";
 
 interface RentCardsProps {
   propertyId?: string;
 }
 
 export default function RentCards({ propertyId }: RentCardsProps) {
+
+  const {fetchPropertyStats} = usePropertyStore();
+
   const [loading, setLoading] = useState(false);
   const [rent, setRents] = useState<any>({});
 
@@ -17,10 +21,9 @@ export default function RentCards({ propertyId }: RentCardsProps) {
 
   const fetchProperty = async () => {
     setLoading(true);
-    const apiUrl = propertyId ? `/api/properties/${propertyId}?date=${date}` : `/api/overview?date=${date}`;
-    const statsResponse = await fetchData({
-      url: apiUrl,
-    });
+
+    const statsResponse = await fetchPropertyStats({propertyId, date});
+
     setLoading(false);
     setRents(statsResponse);
     setDate(statsResponse.date);
