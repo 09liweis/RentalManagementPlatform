@@ -62,6 +62,8 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
     costQuery.property = propertyId;
   }
 
+  costQuery.date = { $gte: currentYearMonth, $lt: nextYearMonth };
+
   const costs = await Cost.find(costQuery);
   const rooms = await Room.find(roomsQuery);
   const roomIds = rooms.map((room) => room._id);
@@ -85,6 +87,8 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
     totalRents += rent.amount;
   });
 
+  const totalCost = costs.reduce((acc, cost)=>acc+cost.amount,0);
 
-  return {date:currentYearMonth, property, rooms, costs, tenants, totalRents, receivedRents, pendingRents };
+
+  return {date:currentYearMonth, property, rooms, costs, totalCost, tenants, totalRents, receivedRents, pendingRents };
 };

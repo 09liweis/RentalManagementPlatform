@@ -45,16 +45,16 @@ export default function RentCards({ propertyId }: RentCardsProps) {
             <p className="rent-price">${rent.totalRents}</p>
           </article>
           <article className="card">
-            <p>Total Rents</p>
-            <p className="rent-price">${rent.totalRents}</p>
-          </article>
-          <article className="card">
             <p>Received Rents</p>
             <p className="rent-price">${rent.receivedRents}</p>
           </article>
           <article className="card">
             <p>Pending Rents</p>
             <p className="rent-price">${rent.pendingRents}</p>
+          </article>
+          <article className="card">
+            <p>Total Costs</p>
+            <p className="rent-price">${rent.totalCost}</p>
           </article>
         </section>
       </LoadingSection>
