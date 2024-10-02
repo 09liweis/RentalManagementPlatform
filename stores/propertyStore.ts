@@ -1,17 +1,32 @@
 import { showToast } from '@/components/common/Toast';
 import { Property } from '@/types/property';
+import { Room } from '@/types/room';
 import { fetchData } from '@/utils/http';
 import { create } from 'zustand'
 
+interface RentStats {
+  date?:string;
+  totalRents?:number;
+  pendingRents?:number;
+  receivedRents?:number;
+  totalCost?:number;
+}
+
 interface PropertyState {
+  rentStats:RentStats,
   properties: Property[];
+  rooms: Room[];
+  tenants:any;
   propertiesFetched:boolean;
   fetchProperties: () => void;
-  fetchPropertyStats: ({propertyId,date}:any) => Promise<any>;
+  fetchPropertyStats: ({propertyId,date}:any) => void;
 }
 
 const usePropertyStore = create<PropertyState>((set) => ({
+  rentStats:{},
   properties: [],
+  rooms: [],
+  tenants:[],
   propertiesFetched: false,
   fetchProperties: async () => {
     const {properties,err} = await fetchData({url:'/api/properties'});
@@ -22,12 +37,13 @@ const usePropertyStore = create<PropertyState>((set) => ({
     }
   },
 
-  fetchPropertyStats: async ({propertyId, date}:any) => {
-    const apiUrl = propertyId ? `/api/properties/${propertyId}?date=${date}` : `/api/overview?date=${date}`;
-    const statsResponse = await fetchData({
+  fetchPropertyStats: async ({propertyId, selectDate}:any) => {
+    const apiUrl = propertyId ? `/api/properties/${propertyId}?date=${selectDate||''}` : `/api/overview?date=${selectDate||''}`;
+    const {properties,rooms,tenants,totalRents,receivedRents,pendingRents,totalCost,date} = await fetchData({
       url: apiUrl,
     });
-    return statsResponse;
+    set({properties,rooms,tenants});
+    set({rentStats:{totalRents,receivedRents,pendingRents,totalCost,date}})
   }
 }))
 
