@@ -41,20 +41,19 @@ interface Stats {
 export const getStats = async ({ date, userId, propertyId }: Stats) => {
   const { currentYearMonth, nextYearMonth } = getCurrentYearMonth(date);
 
-  let property;
+  let properties;
   const propertyQuery: any = {};
   if (userId) {
     propertyQuery.user = userId;
-    property = await Property.find(propertyQuery);
   } else {
     propertyQuery._id = propertyId;
-    property = await Property.findOne(propertyQuery);
   }
+  properties = await Property.find(propertyQuery);
 
   const roomsQuery: any = {};
   const costQuery: any = {};
   if (userId) {
-    const propertyIds = property.map((prop: any) => prop._id);
+    const propertyIds = properties.map((prop: any) => prop._id);
     roomsQuery.property = { $in: propertyIds };
     costQuery.property = {$in:propertyIds};
   } else {
@@ -90,5 +89,5 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
   const totalCost = costs.reduce((acc, cost)=>acc+cost.amount,0);
 
 
-  return {date:currentYearMonth, property, rooms, costs, totalCost, tenants, totalRents, receivedRents, pendingRents };
+  return {date:currentYearMonth, properties, rooms, costs, totalCost, tenants, totalRents, receivedRents, pendingRents };
 };
