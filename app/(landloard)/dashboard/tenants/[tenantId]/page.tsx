@@ -3,17 +3,13 @@
 import LoadingSection from "@/components/common/LoadingSection";
 import { showToast } from "@/components/common/Toast";
 import { fetchData } from "@/utils/http";
-import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import SelectGroup from "@/components/common/SelectGroup";
-import { RENT_STATUS_ARRAY } from "@/types/rent";
+import usePropertyStore from "@/stores/propertyStore";
+import RentForm from "@/components/rent/RentForm";
 
-const RENT_FIELDS = [
-  { placeholder: "Amount", name: "amount", inputType: "number" },
-  { placeholder: "Date", name: "startDate", inputType: "date" },
-];
+
 
 export default function TenantPage({
   params,
@@ -22,55 +18,16 @@ export default function TenantPage({
 }) {
   const { tenantId } = params;
 
-  const [rents, setRents] = useState([]);
+  const {fetchRents, rents, setCurRent, showRentForm, setShowRentForm, handleDeleteRent, setCurTenant} = usePropertyStore();
+
   const [tenant, setTenant] = useState<any>({});
   const [room, setRoom] = useState<any>({});
   const [property, setProperty] = useState<any>({});
   const [loading, setLoading] = useState(false);
-  const fetchRents = async () => {
-    setLoading(true);
-    const { rents, tenant, room, property, err } = await fetchData({
-      url: `/api/tenants/${tenantId}/rents`,
-    });
-    setLoading(false);
-    if (err) {
-      showToast(err);
-    } else {
-      setRents(rents);
-      setTenant(tenant);
-      setRoom(room);
-      setProperty(property);
-    }
-  };
-
-  const [rent, setRent] = useState<any>({});
-  const handleRentSubmit = async (e: any) => {
-    e.preventDefault();
-    const method = rent?._id ? "PUT" : "POST";
-    const url = rent?._id
-      ? `/api/rents/${rent?._id}`
-      : `/api/tenants/${tenantId}/rents`;
-    const { msg, err } = await fetchData({
-      url,
-      method,
-      body: rent,
-    });
-    showToast(msg || err);
-    setRent({});
-    fetchRents();
-  };
-
-  const handleDeleteRent = async (rentId: string) => {
-    const { msg, err } = await fetchData({
-      url: `/api/rents/${rentId}`,
-      method: "DELETE",
-    });
-    showToast(msg || err);
-    fetchRents();
-  };
 
   useEffect(() => {
-    fetchRents();
+    setCurTenant({_id:tenantId});
+    fetchRents(tenantId);
   }, []);
 
   return (
@@ -86,24 +43,8 @@ export default function TenantPage({
       </Link>
       <h1 className="page-title">Tenant {tenant?.name}</h1>
 
-      <section className="flex flex-col gap-3">
-        {RENT_FIELDS.map(({ placeholder, inputType, name }) => (
-          <Input
-            key={name}
-            placeholder={placeholder}
-            value={rent[name] || ""}
-            type={inputType}
-            onChange={(e) => setRent({ ...rent, [name]: e.target.value })}
-          />
-        ))}
-        <SelectGroup
-          value={rent.status || ""}
-          label="Rent Status"
-          options={RENT_STATUS_ARRAY}
-          handleSelect={(value) => setRent({ ...rent, status: value })}
-        />
-        <Button tl="Add Rent" handleClick={handleRentSubmit} />
-      </section>
+      {showRentForm && <RentForm />}
+
 
       <LoadingSection loading={loading}>
         <section className="card-container">
@@ -117,20 +58,24 @@ export default function TenantPage({
               <div className="flex justify-between">
                 <Button
                   tl="Edit"
-                  handleClick={() =>
-                    setRent({ _id, amount, startDate, status })
+                  handleClick={() =>{
+                    setShowRentForm();
+                    setCurRent({ _id, amount, startDate, status })
+                  }
                   }
                 />
                 <Button
                   tp="danger"
                   tl="Delete"
-                  handleClick={() => handleDeleteRent(_id)}
+                  handleClick={() => handleDeleteRent({tenantId, rentId:_id})}
                 />
               </div>
             </article>
           ))}
         </section>
       </LoadingSection>
+
+      <Button tl="Add Rent" handleClick={setShowRentForm} />
     </>
   );
 }

@@ -1,5 +1,9 @@
-interface Rent {
-  status: string;
+export interface Rent {
+  // _id?: string;
+  // amount?: string;
+  // status?: string;
+  // date?: string;
+  [key:string]: string;
 }
 
 interface RentStatus {

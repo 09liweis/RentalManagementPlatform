@@ -34,6 +34,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <title>Dashboard</title>
       <body className={`${inter.className} min-h-screen flex`}>
         <ToastProvider>
           <Sidebar />
