@@ -11,7 +11,7 @@ import ToastProvider from "@/components/common/ToastProvider";
 import { showToast } from "@/components/common/Toast";
 import Loading from "./dashboard/Loading";
 import Logo from "@/components/common/Logo";
-import { fetchData } from "@/utils/http";
+import useUserStore from "@/stores/userStore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +20,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const {fetchUser} = useUserStore();
   useEffect(()=>{
-    fetchData({url:'/api/ping'});
+    fetchUser();
   },[]);
 
   const router = useRouter();
