@@ -62,7 +62,10 @@ export default function PropertyForm({
           }
         />
         <Button tl={`Add`} handleClick={handlePropertySubmit} />
-        <button onClick={() => showPropertyForm(false)}>Cancel</button>
+        <button onClick={() => {
+          setCurProperty(EMPTY_PROPERTY);
+          showPropertyForm(false);
+        }}>Cancel</button>
       </form>
     </FormBackdrop>
   );

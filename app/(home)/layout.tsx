@@ -22,9 +22,10 @@ export default function RootLayout({
   const {fetchUser} = useUserStore();
   useEffect(()=>{
     fetchUser();
-  },[]);
+  },[fetchUser]);
   return (
     <html lang="en">
+      <title>Rental Management Platform</title>
       <body className={inter.className}>
         <ToastProvider>
           <Header />

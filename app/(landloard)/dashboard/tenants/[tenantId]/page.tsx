@@ -28,7 +28,7 @@ export default function TenantPage({
   useEffect(() => {
     setCurTenant({_id:tenantId});
     fetchRents(tenantId);
-  }, []);
+  }, [tenantId,setCurTenant,fetchRents]);
 
   return (
     <>
