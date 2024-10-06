@@ -16,15 +16,17 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
+  lang,
 }: Readonly<{
   children: React.ReactNode;
+  lang:string
 }>) {
   const {fetchUser} = useUserStore();
   useEffect(()=>{
     fetchUser();
   },[fetchUser]);
   return (
-    <html lang="en">
+    <html lang={lang}>
       <title>Rental Management Platform</title>
       <body className={inter.className}>
         <ToastProvider>

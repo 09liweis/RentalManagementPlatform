@@ -13,7 +13,7 @@ export default function LangSwitch() {
       {LANGS.map((locale) => {
         return (
           <li key={locale}>
-            <Link href={curPath} as={curPath} locale={locale} legacyBehavior>
+            <Link href={curPath} as={curPath} locale={locale}>
               {locale}
             </Link>
           </li>
