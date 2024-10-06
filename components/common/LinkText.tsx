@@ -1,3 +1,4 @@
+import useAppStore from "@/stores/appStore";
 import Link from "next/link";
 
 interface LinkTextProps {
@@ -6,5 +7,6 @@ interface LinkTextProps {
 }
 
 export default function LinkText({ href, text }: LinkTextProps) {
-  return <Link className="link" href={href}>{text}</Link>;
+  const {curLocale} = useAppStore();
+  return <Link className="link" href={`${curLocale}${href}`}>{text}</Link>;
 }

@@ -1,24 +1,16 @@
 "use client";
 
-import Link from "next/link";
+import { locales } from "@/constants/locales";
 import { usePathname } from "next/navigation";
-
-const LANGS = ["en", "zh"];
+import Link from "next/link";
 
 export default function LangSwitch() {
   const curPath = usePathname();
 
   return (
     <ul className="flex gap-2">
-      {LANGS.map((locale) => {
-        return (
-          <li key={locale}>
-            <Link href={curPath} as={curPath} locale={locale}>
-              {locale}
-            </Link>
-          </li>
-        );
-      })}
+      <Link href="/en-CA">EN</Link>
+      <Link href="/zh-CN">中文</Link>
     </ul>
   );
 }

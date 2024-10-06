@@ -6,6 +6,7 @@ import ToastProvider from "@/components/common/ToastProvider";
 import Header from "@/components/common/Header";
 import useUserStore from "@/stores/userStore";
 import { useEffect } from "react";
+import useAppStore from "@/stores/appStore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,9 +23,11 @@ export default function RootLayout({
   params:any
 }>) {
   const {fetchUser} = useUserStore();
+  const {setLocale} = useAppStore();
   useEffect(()=>{
     fetchUser();
-  },[fetchUser]);
+    setLocale(lang);
+  },[fetchUser, lang, setLocale]);
   return (
     <html lang={lang}>
       <title>Rental Management Platform</title>
