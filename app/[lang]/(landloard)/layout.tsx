@@ -17,8 +17,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
+  params:{lang}
 }: Readonly<{
   children: React.ReactNode;
+  params:any
 }>) {
   const {fetchUser} = useUserStore();
   useEffect(()=>{
@@ -34,7 +36,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html lang={lang}>
       <title>Dashboard</title>
       <body className={`${inter.className} min-h-screen flex`}>
         <ToastProvider>
