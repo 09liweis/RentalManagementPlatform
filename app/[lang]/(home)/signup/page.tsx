@@ -9,9 +9,12 @@ import { useState } from "react";
 import { EMAIL } from "@/constants/text";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import Link from "next/link";
+import useAppStore from "@/stores/appStore";
+import LinkText from "@/components/common/LinkText";
 
 function Signup() {
 
+  const {t} = useAppStore();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,26 +32,26 @@ function Signup() {
   };
   return (
     <section className="auth-form">
-      <h1 className="font-bold text-lg">Please Sign up as landlord</h1>
+      <h1 className="font-bold text-lg">{t('home.SignupAsALandlord')}</h1>
       <Input
         type="email"
         onChange={(e) => setEmail(e.target.value)}
-        placeholder={EMAIL}
+        placeholder={t('home.Email')}
         value={email}
       />
       <Input
         type="password"
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        placeholder={t('home.Password')}
         value={password}
       />
-      <Link href={'/login'}>Already has an account? Login</Link>
+      <LinkText href={'/login'} text={t('home.HaveAlreadyRegister')} />
       <button
         type="submit"
         onClick={handleSignup}
         className="rounded bg-red-400 text-white p-3"
       >
-        {loading ? <LoadingSpinner /> : "Sign Up"}
+        {loading ? <LoadingSpinner /> : t('home.Signup')}
       </button>
     </section>
   );
