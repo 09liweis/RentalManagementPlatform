@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import usePropertyStore from "@/stores/propertyStore";
 import RentForm from "@/components/rent/RentForm";
+import useAppStore from "@/stores/appStore";
+import LinkText from "@/components/common/LinkText";
 
 
 
@@ -17,6 +19,8 @@ export default function TenantPage({
   params: { tenantId: string };
 }) {
   const { tenantId } = params;
+
+  const {t} = useAppStore();
 
   const {fetchRents, rents, setCurRent, showRentForm, setShowRentForm, handleDeleteRent, setCurTenant} = usePropertyStore();
 
@@ -32,12 +36,11 @@ export default function TenantPage({
 
   return (
     <>
-      <Link
+      <LinkText
         className="page-title"
         href={`/dashboard/properties/${property?._id}`}
-      >
-        Property: {property?.name}
-      </Link>
+        text={`Property: ${property?.name}`}
+      />
       <Link className="page-title" href={`/dashboard/rooms/${room?._id}`}>
         Room: {room?.name}
       </Link>
@@ -53,11 +56,11 @@ export default function TenantPage({
               <p className="rent-date">{startDate}</p>
               <div className="flex justify-between items-center my-2">
                 <p className="text-xl font-semibold">${amount}</p>
-                <p className={`rent-status ${statusTxt}`}>{statusTxt}</p>
+                <p className={`rent-status ${statusTxt}`}>{t(`dashboard.${statusTxt}`)}</p>
               </div>
               <div className="flex justify-between">
                 <Button
-                  tl="Edit"
+                  tl={t('dashboard.Edit')}
                   handleClick={() =>{
                     setShowRentForm();
                     setCurRent({ _id, amount, startDate, status })
@@ -66,7 +69,7 @@ export default function TenantPage({
                 />
                 <Button
                   tp="danger"
-                  tl="Delete"
+                  tl={t('dashboard.Delete')}
                   handleClick={() => handleDeleteRent({tenantId, rentId:_id})}
                 />
               </div>
@@ -75,7 +78,7 @@ export default function TenantPage({
         </section>
       </LoadingSection>
 
-      <Button tl="Add Rent" handleClick={setShowRentForm} />
+      <Button tl={t('dashboard.AddRent')} handleClick={setShowRentForm} />
     </>
   );
 }

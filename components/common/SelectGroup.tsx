@@ -1,3 +1,5 @@
+import useAppStore from "@/stores/appStore";
+
 interface Option {
   key: string;
   text: string;
@@ -16,6 +18,7 @@ export default function SelectGroup({
   value,
   handleSelect,
 }: SelectGroupProps) {
+  const {t} = useAppStore();
   return (
     <section className="select-options-container">
       {options.map(({ key, text }) => (

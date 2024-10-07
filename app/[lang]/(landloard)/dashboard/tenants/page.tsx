@@ -1,5 +1,6 @@
 "use client";
 
+import LinkText from "@/components/common/LinkText";
 import LoadingSection from "@/components/common/LoadingSection";
 import { fetchData } from "@/utils/http";
 import Link from "next/link";
@@ -27,9 +28,7 @@ export default function TenantsPage() {
       <LoadingSection loading={loading}>
         <section className="card-container">
           {tenants.map(({ _id, name }) => (
-            <Link className="card" href={`/dashboard/tenants/${_id}`} key={_id}>
-              {name}
-            </Link>
+            <LinkText className="card" href={`/dashboard/tenants/${_id}`} key={_id} text={name} />
           ))}
         </section>
       </LoadingSection>

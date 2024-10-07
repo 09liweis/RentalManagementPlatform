@@ -12,6 +12,7 @@ import { showToast } from "@/components/common/Toast";
 import Loading from "./dashboard/Loading";
 import Logo from "@/components/common/Logo";
 import useUserStore from "@/stores/userStore";
+import useAppStore from "@/stores/appStore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,17 +23,19 @@ export default function RootLayout({
   children: React.ReactNode;
   params:any
 }>) {
+  const {setLocale, t, curLocale} = useAppStore();
   const {fetchUser} = useUserStore();
   useEffect(()=>{
     fetchUser();
-  },[]);
+    setLocale(lang);
+  },[fetchUser,setLocale,lang]);
 
   const router = useRouter();
 
   const handleLogout = () => {
     showToast("Logout Successful");
     localStorage.removeItem("auth-token");
-    router.replace("/login");
+    router.replace(`${curLocale}/login`);
   };
 
   return (
@@ -44,7 +47,7 @@ export default function RootLayout({
           <main className="w-4/5 p-2">
             <header className="flex items-center justify-between p-2 shadow mb-2">
               <Logo/>
-              <Button tl="Logout" handleClick={handleLogout} />
+              <Button tl={t('home.Logout')} handleClick={handleLogout} />
             </header>
             <section className="shadow-lg min-h-screen p-2">
               <Suspense fallback={<Loading />}>{children}</Suspense>

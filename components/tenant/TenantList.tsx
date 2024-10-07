@@ -1,5 +1,6 @@
 import Link from "next/link";
 import LoadingSection from "@/components/common/LoadingSection";
+import LinkText from "../common/LinkText";
 
 interface TenantListProps {
   loading: boolean;
@@ -14,9 +15,7 @@ export default function TenantList({ loading, tenants, onEditClick }:TenantListP
         {tenants.map((t) => (
           <article key={t._id} className="card">
             <div className="flex justify-between">
-              <Link className="tenant-name" href={`/dashboard/tenants/${t._id}`}>
-                {t.name}
-              </Link>
+              <LinkText className="tenant-name" href={`/dashboard/tenants/${t._id}`} text={t.name} />
               <span className="text-red-400 cursor-pointer" onClick={()=>onEditClick(t)}>Edit</span>
             </div>
             <div className="flex justify-between">

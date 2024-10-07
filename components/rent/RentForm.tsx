@@ -9,6 +9,7 @@ import Input from "@/components/common/Input";
 import SelectGroup from "@/components/common/SelectGroup";
 import FormBackdrop from "@/components/common/form/FormBackdrop";
 import FormTitle from "@/components/common/form/FormTitle";
+import useAppStore from "@/stores/appStore";
 
 const RENT_FIELDS = [
   { placeholder: "Amount", name: "amount", inputType: "number" },
@@ -16,6 +17,7 @@ const RENT_FIELDS = [
 ];
 
 export default function RentForm() {
+  const {t} = useAppStore();
   const { curRent, setCurRent, curTenant, handleRentSubmit, setShowRentForm } = usePropertyStore();
 
   return (
@@ -41,7 +43,7 @@ export default function RentForm() {
           handleSelect={(value) => setCurRent({ ...curRent, status: value })}
         />
         <Button tl="Add Rent" handleClick={()=>{}} />
-        <button onClick={setShowRentForm}>Cancel</button>
+        <button onClick={setShowRentForm}>{t('dashboard.Cancel')}</button>
       </form>
     </FormBackdrop>
   );
