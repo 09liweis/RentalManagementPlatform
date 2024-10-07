@@ -27,7 +27,7 @@ export default function SelectGroup({
           className={`select-option ${(value === key) || (value === text) ? "active" : ""}`}
           onClick={() => handleSelect(key)}
         >
-          {text}
+          {t(text)}
         </span>
       ))}
     </section>

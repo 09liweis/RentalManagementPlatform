@@ -9,6 +9,7 @@ import Input from "@/components/common/Input";
 import SelectGroup from "../common/SelectGroup";
 import FormBackdrop from "../common/form/FormBackdrop";
 import FormTitle from "../common/form/FormTitle";
+import useAppStore from "@/stores/appStore";
 
 interface PropertyFormProps {
   showPropertyForm: Function;
@@ -19,6 +20,7 @@ export default function PropertyForm({
   showPropertyForm,
   property,
 }: PropertyFormProps) {
+  const {t} = useAppStore();
   const { fetchProperties } = usePropertyStore();
 
   const [curProperty, setCurProperty] = useState<Property>(property);
@@ -44,10 +46,9 @@ export default function PropertyForm({
         className="form-container"
         onSubmit={handlePropertySubmit}
       >
-        <FormTitle title="Add New Property" />
         <Input
           type="text"
-          placeholder="Name"
+          placeholder={t('dashboard.Name')}
           value={curProperty.name || ""}
           onChange={(e) =>
             setCurProperty({ ...curProperty, name: e.target.value })
@@ -61,11 +62,11 @@ export default function PropertyForm({
             setCurProperty({ ...curProperty, ptype: value })
           }
         />
-        <Button tl={`Add`} handleClick={handlePropertySubmit} />
+        <Button tl={t('dashboard.Add')} handleClick={handlePropertySubmit} />
         <button onClick={() => {
           setCurProperty(EMPTY_PROPERTY);
           showPropertyForm(false);
-        }}>Cancel</button>
+        }}>{t('dashboard.Cancel')}</button>
       </form>
     </FormBackdrop>
   );
