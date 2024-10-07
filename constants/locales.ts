@@ -5,8 +5,13 @@ const defaultLocale = "en";
 const translates:{[key:string]:any} = {
   'en-CA':{
     home:{
+      Signup: 'Signup',
       Login:"Login",
       Logout: 'Logout',
+      LoginAsALandlord: 'Login as a landlord',
+      Email: 'Email',
+      Password: 'Password',
+      ForgotPassword: 'Forgot Password',
       Dashboard: "Dashboard",
       Properties: 'Properties',
       Rooms: 'Rooms',
@@ -24,8 +29,13 @@ const translates:{[key:string]:any} = {
   },
   'zh-CN':{
     home:{
+      Signup: '注册',
       Login:"登陆",
       Logout: '登出',
+      LoginAsALandlord: '房东请登录',
+      Email: '邮箱',
+      Password: '密码',
+      ForgotPassword: '忘记密码',
       Dashboard: "控制面板",
       Properties: '房屋',
       Rooms: '房间',

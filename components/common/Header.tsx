@@ -15,8 +15,8 @@ export default function Header() {
         {loginUser._id ? 
         <LinkText href="/dashboard" text={t('home.Dashboard')}/> :
         <>
-          <LinkText href={"/signup"} text="Signup" />
-          <LinkText href={"/login"} text="Login" />
+          <LinkText href={"/signup"} text={t('home.Signup')} />
+          <LinkText href={"/login"} text={t('home.Login')} />
         </>
         }
         <LangSwitch />

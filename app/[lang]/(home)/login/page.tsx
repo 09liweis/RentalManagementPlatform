@@ -8,8 +8,11 @@ import Link from "next/link";
 import useUserStore from "@/stores/userStore";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { EMAIL } from "@/constants/text";
+import useAppStore from "@/stores/appStore";
+import LinkText from "@/components/common/LinkText";
 
 function Login() {
+  const {t} = useAppStore();
   const { login } = useUserStore();
   const router = useRouter();
 
@@ -33,30 +36,29 @@ function Login() {
       onSubmit={handleLogin}
       className="auth-form"
     >
-      <h1 className="font-bold text-lg">Please Login as landlord</h1>
+      <h1 className="font-bold text-lg">{t('home.LoginAsALandlord')}</h1>
       <Input
         type="email"
         onChange={(e) => setEmail(e.target.value)}
-        placeholder={EMAIL}
+        placeholder={t('home.Email')}
         value={email}
       />
       <Input
         type="password"
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        placeholder={t('home.Password')}
         value={password}
       />
 
       <nav className="text-right">
-        <Link
+        <LinkText
+          text={t('home.ForgotPassword')}
           href="/forgotpassword"
           className="text-black-800 underline decoration-1 underline-offset-4"
-        >
-          Forgot Password?
-        </Link>
+        />
       </nav>
 
-      <Button disabled={loading} handleClick={handleLogin} tl={loading ? <LoadingSpinner /> : "Login"} />
+      <Button disabled={loading} handleClick={handleLogin} tl={loading ? <LoadingSpinner /> : t('home.Login')} />
     </form>
   );
 }
