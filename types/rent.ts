@@ -17,7 +17,7 @@ export const CANCELLED = "cancelled";
 export const RENT_STATUS: RentStatus = {
   1: PENDING,
   2: PAID,
-  3: CANCELLED,
+  // 3: CANCELLED,
 }
 
 function getRentStatusArray() {

@@ -39,12 +39,10 @@ export default function TenantPage({
       <LinkText
         className="page-title"
         href={`/dashboard/properties/${property?._id}`}
-        text={`Property: ${property?.name}`}
+        text={`${t('home.Property')}: ${property?.name}`}
       />
-      <Link className="page-title" href={`/dashboard/rooms/${room?._id}`}>
-        Room: {room?.name}
-      </Link>
-      <h1 className="page-title">Tenant {tenant?.name}</h1>
+      <LinkText className="page-title" href={`/dashboard/rooms/${room?._id}`} text={`${t('home.Room')}: ${room?.name}`} />
+      <h1 className="page-title">{t('home.Tenant')} {tenant?.name}</h1>
 
       {showRentForm && <RentForm />}
 
@@ -56,7 +54,7 @@ export default function TenantPage({
               <p className="rent-date">{startDate}</p>
               <div className="flex justify-between items-center my-2">
                 <p className="text-xl font-semibold">${amount}</p>
-                <p className={`rent-status ${statusTxt}`}>{t(`dashboard.${statusTxt}`)}</p>
+                <p className={`rent-status ${statusTxt}`}>{t(statusTxt)}</p>
               </div>
               <div className="flex justify-between">
                 <Button

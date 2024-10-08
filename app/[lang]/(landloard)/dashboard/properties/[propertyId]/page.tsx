@@ -13,12 +13,15 @@ import RentCards from "@/components/dashboard/RentCards";
 import FormBackdrop from "@/components/common/form/FormBackdrop";
 import CostForm from "@/components/property/CostForm";
 import { Cost } from "@/types/cost";
+import useAppStore from "@/stores/appStore";
+import LinkText from "@/components/common/LinkText";
 
 export default function PropertyPage({
   params,
 }: {
   params: { propertyId: string };
 }) {
+  const {t} = useAppStore();
   const { propertyId } = params;
 
   const [loading, setLoading] = useState(false);
@@ -75,8 +78,8 @@ export default function PropertyPage({
         <section className="card-container flex-col">
           {rooms.map((room) => (
             <article key={room._id} className="card flex justify-between items-center">
-              <Link className="room-name" href={`/dashboard/rooms/${room._id}`} key={room.name}>{room.name}</Link>
-              <Button tl={'Edit'} handleClick={() => setRoom(room)} />
+              <LinkText className="room-name" href={`/dashboard/rooms/${room._id}`} key={room._id} text={room.name} />
+              <Button tl={t('dashboard.Edit')} handleClick={() => {setRoom(room);setShowRoomForm(true);}} />
             </article>
           ))}
         </section>
@@ -88,7 +91,7 @@ export default function PropertyPage({
         <form className="form-container">
           <Input
             type="text"
-            placeholder="Room Name"
+            placeholder={t('dashboard.Name')}
             value={room["name"] || ""}
             onChange={(e) => setRoom({ ...room, name: e.target.value })}
           />
@@ -96,6 +99,7 @@ export default function PropertyPage({
             tl={`${room?._id ? "Update" : "Add"} Room`}
             handleClick={handleRoomSubmit}
           />
+          <Button tl={t('dashboard.Cancel')} handleClick={()=>setShowRoomForm(false)} />
         </form>
       </FormBackdrop> }
 

@@ -7,10 +7,15 @@ import Button from "@/components/common/Button";
 import { showToast } from "@/components/common/Toast";
 import LoadingSection from "@/components/common/LoadingSection";
 import TenantList from "@/components/tenant/TenantList";
+import useAppStore from "@/stores/appStore";
+import LinkText from "@/components/common/LinkText";
+import FormBackdrop from "@/components/common/form/FormBackdrop";
 
 export default function RoomPage({ params }: { params: { roomId: string } }) {
+  const {t} = useAppStore();
   const { roomId } = params;
   const [loading, setLoading] = useState(false);
+  const [showTenantForm, setShowTenantForm] = useState(false);
   const [tenants, setTenants] = useState<any[]>([]);
   const [room, setRoom] = useState<any>({});
   const [property, setProperty] = useState<any>({});
@@ -32,11 +37,16 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
 
   const [tenant, setTenant] = useState<any>({});
   const tenantFields = [
-    { field: "name", inputType: "text", placeholder: "Name" },
-    { field: "deposit", inputType: "number", placeholder: "Deposit" },
-    { field: "startDate", inputType: "date", placeholder: "Start Date" },
-    { field: "endDate", inputType: "date", placeholder: "End Date" },
+    { field: "name", inputType: "text", placeholder: "dashboard.Name" },
+    { field: "deposit", inputType: "number", placeholder: "dashboard.Deposit" },
+    { field: "startDate", inputType: "date", placeholder: "dashboard.StartDate" },
+    { field: "endDate", inputType: "date", placeholder: "dashboard.EndDate" },
   ];
+
+  const handleTenantClick = (tenant:any) => {
+    setTenant(tenant);
+    setShowTenantForm(true);
+  }
 
   const handleSubmit = async () => {
     const method = tenant?._id ? "PUT" : "POST";
@@ -63,19 +73,21 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
 
   return (
     <>
-      <Link
+      <LinkText
         href={`/dashboard/properties/${property?._id}`}
         className="page-title"
-      >
-        Property: {property?.name}
-      </Link>
-      <h2>Room: {room?.name}</h2>
-      <section className="flex flex-col gap-3">
+        text={`${t('home.Property')}: ${property?.name}`}
+      />
+      <h2>{t('home.Room')}: {room?.name}</h2>
+
+      {showTenantForm &&
+      <FormBackdrop>
+      <section className="form-container">
         {tenantFields.map(({ field, inputType, placeholder }) => (
           <Input
             key={field}
             type={inputType}
-            placeholder={placeholder}
+            placeholder={t(placeholder)}
             value={tenant[field] || ""}
             onChange={(e) => setTenant({ ...tenant, [field]: e.target.value })}
           />
@@ -84,13 +96,19 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
           tl={`${tenant?._id ? "Update" : "Add"} Tenant`}
           handleClick={handleSubmit}
         />
+        <Button tl={t('dashboard.Cancel')} handleClick={()=>{setShowTenantForm(false);setTenant({});}} />
       </section>
+      </FormBackdrop>
+      }
 
       <TenantList
         loading={loading}
         tenants={tenants}
-        onEditClick={setTenant}
+        onEditClick={handleTenantClick}
       />
+
+
+      <Button tl={t('dashboard.Add')} handleClick={()=>setShowTenantForm(true)} />
     </>
   );
 }

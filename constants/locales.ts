@@ -17,7 +17,10 @@ const translates:{[key:string]:any} = {
       Dashboard: "Dashboard",
       Properties: 'Properties',
       Rooms: 'Rooms',
-      Tenants: 'Tenants'
+      Tenants: 'Tenants',
+      Property: 'Property',
+      Room: 'Room',
+      Tenant: 'Tenant'
     },
     dashboard:{
       AddNew: 'Add New',
@@ -26,9 +29,10 @@ const translates:{[key:string]:any} = {
       Cancel: 'Cancel',
       Delete: 'Delete',
       Name: 'Name',
+      Deposit: 'Deposit',
+      StartDate: 'Start Date',
+      EndDate: 'End Date',
       AddRent: 'Add Rent',
-      pending: 'Pending',
-      paid: 'Paid',
       TotalRents: 'Total Rents',
       ReceivedRents: 'Received Rents',
       PendingRents: 'Pending Rents',
@@ -38,6 +42,13 @@ const translates:{[key:string]:any} = {
     Townhouse: "Townhouse",
     Condo: "Condo",
     Apartment: "Apartment",
+    Water: "Water",
+    Electricity: "Electricity",
+    gas: "gas",
+    internet: "internet",
+    repairment: "repairment",
+    pending: 'Pending',
+    paid: 'Paid',
   },
   'zh-CN':{
     home:{
@@ -53,7 +64,10 @@ const translates:{[key:string]:any} = {
       Dashboard: "控制面板",
       Properties: '房屋',
       Rooms: '房间',
-      Tenants: '租客'
+      Tenants: '租客',
+      Property: '房屋',
+      Room: '房间',
+      Tenant: '租客'
     },
     dashboard:{
       AddNew: '添加',
@@ -62,9 +76,10 @@ const translates:{[key:string]:any} = {
       Cancel: '取消',
       Delete: '删除',
       Name: '名字',
+      Deposit: '订金',
+      StartDate: '开始日期',
+      EndDate: '结束日期',
       AddRent: '添加房租',
-      pending: '等待',
-      paid: '已付',
       TotalRents: '应收房租',
       ReceivedRents: '收到的房租',
       PendingRents: '还没收到的房租',
@@ -74,6 +89,13 @@ const translates:{[key:string]:any} = {
     Townhouse: "联排别墅",
     Condo: "公寓",
     Apartment: "Apartment",
+    Water: "水费",
+    Electricity: "电费",
+    gas: "气费",
+    internet: "网费",
+    repairment: "维修费",
+    pending: '等待',
+    paid: '已付',
   }
 };
 
