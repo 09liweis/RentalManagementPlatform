@@ -12,7 +12,7 @@ import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
 
 function Login() {
-  const {t} = useAppStore();
+  const {t, curLocale} = useAppStore();
   const { login } = useUserStore();
   const router = useRouter();
 
@@ -25,7 +25,7 @@ function Login() {
     setLoading(true);
     const { err } = await login({ email, password });
     if (!err) {
-      router.push("/dashboard");
+      router.push(`/${curLocale}/dashboard`);
     } else {
       setLoading(false);
     }

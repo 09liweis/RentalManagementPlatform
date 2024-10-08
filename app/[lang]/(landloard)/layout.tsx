@@ -35,7 +35,7 @@ export default function RootLayout({
   const handleLogout = () => {
     showToast("Logout Successful");
     localStorage.removeItem("auth-token");
-    router.replace(`${curLocale}/login`);
+    router.replace(`/${curLocale}/login`);
   };
 
   return (
