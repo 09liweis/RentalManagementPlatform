@@ -49,6 +49,11 @@ const translates:{[key:string]:any} = {
     repairment: "repairment",
     pending: 'Pending',
     paid: 'Paid',
+    Suite: "Suite",
+    Floor: "Floor",
+    Whole: "Whole",
+    Parking: "Parking",
+    Storage: "Storage",
   },
   'zh-CN':{
     home:{
@@ -66,8 +71,8 @@ const translates:{[key:string]:any} = {
       Rooms: '房间',
       Tenants: '租客',
       Property: '房屋',
+      Tenant: '租客',
       Room: '房间',
-      Tenant: '租客'
     },
     dashboard:{
       AddNew: '添加',
@@ -96,6 +101,12 @@ const translates:{[key:string]:any} = {
     repairment: "维修费",
     pending: '等待',
     paid: '已付',
+    Room: "单间",
+    Suite: "套间",
+    Floor: "整层",
+    Whole: "整套",
+    Parking: "车位",
+    Storage: "储物间",
   }
 };
 

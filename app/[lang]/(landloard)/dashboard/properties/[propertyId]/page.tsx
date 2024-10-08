@@ -3,7 +3,7 @@
 import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Room } from "@/types/room";
+import { Room, ROOM_TP_ARRAY } from "@/types/room";
 import { Property } from "@/types/property";
 import LoadingSection from "@/components/common/LoadingSection";
 import Input from "@/components/common/Input";
@@ -15,6 +15,7 @@ import CostForm from "@/components/property/CostForm";
 import { Cost } from "@/types/cost";
 import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
+import SelectGroup from "@/components/common/SelectGroup";
 
 export default function PropertyPage({
   params,
@@ -63,6 +64,7 @@ export default function PropertyPage({
     fetchPropertyRooms();
     showToast(err || msg);
     setRoom({ name: "", property: "" });
+    setShowRoomForm(false);
   };
 
   const [costs, setCosts] = useState<Cost[]>([]);
@@ -78,7 +80,7 @@ export default function PropertyPage({
         <section className="card-container flex-col">
           {rooms.map((room) => (
             <article key={room._id} className="card flex justify-between items-center">
-              <LinkText className="room-name" href={`/dashboard/rooms/${room._id}`} key={room._id} text={room.name} />
+              <LinkText className="room-name" href={`/dashboard/rooms/${room._id}`} key={room._id} text={room?.name||''} />
               <Button tl={t('dashboard.Edit')} handleClick={() => {setRoom(room);setShowRoomForm(true);}} />
             </article>
           ))}
@@ -88,19 +90,20 @@ export default function PropertyPage({
       <Button tl={'Add Room'} handleClick={() => setShowRoomForm(true)} />
       
       {showRoomForm && <FormBackdrop>
-        <form className="form-container">
+        <section className="form-container">
           <Input
             type="text"
             placeholder={t('dashboard.Name')}
             value={room["name"] || ""}
             onChange={(e) => setRoom({ ...room, name: e.target.value })}
           />
+          <SelectGroup value={room["tp"]||""} options={ROOM_TP_ARRAY} label="Room Type" handleSelect={(value)=>setRoom({...room,tp:value})} />
           <Button
             tl={`${room?._id ? "Update" : "Add"} Room`}
             handleClick={handleRoomSubmit}
           />
           <Button tl={t('dashboard.Cancel')} handleClick={()=>setShowRoomForm(false)} />
-        </form>
+        </section>
       </FormBackdrop> }
 
       {costs.map((cost)=><article key={cost._id}>{cost.tp} - {cost.amount}</article>)}

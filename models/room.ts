@@ -7,6 +7,9 @@ const roomSchema = new mongoose.Schema({
   name: {
     type: String,
   },
+  tp: {
+    type: String
+  }
 });
 
 const Room = mongoose.models.rooms || mongoose.model("rooms", roomSchema);
