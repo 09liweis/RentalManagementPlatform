@@ -41,8 +41,8 @@ export async function POST(request: NextRequest, { params }: ParamsProps) {
 
   await connect();
 
-  const { name } = await request.json();
-  const newRoom = new Room({ name, property: propertyId });
+  const { name,tp } = await request.json();
+  const newRoom = new Room({ name, tp, property: propertyId });
   await newRoom.save();
 
   return NextResponse.json({ msg: "added" }, { status: 200 });

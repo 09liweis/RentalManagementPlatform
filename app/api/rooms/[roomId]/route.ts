@@ -33,9 +33,10 @@ export async function PUT(request: NextRequest, { params }: ParamsProps) {
 
   try {
     await connect();
-    const {name} = await request.json();
+    const {name,tp} = await request.json();
     const room = await Room.findOne({ _id: roomId });
     room.name = name;
+    room.tp = tp;
     await room.save();
     return NextResponse.json({ msg: "updated" }, { status: 200});
   } catch (err) {
