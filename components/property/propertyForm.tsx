@@ -62,7 +62,7 @@ export default function PropertyForm({
             setCurProperty({ ...curProperty, ptype: value })
           }
         />
-        <Button tl={t('dashboard.Add')} handleClick={handlePropertySubmit} />
+        <Button tl={t(curProperty._id?'dashboard.Update':'dashboard.Add')} handleClick={handlePropertySubmit} />
         <button onClick={() => {
           setCurProperty(EMPTY_PROPERTY);
           showPropertyForm(false);

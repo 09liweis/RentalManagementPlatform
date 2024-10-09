@@ -25,6 +25,7 @@ const translates:{[key:string]:any} = {
     dashboard:{
       AddNew: 'Add New',
       Add: 'Add',
+      Update: 'Update',
       Edit: 'Edit',
       Cancel: 'Cancel',
       Delete: 'Delete',
@@ -77,6 +78,7 @@ const translates:{[key:string]:any} = {
     dashboard:{
       AddNew: '添加',
       Add: '添加',
+      Update: '更新',
       Edit: '编辑',
       Cancel: '取消',
       Delete: '删除',
