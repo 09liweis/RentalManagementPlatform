@@ -7,6 +7,7 @@ interface InputProps {
   value: string
   placeholder: string
   disabled?: boolean
+  autoFocus?: boolean
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -15,10 +16,12 @@ const Input: FC<InputProps> = ({
   value,
   placeholder,
   disabled,
+  autoFocus=false,
   onChange,
 }) => {
   return (
     <input
+      autoFocus={autoFocus}
       className='input'
       type={type}
       value={value}

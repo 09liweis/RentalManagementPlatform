@@ -38,6 +38,7 @@ function Login() {
     >
       <h1 className="font-bold text-lg">{t('home.LoginAsALandlord')}</h1>
       <Input
+        autoFocus={true}
         type="email"
         onChange={(e) => setEmail(e.target.value)}
         placeholder={t('home.Email')}
