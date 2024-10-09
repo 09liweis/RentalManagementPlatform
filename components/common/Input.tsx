@@ -20,15 +20,17 @@ const Input: FC<InputProps> = ({
   onChange,
 }) => {
   return (
-    <input
-      autoFocus={autoFocus}
-      className='input'
-      type={type}
-      value={value}
-      placeholder={placeholder}
-      onChange={onChange}
-      disabled={disabled}
-    />
+    <div>
+      <label>{placeholder}</label>
+      <input
+        autoFocus={autoFocus}
+        className='input'
+        type={type}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+      />
+    </div>
   )
 }
 
