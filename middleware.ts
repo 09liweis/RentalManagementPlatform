@@ -13,6 +13,7 @@ export function middleware(request: NextRequest) {
   // Check if there is any supported locale in the pathname
   const { pathname } = request.nextUrl
   
+  if (pathname.startsWith('/images')) return;
   if (pathname.startsWith('/favicon')) return;
   if (pathname.startsWith('/api'))  return;
 
