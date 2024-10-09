@@ -21,15 +21,15 @@ export default function SelectGroup({
   const {t} = useAppStore();
   return (
     <section className="select-options-container">
-      {options.map(({ key, text }) => (
+      {options.map(({ key, text }) =>
         <span
           key={key}
-          className={`select-option ${(value === key) || (value === text) ? "active" : ""}`}
+          className={`select-option ${(value === key) ? "active" : ""}`}
           onClick={() => handleSelect(key)}
         >
           {t(text)}
         </span>
-      ))}
+      )}
     </section>
   );
 }

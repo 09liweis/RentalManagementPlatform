@@ -50,6 +50,7 @@ const translates:{[key:string]:any} = {
     repairment: "repairment",
     pending: 'Pending',
     paid: 'Paid',
+    Room: 'Room',
     Suite: "Suite",
     Floor: "Floor",
     Whole: "Whole",
