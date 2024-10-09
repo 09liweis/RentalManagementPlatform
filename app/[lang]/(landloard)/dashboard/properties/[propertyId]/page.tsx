@@ -87,7 +87,7 @@ export default function PropertyPage({
         </section>
       </LoadingSection>
 
-      <Button tl={'Add Room'} handleClick={() => setShowRoomForm(true)} />
+      <Button tl={t('dashboard.Add')} handleClick={() => setShowRoomForm(true)} />
       
       {showRoomForm && <FormBackdrop>
         <section className="form-container">
@@ -99,10 +99,10 @@ export default function PropertyPage({
           />
           <SelectGroup value={room["tp"]||""} options={ROOM_TP_ARRAY} label="Room Type" handleSelect={(value)=>setRoom({...room,tp:value})} />
           <Button
-            tl={`${room?._id ? "Update" : "Add"} Room`}
+            tl={`${room?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
             handleClick={handleRoomSubmit}
           />
-          <Button tl={t('dashboard.Cancel')} handleClick={()=>setShowRoomForm(false)} />
+          <Button tl={t('dashboard.Cancel')} handleClick={()=>{setShowRoomForm(false);setRoom({})}} />
         </section>
       </FormBackdrop> }
 

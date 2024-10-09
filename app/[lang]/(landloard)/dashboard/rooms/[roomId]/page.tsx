@@ -93,7 +93,7 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
           />
         ))}
         <Button
-          tl={`${tenant?._id ? "Update" : "Add"} Tenant`}
+          tl={`${tenant?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
           handleClick={handleSubmit}
         />
         <Button tl={t('dashboard.Cancel')} handleClick={()=>{setShowTenantForm(false);setTenant({});}} />

@@ -42,7 +42,7 @@ export default function RentForm() {
           options={RENT_STATUS_ARRAY}
           handleSelect={(value) => setCurRent({ ...curRent, status: value })}
         />
-        <Button tl="Add Rent" handleClick={()=>{}} />
+        <Button tl={curRent._id?t('dashboard.Update'):t('dashboard.Add')} handleClick={()=>{}} />
         <button onClick={setShowRentForm}>{t('dashboard.Cancel')}</button>
       </form>
     </FormBackdrop>

@@ -68,7 +68,11 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
   },
   showRentForm:false,
   setShowRentForm:() => {
-    set({showRentForm:!get().showRentForm});
+    const curShowRentForm = get().showRentForm;
+    if (curShowRentForm) {
+      set({curRent:{}});
+    }
+    set({showRentForm:!curShowRentForm});
   },
   fetchRents: async (tenantId:String) => {
     const { rents, tenant, room, property, err } = await fetchData({
@@ -93,7 +97,6 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
       body: get().curRent,
     });
     showToast(msg || err);
-    set({curRent:{}});
     get().fetchRents(get().curTenant._id);
     get().setShowRentForm();
   },
