@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/user";
 import { decodeToken } from "@/utils/jwt";
 import connect from "@/config/db";
+import { sendResponse } from "@/utils/http";
 
 export async function GET(request: NextRequest) {
   try {
@@ -16,6 +17,6 @@ export async function GET(request: NextRequest) {
     const user = await User.findOne({ _id: verified.userId },'email roles');
     return NextResponse.json({ user }, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ err }, { status: 500 });
+    return sendResponse({response:{err},status:500});
   }
 }

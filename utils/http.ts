@@ -25,3 +25,15 @@ export const fetchData = async ({
     return { err };
   }
 };
+
+import { NextRequest, NextResponse } from "next/server";
+
+interface SendResponseProps {
+  status: number,
+  response:any
+}
+
+export const sendResponse = (params: SendResponseProps) => {
+  const {response, status} = params;
+  return NextResponse.json(response, {status});
+}
