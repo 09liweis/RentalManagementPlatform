@@ -40,7 +40,7 @@ export async function POST(req: Request) {
               You have requested to reset your password. To continue, click the button below:
             </p>
             <div style="text-align: center; margin-bottom: 16px;">
-              <a href="https://3000-09liweis-rentalmanageme-nde8tf6ajbg.ws-us116.gitpod.io/resetpassword?token=${token}" style="background-color: #f97316; color: #ffffff; font-weight: bold; padding: 12px 24px; border-radius: 24px; text-decoration: none; display: inline-block;">
+              <a href="${process.env.HOST}/resetpassword?token=${token}" style="background-color: #f97316; color: #ffffff; font-weight: bold; padding: 12px 24px; border-radius: 24px; text-decoration: none; display: inline-block;">
                 RESET PASSWORD
               </a>
             </div>
