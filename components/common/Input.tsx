@@ -20,7 +20,7 @@ const Input: FC<InputProps> = ({
   onChange,
 }) => {
   return (
-    <div>
+    <div className='text-left'>
       <label>{placeholder}</label>
       <input
         autoFocus={autoFocus}

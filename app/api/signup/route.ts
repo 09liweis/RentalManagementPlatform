@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import User from "@/models/user";
 import connect from "@/config/db";
+import { sendEmail } from "@/lib/email";
 
 /**
  * @swagger
@@ -41,6 +42,7 @@ export async function POST(request: NextRequest) {
       });
 
       existingUser = await newUser.save();
+      sendEmail({to:email, subject:'Welcome to Tenant Tracker', html:'<p>Please activte</p>'})
       return NextResponse.json({ msg: "Sign up successfully!" }, { status: 200 });
     } else {
 

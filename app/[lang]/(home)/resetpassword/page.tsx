@@ -34,7 +34,7 @@ export default function ResetPassword() {
       return;
     }
 
-    const response = await fetch('/api/sendemail/resetdata', {
+    const response = await fetch('/api/resetpassword', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
