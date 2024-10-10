@@ -15,6 +15,7 @@
     "@types/swagger-ui-react": "^4.18.3",
     "appwrite": "^15.0.0",
     "bcryptjs": "^2.4.3",
+    "httpsms": "^0.0.4",
     "jsonwebtoken": "^9.0.2",
     "mapbox-gl": "^3.6.0",
     "mongodb": "^6.8.0",
@@ -27,6 +28,7 @@
     "react-dom": "^18",
     "react-map-gl": "^7.1.7",
     "react-toastify": "^10.0.5",
+    "resend": "^4.0.0",
     "swagger-ui-react": "^5.17.14",
     "zustand": "^4.5.5"
   },
