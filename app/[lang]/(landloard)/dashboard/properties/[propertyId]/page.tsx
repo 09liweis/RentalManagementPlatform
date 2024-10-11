@@ -106,7 +106,7 @@ export default function PropertyPage({
         </section>
       </FormBackdrop> }
 
-      {costs.map((cost)=><article key={cost._id}>{cost.tp} - {cost.amount}</article>)}
+      {costs.map((cost)=><article className="card" key={cost._id}>{t(cost.tpTxt||'')} - {cost.amount}</article>)}
       <Button tl={'Add Cost'} handleClick={() => setShowCostForm(true)} />
       {showCostForm && <CostForm showCostForm={setShowCostForm} propertyId={propertyId} />}
     </>
