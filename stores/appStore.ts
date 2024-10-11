@@ -10,6 +10,7 @@ interface AppState {
 const useAppStore = create<AppState>((set, get) => ({
   curLocale: 'en-CA',
   setLocale: (locale:string) => {
+    localStorage.setItem('locale',locale);
     set({curLocale:locale})
   },
   t: (key:string) => {

@@ -23,9 +23,9 @@ function Login() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    const { err } = await login({ email, password });
+    const { err,locale } = await login({ email, password });
     if (!err) {
-      router.push(`/${curLocale}/dashboard`);
+      router.push(`/${locale||curLocale}/dashboard`);
     } else {
       setLoading(false);
     }

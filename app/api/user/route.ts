@@ -4,7 +4,7 @@ import { decodeToken } from "@/utils/jwt";
 import connect from "@/config/db";
 import { sendResponse } from "@/utils/http";
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     const verified = decodeToken(request);
 
@@ -13,8 +13,13 @@ export async function GET(request: NextRequest) {
     }
 
     await connect();
+    const {locale} = await request.json();
 
-    const user = await User.findOne({ _id: verified.userId },'email roles');
+    const user = await User.findOne({ _id: verified.userId },'email locale roles');
+
+    user.locale = locale;
+    await user.save();
+
     return NextResponse.json({ user }, { status: 200 });
   } catch (err) {
     return sendResponse({response:{err},status:500});
