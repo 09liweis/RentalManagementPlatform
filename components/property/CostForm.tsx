@@ -22,13 +22,13 @@ export default function CostForm({
   cost,
   propertyId
 }: PropertyFormProps) {
-  const { fetchProperties } = usePropertyStore();
+  const { fetchPropertyStats } = usePropertyStore();
 
   const [curCost, setCurCost] = useState<Cost>();
 
   useEffect(() => setCurCost(cost), [cost]);
 
-  const handlePropertySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const method = curCost?._id ? "PUT" : "POST";
     const url = curCost?._id
@@ -37,7 +37,7 @@ export default function CostForm({
     const { msg, err } = await fetchData({ url, method, body: curCost });
     showCostForm(false);
     showToast(err || msg);
-    fetchProperties();
+    fetchPropertyStats({propertyId});
     setCurCost(EMPTY_PROPERTY);
   };
 
@@ -45,7 +45,7 @@ export default function CostForm({
     <FormBackdrop>
       <form
         className="form-container"
-        onSubmit={handlePropertySubmit}
+        onSubmit={handleCostSubmit}
       >
         <FormTitle title="Add New Cost" />
         <Input
@@ -72,7 +72,7 @@ export default function CostForm({
             setCurCost({ ...curCost, tp: value })
           }
         />
-        <Button tl={`Add`} handleClick={handlePropertySubmit} />
+        <Button tl={`Add`} handleClick={()=>{}} />
         <button onClick={() => showCostForm(false)}>Cancel</button>
       </form>
     </FormBackdrop>

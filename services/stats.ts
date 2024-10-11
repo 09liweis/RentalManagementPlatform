@@ -4,6 +4,7 @@ import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
 import {RENT_STATUS, PENDING, PAID, CANCELLED} from "@/types/rent";
 import Cost from "@/models/cost";
+import { COST_TP_MAP } from "@/types/cost";
 
 const getCurrentYearMonth = (date: string | undefined) => {
   if (date) {
@@ -63,7 +64,18 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
 
   costQuery.date = { $gte: currentYearMonth, $lt: nextYearMonth };
 
-  const costs = await Cost.find(costQuery);
+  const costsResult = await Cost.find(costQuery);
+  const costs = costsResult.map((cost) => {
+    return {
+      _id:cost._id,
+      amount:cost.amount,
+      date:cost.date,
+      tp:cost.tp,
+      tpTxt:COST_TP_MAP[cost.tp] || cost.tp
+    }
+  });
+
+
   const rooms = await Room.find(roomsQuery);
   const roomIds = rooms.map((room) => room._id);
   const tenants = await Tenant.find({ room: { $in: roomIds } });

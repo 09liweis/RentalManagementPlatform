@@ -3,6 +3,7 @@ export interface Cost {
   amount?:string;
   date?:string;
   tp?:string;
+  tpTxt?:string;
   user?:string;
   property?:string;
 } 

@@ -19,10 +19,11 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   try {
     await connect();
 
-    const costs = Cost.find({property:propertyId, user:verified.userId});
+    const costs = await Cost.find({property:propertyId, user:verified.userId});
 
     return NextResponse.json({costs}, { status: OK });
   } catch (err) {
+    console.error(err);
     return NextResponse.json({ err }, { status: 500 });
   }
 }
