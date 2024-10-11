@@ -1,5 +1,6 @@
 import { showToast } from '@/components/common/Toast';
-import { Property } from '@/types/property';
+import { Cost } from '@/types/cost';
+import { EMPTY_PROPERTY, Property } from '@/types/property';
 import { Rent } from '@/types/rent';
 import { Room } from '@/types/room';
 import { fetchData } from '@/utils/http';
@@ -16,6 +17,7 @@ interface RentStats {
 interface PropertyState {
   rentStats:RentStats,
   properties: Property[];
+  curProperty: Property;
   rooms: Room[];
   tenants:any;
   curTenant:any;
@@ -23,6 +25,8 @@ interface PropertyState {
   rents:Rent[];
   propertiesFetched:boolean;
   fetchProperties: () => void;
+  costs: Cost[],
+  fetchCosts: (propertyId:string) => void;
   fetchRents:(tenantId:String) => void;
   fetchPropertyStats: ({propertyId,date}:any) => void;
   curRent: Rent;
@@ -36,6 +40,7 @@ interface PropertyState {
 const usePropertyStore = create<PropertyState>((set, get) => ({
   rentStats:{},
   properties: [],
+  curProperty:EMPTY_PROPERTY,
   rooms: [],
   tenants:[],
   curTenant:{},
@@ -55,11 +60,24 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
 
   fetchPropertyStats: async ({propertyId, selectDate}:any) => {
     const apiUrl = propertyId ? `/api/properties/${propertyId}?date=${selectDate||''}` : `/api/overview?date=${selectDate||''}`;
-    const {properties,rooms,tenants,totalRents,receivedRents,pendingRents,totalCost,date} = await fetchData({
+    const {properties,rooms,tenants,costs,totalRents,receivedRents,pendingRents,totalCost,date} = await fetchData({
       url: apiUrl,
     });
-    set({properties,rooms,tenants});
+    if (propertyId) {
+      set({curProperty:properties[0]});
+    }
+    set({properties,rooms,tenants,costs});
     set({rentStats:{totalRents,receivedRents,pendingRents,totalCost,date}})
+  },
+
+  costs:[],
+  fetchCosts: async (propertyId:string) => {
+    const {costs, err} = await fetchData({url:`/api/properties/${propertyId}/costs`})
+    if (err) {
+      showToast(err);
+      return;
+    }
+    set({costs});
   },
 
   curRent:{},

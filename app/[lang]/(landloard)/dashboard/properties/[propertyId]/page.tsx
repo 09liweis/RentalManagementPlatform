@@ -16,6 +16,7 @@ import { Cost } from "@/types/cost";
 import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
 import SelectGroup from "@/components/common/SelectGroup";
+import usePropertyStore from "@/stores/propertyStore";
 
 export default function PropertyPage({
   params,
@@ -23,30 +24,30 @@ export default function PropertyPage({
   params: { propertyId: string };
 }) {
   const {t} = useAppStore();
+  const {costs, rooms, curProperty} = usePropertyStore();
   const { propertyId } = params;
 
   const [loading, setLoading] = useState(false);
-  const [property, setProperty] = useState<Property>();
-  const [rooms, setRooms] = useState<Room[]>([]);
 
-  const fetchPropertyRooms = async () => {
-    setLoading(true);
-    const { property, rooms, err } =
-      await fetchData({
-        url: `/api/properties/${propertyId}/rooms`,
-      });
-    if (err) {
-      showToast(err);
-    } else {
-      setProperty(property);
-      setRooms(rooms);
-    }
+  // const fetchPropertyRooms = async () => {
+  //   setLoading(true);
+  //   const { property, rooms, err } =
+  //     await fetchData({
+  //       url: `/api/properties/${propertyId}/rooms`,
+  //     });
+  //   if (err) {
+  //     showToast(err);
+  //   } else {
+  //     setProperty(property);
+  //     setRooms(rooms);
+  //   }
 
-    setLoading(false);
-  };
+  //   setLoading(false);
+  // };
 
   useEffect(() => {
-    fetchPropertyRooms();
+    // fetchPropertyRooms();
+    // fetchCosts(propertyId);
   }, []);
 
   const [room, setRoom] = useState<Room>({ name: "", property: "" });
@@ -61,18 +62,17 @@ export default function PropertyPage({
       method,
       body: room,
     });
-    fetchPropertyRooms();
+    // fetchPropertyRooms();
     showToast(err || msg);
     setRoom({ name: "", property: "" });
     setShowRoomForm(false);
   };
 
-  const [costs, setCosts] = useState<Cost[]>([]);
   const [showCostForm, setShowCostForm] = useState(false);
 
   return (
     <>
-      <h1 className="page-title">Property: {property?.name}</h1>
+      <h1 className="page-title">Property: {curProperty?.name}</h1>
 
       <RentCards propertyId={propertyId} />
 
