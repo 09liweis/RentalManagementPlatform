@@ -16,10 +16,11 @@ export default function Sidebar() {
   const {t, curLocale} = useAppStore();
 
   const isSelected = (path: string) => {
-    if (path != "/dashboard") {
-      return curPathname.startsWith(path);
+    const comparedPath = '/'+curLocale+path;
+    if (comparedPath != `/${curLocale}/dashboard`) {
+      return curPathname.startsWith(comparedPath);
     } else {
-      return curPathname == path;
+      return curPathname == comparedPath;
     }
   };
 
