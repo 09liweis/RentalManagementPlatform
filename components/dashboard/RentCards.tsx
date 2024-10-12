@@ -37,25 +37,25 @@ export default function RentCards({ propertyId }: RentCardsProps) {
     <>
       <Input type="month" value={rentStats.date||''} placeholder={"Select a month"} onChange={(e)=>setDate(e.target.value)} />
       <LoadingSection loading={loading}>
-        <section className="card-container">
+        <section className="card-container grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           <article className="card">
             {properties && <p><span className="rent-price">{properties.length}</span> {t('home.Properties')}</p>}
             {rooms && <p><span className="rent-price">{rooms.length}</span> {t('home.Rooms')}</p>}
             {tenants && <p><span className="rent-price">{tenants.length}</span> {t('home.Tenants')}</p>}
           </article>
-          <article className="card">
+          <article className="card text-yellow-600">
             <p>{t('dashboard.TotalRents')}</p>
             <p className="rent-price">${rentStats.totalRents}</p>
           </article>
-          <article className="card">
+          <article className="card text-green-600">
             <p>{t('dashboard.ReceivedRents')}</p>
             <p className="rent-price">${rentStats.receivedRents}</p>
           </article>
-          <article className="card">
+          <article className="card text-red-600">
             <p>{t('dashboard.PendingRents')}</p>
             <p className="rent-price">${rentStats.pendingRents}</p>
           </article>
-          <article className="card">
+          <article className="card text-red-400">
             <p>{t('dashboard.TotalCosts')}</p>
             <p className="rent-price">${rentStats.totalCost}</p>
           </article>

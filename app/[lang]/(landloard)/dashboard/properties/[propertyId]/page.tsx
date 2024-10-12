@@ -76,18 +76,28 @@ export default function PropertyPage({
 
       <RentCards propertyId={propertyId} />
 
-      <LoadingSection loading={loading}>
-        <section className="card-container flex-col">
-          {rooms.map((room) => (
-            <article key={room._id} className="card flex justify-between items-center">
-              <LinkText className="room-name" href={`/dashboard/rooms/${room._id}`} key={room._id} text={room?.name||''} />
-              <Button tl={t('dashboard.Edit')} handleClick={() => {setRoom(room);setShowRoomForm(true);}} />
-            </article>
-          ))}
-        </section>
-      </LoadingSection>
+      <section className="grid sm:grid-cols-2 gap-4">
+        <section>
+          <LoadingSection loading={loading}>
+            <section className="card-container flex-col">
+              {rooms.map((room) => (
+                <article key={room._id} className="card flex justify-between items-center">
+                  <LinkText className="room-name" href={`/dashboard/rooms/${room._id}`} key={room._id} text={room?.name||''} />
+                  <Button tl={t('dashboard.Edit')} handleClick={() => {setRoom(room);setShowRoomForm(true);}} />
+                </article>
+              ))}
+            </section>
+          </LoadingSection>
 
-      <Button tl={t('dashboard.Add')} handleClick={() => setShowRoomForm(true)} />
+          <Button tl={t('dashboard.Add')} handleClick={() => setShowRoomForm(true)} />
+        </section>
+
+      <section>
+        {costs.map((cost)=><article className="card" key={cost._id}>{t(cost.tpTxt||'')} - {cost.amount}</article>)}
+        <Button tl={'Add Cost'} handleClick={() => setShowCostForm(true)} />
+      </section>
+
+      </section>
       
       {showRoomForm && <FormBackdrop>
         <section className="form-container">
@@ -106,8 +116,6 @@ export default function PropertyPage({
         </section>
       </FormBackdrop> }
 
-      {costs.map((cost)=><article className="card" key={cost._id}>{t(cost.tpTxt||'')} - {cost.amount}</article>)}
-      <Button tl={'Add Cost'} handleClick={() => setShowCostForm(true)} />
       {showCostForm && <CostForm showCostForm={setShowCostForm} propertyId={propertyId} />}
     </>
   );
