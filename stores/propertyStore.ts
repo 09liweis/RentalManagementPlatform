@@ -19,6 +19,8 @@ interface PropertyState {
   properties: Property[];
   curProperty: Property;
   rooms: Room[];
+  curRoom: Room;
+  setCurRoom:(room:Room)=>void;
   tenants:any;
   curTenant:any;
   setCurTenant:(tenant:any)=>void;
@@ -42,6 +44,10 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
   properties: [],
   curProperty:EMPTY_PROPERTY,
   rooms: [],
+  curRoom:{},
+  setCurRoom: (room:Room) => {
+    set({curRoom: room});
+  },
   tenants:[],
   curTenant:{},
   setCurTenant:(tenant:any) => {
@@ -99,7 +105,7 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
     if (err) {
       showToast(err);
     } else {
-      set({rents});
+      set({rents,curTenant:tenant, curProperty:property,curRoom:room});
     }
   },
 

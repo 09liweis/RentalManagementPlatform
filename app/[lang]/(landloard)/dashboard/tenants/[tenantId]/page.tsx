@@ -22,11 +22,8 @@ export default function TenantPage({
 
   const {t} = useAppStore();
 
-  const {fetchRents, rents, setCurRent, showRentForm, setShowRentForm, handleDeleteRent, setCurTenant} = usePropertyStore();
+  const {fetchRents, rents, setCurRent, curTenant, curRoom, curProperty, showRentForm, setShowRentForm, handleDeleteRent, setCurTenant} = usePropertyStore();
 
-  const [tenant, setTenant] = useState<any>({});
-  const [room, setRoom] = useState<any>({});
-  const [property, setProperty] = useState<any>({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -38,11 +35,11 @@ export default function TenantPage({
     <>
       <LinkText
         className="page-title"
-        href={`/dashboard/properties/${property?._id}`}
-        text={`${t('home.Property')}: ${property?.name}`}
+        href={`/dashboard/properties/${curProperty?._id}`}
+        text={`${t('home.Property')}: ${curProperty?.name}`}
       />
-      <LinkText className="page-title" href={`/dashboard/rooms/${room?._id}`} text={`${t('home.Room')}: ${room?.name}`} />
-      <h1 className="page-title">{t('home.Tenant')} {tenant?.name}</h1>
+      <LinkText className="page-title" href={`/dashboard/rooms/${curRoom?._id}`} text={`${t('home.Room')}: ${curRoom?.name}`} />
+      <h1 className="page-title">{t('home.Tenant')} {curTenant?.name}</h1>
 
       {showRentForm && <RentForm />}
 
