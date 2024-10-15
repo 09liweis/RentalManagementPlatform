@@ -39,7 +39,11 @@ export default function TenantPage({
         text={`${t('home.Property')}: ${curProperty?.name}`}
       />
       <LinkText className="page-title" href={`/dashboard/rooms/${curRoom?._id}`} text={`${t('home.Room')}: ${curRoom?.name}`} />
-      <h1 className="page-title">{t('home.Tenant')} {curTenant?.name}</h1>
+
+      <div className="flex justify-between">
+        <h1 className="page-title">{t('home.Tenant')} {curTenant?.name}</h1>
+        <Button tl={t('dashboard.AddRent')} handleClick={setShowRentForm} />
+      </div>
 
       {showRentForm && <RentForm />}
 
@@ -72,8 +76,6 @@ export default function TenantPage({
           ))}
         </section>
       </LoadingSection>
-
-      <Button tl={t('dashboard.AddRent')} handleClick={setShowRentForm} />
     </>
   );
 }

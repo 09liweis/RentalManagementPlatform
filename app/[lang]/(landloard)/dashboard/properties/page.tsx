@@ -35,7 +35,10 @@ export default function PropertiesPage() {
 
   return (
     <>
-      <h1 className="page-title">Properties</h1>
+      <div className="flex justify-between">
+        <h1 className="page-title">Properties</h1>
+        <Button tl={t('dashboard.AddNew')} handleClick={() => setShowPropertyForm(true)} />
+      </div>
       {showPropertyForm && (
         <PropertyForm
           property={property}
@@ -56,8 +59,6 @@ export default function PropertiesPage() {
           ))}
         </section>
       </LoadingSection>
-
-      <Button tl={t('dashboard.AddNew')} handleClick={() => setShowPropertyForm(true)} />
     </>
   );
 }

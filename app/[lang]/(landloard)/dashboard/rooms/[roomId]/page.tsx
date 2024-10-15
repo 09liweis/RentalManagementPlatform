@@ -78,7 +78,10 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
         className="page-title"
         text={`${t('home.Property')}: ${property?.name}`}
       />
-      <h2>{t('home.Room')}: {room?.name}</h2>
+      <div className="flex justify-between">
+        <h1 className="page-title">{t('home.Room')}: {room?.name}</h1>
+        <Button tl={t('dashboard.Add')} handleClick={()=>setShowTenantForm(true)} />
+      </div>
 
       {showTenantForm &&
       <FormBackdrop>
@@ -108,9 +111,6 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
         tenants={tenants}
         onEditClick={handleTenantClick}
       />
-
-
-      <Button tl={t('dashboard.Add')} handleClick={()=>setShowTenantForm(true)} />
     </>
   );
 }
