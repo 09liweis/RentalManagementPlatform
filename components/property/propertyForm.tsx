@@ -62,11 +62,13 @@ export default function PropertyForm({
             setCurProperty({ ...curProperty, ptype: value })
           }
         />
-        <Button tl={t(curProperty._id?'dashboard.Update':'dashboard.Add')} handleClick={handlePropertySubmit} />
-        <button onClick={() => {
-          setCurProperty(EMPTY_PROPERTY);
-          showPropertyForm(false);
-        }}>{t('dashboard.Cancel')}</button>
+        <div className="flex justify-between">
+          <Button tl={t(curProperty._id?'dashboard.Update':'dashboard.Add')} handleClick={handlePropertySubmit} />
+          <Button tl={t('dashboard.Cancel')} handleClick={()=>{
+            setCurProperty(EMPTY_PROPERTY);
+            showPropertyForm(false);
+          }} tp="danger" />
+        </div>
       </form>
     </FormBackdrop>
   );

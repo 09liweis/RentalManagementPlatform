@@ -10,6 +10,7 @@ import SelectGroup from "@/components/common/SelectGroup";
 import FormBackdrop from "@/components/common/form/FormBackdrop";
 import FormTitle from "@/components/common/form/FormTitle";
 import { Cost, COST_TP_ARRAY } from "@/types/cost";
+import useAppStore from "@/stores/appStore";
 
 interface PropertyFormProps {
   propertyId: String;
@@ -23,6 +24,7 @@ export default function CostForm({
   propertyId
 }: PropertyFormProps) {
   const { fetchPropertyStats } = usePropertyStore();
+  const {t} = useAppStore();
 
   const [curCost, setCurCost] = useState<Cost>();
 
@@ -72,8 +74,10 @@ export default function CostForm({
             setCurCost({ ...curCost, tp: value })
           }
         />
-        <Button tl={`Add`} handleClick={()=>{}} />
-        <button onClick={() => showCostForm(false)}>Cancel</button>
+        <div className="flex justify-between">
+          <Button tl={t(`dashboard.Add`)} handleClick={()=>{}} />
+          <Button tl={t(`dashboard.Cancel`)} handleClick={()=>{showCostForm(false)}} tp="danger" />
+        </div>
       </form>
     </FormBackdrop>
   );

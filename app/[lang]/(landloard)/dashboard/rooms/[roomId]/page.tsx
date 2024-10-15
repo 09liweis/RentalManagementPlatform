@@ -92,11 +92,13 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
             onChange={(e) => setTenant({ ...tenant, [field]: e.target.value })}
           />
         ))}
-        <Button
-          tl={`${tenant?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
-          handleClick={handleSubmit}
-        />
-        <Button tl={t('dashboard.Cancel')} handleClick={()=>{setShowTenantForm(false);setTenant({});}} />
+        <div className="flex justify-between">
+          <Button
+            tl={`${tenant?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
+            handleClick={handleSubmit}
+          />
+          <Button tl={t('dashboard.Cancel')} handleClick={()=>{setShowTenantForm(false);setTenant({});}} tp="danger" />
+        </div>
       </section>
       </FormBackdrop>
       }

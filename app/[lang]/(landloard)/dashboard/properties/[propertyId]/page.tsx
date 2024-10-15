@@ -108,11 +108,13 @@ export default function PropertyPage({
             onChange={(e) => setRoom({ ...room, name: e.target.value })}
           />
           <SelectGroup value={room["tp"]||""} options={ROOM_TP_ARRAY} label="Room Type" handleSelect={(value)=>setRoom({...room,tp:value})} />
-          <Button
-            tl={`${room?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
-            handleClick={handleRoomSubmit}
-          />
-          <Button tl={t('dashboard.Cancel')} handleClick={()=>{setShowRoomForm(false);setRoom({})}} />
+          <div className="flex justify-between">
+            <Button
+              tl={`${room?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
+              handleClick={handleRoomSubmit}
+            />
+            <Button tl={t('dashboard.Cancel')} handleClick={()=>{setShowRoomForm(false);setRoom({})}} tp="danger" />
+          </div>
         </section>
       </FormBackdrop> }
 
