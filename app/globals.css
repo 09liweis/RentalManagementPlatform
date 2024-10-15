@@ -167,7 +167,7 @@ body {
 }
 
 .card {
-  @apply rounded shadow p-2 transition hover:shadow-lg;
+  @apply rounded relative shadow p-2 transition hover:shadow-lg;
 }
 
 .property-name {

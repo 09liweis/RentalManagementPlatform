@@ -18,6 +18,7 @@ const tenantSchema = new mongoose.Schema({
   endDate: {
     type: String,
   },
+  isCurrent: Boolean
 });
 
 const Tenant =

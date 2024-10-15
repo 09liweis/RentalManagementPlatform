@@ -24,6 +24,7 @@ interface PropertyState {
   tenants:any;
   curTenant:any;
   setCurTenant:(tenant:any)=>void;
+  fetchTenants:(roomId:string) => void;
   rents:Rent[];
   propertiesFetched:boolean;
   fetchProperties: () => void;
@@ -53,6 +54,16 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
   setCurTenant:(tenant:any) => {
     set({curTenant:tenant});
   },
+
+  fetchTenants: async(roomId: string) => {
+    const {tenants, err} = await fetchData({url:`/api/rooms/${roomId}/tenants`});
+    if (err) {
+      showToast(err);
+    } else {
+      set({tenants});
+    }
+  },
+
   rents:[],
   propertiesFetched: false,
   fetchProperties: async () => {
