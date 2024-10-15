@@ -1,7 +1,7 @@
 export interface Room {
   _id?: string;
   name?: string;
-  property?: string;
+  property?: any;
   tp?:string;
 }
 
