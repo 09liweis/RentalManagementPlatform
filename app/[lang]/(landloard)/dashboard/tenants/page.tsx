@@ -27,8 +27,11 @@ export default function TenantsPage() {
       <h1 className="page-title">Tenants Page</h1>
       <LoadingSection loading={loading}>
         <section className="card-container">
-          {tenants.map(({ _id, name }) => (
-            <LinkText className="card" href={`/dashboard/tenants/${_id}`} key={_id} text={name} />
+          {tenants.map(({ _id, name, deposit }) => (
+            <article className="card" key={_id}>
+              <LinkText href={`/dashboard/tenants/${_id}`} text={name} />
+              <p>Deposit: {deposit}</p>
+            </article>
           ))}
         </section>
       </LoadingSection>
