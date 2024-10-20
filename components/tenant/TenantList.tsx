@@ -33,6 +33,7 @@ export default function TenantList({ loading, tenants, onEditClick }:TenantListP
             </div>
             <div className="flex justify-between items-center">
               <div className={`rounded-lg w-10 h-10 cursor-pointer ${tenant.isCurrent?'bg-green-600':'bg-gray-500'}`} onClick={()=>setCurrentTenant(tenant)}></div>
+              <div>{t('dashboard.Deposit')}: {tenant.deposit}</div>
               <div>
                 <span className="tenant-date">{tenant.startDate}</span>
                 {tenant.endDate && <span className="tenant-date"> - {tenant.endDate}</span>}
