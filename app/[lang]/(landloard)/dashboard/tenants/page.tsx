@@ -3,7 +3,6 @@
 import LinkText from "@/components/common/LinkText";
 import LoadingSection from "@/components/common/LoadingSection";
 import { fetchData } from "@/utils/http";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function TenantsPage() {
