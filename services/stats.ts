@@ -103,5 +103,5 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
 
   const totalCost = costs.reduce((acc, cost)=>acc+cost.amount,0);
 
-  return {date:currentYearMonth, properties, rooms, costs, totalCost, tenants, curTenants, totalRents, receivedRents, pendingRents };
+  return {date:currentYearMonth, properties, rooms, costs, totalCost, tenants:curTenants, totalRents, receivedRents, pendingRents };
 };
