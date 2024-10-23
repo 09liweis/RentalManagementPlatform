@@ -37,6 +37,7 @@ export default function Rooms() {
           <article key={room._id} className="card">
             <LinkText text={room.name || ''} href={`/dashboard/rooms/${room._id}`} />
             <p>{t('home.Property')}: {room.property?.name || ''}</p>
+            <p>{room.tenant?.name}</p>
           </article>
         )}
         </section>

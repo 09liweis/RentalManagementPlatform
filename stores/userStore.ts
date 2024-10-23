@@ -1,6 +1,5 @@
 import { showToast } from '@/components/common/Toast';
 import { fetchData } from '@/utils/http';
-import { get } from 'http';
 import { create } from 'zustand'
 
 interface User {

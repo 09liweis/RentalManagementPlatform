@@ -3,6 +3,7 @@ export interface Room {
   name?: string;
   property?: any;
   tp?:string;
+  tenant?:any;
 }
 
 interface ROOM_TP_MAP_TYPE {
