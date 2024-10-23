@@ -13,6 +13,7 @@ interface UserState {
   loginUser: any,
   login: (user: User) => any,
   fetchUser:() => void;
+  logout:()=>void;
 }
 
 const useUserStore = create<UserState>((set, get) => ({
@@ -38,7 +39,10 @@ const useUserStore = create<UserState>((set, get) => ({
       set({loginUser:user});
     }
   },
-  removeAllBears: () => set({ loginUser: {} }),
+  logout: () => {
+    localStorage.setItem('auth-token','');
+    set({ loginUser: {} })
+  },
 }))
 
 export default useUserStore;
