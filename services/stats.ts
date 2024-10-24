@@ -76,12 +76,21 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
   });
 
 
-  const rooms = await Room.find(roomsQuery);
-  const roomIds = rooms.map((room) => room._id);
+  const roomsResult = await Room.find(roomsQuery);
+  const roomIds = roomsResult.map((room) => room._id);
   
-  const tenants = await Tenant.find({ room: { $in: roomIds } });
+  const tenants = await Tenant.find({ room: { $in: roomIds }, isCurrent: true });
+  const tenantMap:{[key:string]:any} = {};
+    tenants.forEach(tenant=>{
+      tenantMap[tenant.room] = tenant;
+    });
   const tenantIds = tenants.map((tenant) => tenant._id);
-  const curTenants = tenants.filter((tenant)=> tenant.isCurrent === true);
+
+  const rooms = roomsResult.map(({_id,name,tp})=>{
+    return {
+      _id,name,tp,tenant:tenantMap[_id]
+    };
+  });
 
   const rents = await Rent.find({
     tenant: { $in: tenantIds },
@@ -103,5 +112,5 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
 
   const totalCost = costs.reduce((acc, cost)=>acc+cost.amount,0);
 
-  return {date:currentYearMonth, properties, rooms, costs, totalCost, tenants:curTenants, totalRents, receivedRents, pendingRents };
+  return {date:currentYearMonth, properties, rooms, costs, totalCost, tenants, totalRents, receivedRents, pendingRents };
 };

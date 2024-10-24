@@ -82,7 +82,10 @@ export default function PropertyPage({
             <section className="card-container flex-col">
               {rooms.map((room) => (
                 <article key={room._id} className="card flex justify-between items-center">
-                  <LinkText className="room-name" href={`/dashboard/rooms/${room._id}`} key={room._id} text={room?.name||''} />
+                  <div>
+                    <LinkText className="room-name" href={`/dashboard/rooms/${room._id}`} key={room._id} text={room?.name||''} />
+                    <p>{t('home.Tenant')}: {room.tenant?.name}</p>
+                  </div>
                   <Button tl={t('dashboard.Edit')} handleClick={() => {setRoom(room);setShowRoomForm(true);}} />
                 </article>
               ))}
