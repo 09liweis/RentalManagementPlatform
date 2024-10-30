@@ -1,7 +1,9 @@
+import { Property } from "./property";
+
 export interface Room {
   _id?: string;
   name?: string;
-  property?: any;
+  property?: Property;
   tp?:string;
   tenant?:any;
 }
