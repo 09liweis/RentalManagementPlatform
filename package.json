@@ -30,7 +30,7 @@
     "react-toastify": "^10.0.5",
     "resend": "^4.0.0",
     "swagger-ui-react": "^5.17.14",
-    "zustand": "^4.5.5"
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@types/negotiator": "^0.6.3",
