@@ -50,7 +50,7 @@ export default function PropertyPage({
     // fetchCosts(propertyId);
   }, []);
 
-  const [room, setRoom] = useState<Room>({ name: "", property: "" });
+  const [room, setRoom] = useState<Room>({ name: "" });
   const [showRoomForm, setShowRoomForm] = useState(false);
   const handleRoomSubmit = async () => {
     const method = room?._id ? "PUT" : "POST";
@@ -64,7 +64,7 @@ export default function PropertyPage({
     });
     // fetchPropertyRooms();
     showToast(err || msg);
-    setRoom({ name: "", property: "" });
+    setRoom({ name: "" });
     setShowRoomForm(false);
   };
 
