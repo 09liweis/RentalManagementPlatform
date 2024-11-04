@@ -12,6 +12,7 @@ interface RentStats {
   pendingRents?:number;
   receivedRents?:number;
   totalCost?:number;
+  pendingRentTenants?: any[]
 }
 
 interface PropertyState {
@@ -77,14 +78,14 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
 
   fetchPropertyStats: async ({propertyId, selectDate}:any) => {
     const apiUrl = propertyId ? `/api/properties/${propertyId}?date=${selectDate||''}` : `/api/overview?date=${selectDate||''}`;
-    const {properties,rooms,tenants,costs,totalRents,receivedRents,pendingRents,totalCost,date} = await fetchData({
+    const {properties,rooms,tenants,costs,totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date} = await fetchData({
       url: apiUrl,
     });
     if (propertyId) {
       set({curProperty:properties[0]});
     }
     set({properties,rooms,tenants,costs});
-    set({rentStats:{totalRents,receivedRents,pendingRents,totalCost,date}})
+    set({rentStats:{totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date}})
   },
 
   costs:[],

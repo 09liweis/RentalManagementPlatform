@@ -100,17 +100,25 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
   let totalRents = 0;
   let receivedRents = 0;
   let pendingRents = 0;
+  const pendingRentTenants:any[] = [];
   rents.forEach((rent) => {
+    console.log(rent);
     const status = RENT_STATUS[rent.status] || rent.status;
     if (status === PAID) {
       receivedRents += rent.amount;
     } else if (status === PENDING) {
       pendingRents += rent.amount;
+
+      pendingRentTenants.push({
+        tenant: tenantMap[rent.room],
+        amount: rent.amount
+      });
+
     }
     totalRents += rent.amount;
   });
 
   const totalCost = costs.reduce((acc, cost)=>acc+cost.amount,0);
 
-  return {date:currentYearMonth, properties, rooms, costs, totalCost, tenants, totalRents, receivedRents, pendingRents };
+  return {date:currentYearMonth, properties, rooms, costs, totalCost, tenants, totalRents, receivedRents, pendingRents, pendingRentTenants };
 };

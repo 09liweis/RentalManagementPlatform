@@ -54,6 +54,9 @@ export default function RentCards({ propertyId }: RentCardsProps) {
           <article className="card text-red-600">
             <p>{t('dashboard.PendingRents')}</p>
             <p className="rent-price">${rentStats.pendingRents}</p>
+            {rentStats.pendingRentTenants?.map(({tenant,amount})=>
+              <div key={tenant._id}>{tenant.name} ${amount}</div>
+            )}
           </article>
           <article className="card text-red-400">
             <p>{t('dashboard.TotalCosts')}</p>
