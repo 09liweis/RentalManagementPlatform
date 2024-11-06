@@ -1,26 +1,19 @@
-import Link from "next/link";
 import LoadingSection from "@/components/common/LoadingSection";
 import LinkText from "../common/LinkText";
 import useAppStore from "@/stores/appStore";
-import { fetchData } from "@/utils/http";
-import { showToast } from "../common/Toast";
-import usePropertyStore from "@/stores/propertyStore";
+import { Tenant } from "@/types/tenant";
 
 interface TenantListProps {
   loading: boolean;
-  tenants: any[];
+  tenants: Tenant[];
   onEditClick: (tenant: any) => void;
+  setCurrentTenant: (tenant: Tenant) => void;
 }
 
-export default function TenantList({ loading, tenants, onEditClick }:TenantListProps) {
+export default function TenantList({ loading, tenants, onEditClick,setCurrentTenant }:TenantListProps) {
   const {t} = useAppStore();
-  const {fetchTenants} = usePropertyStore();
 
-  const setCurrentTenant = async (tenant:any) => {
-    const {err, msg} = await fetchData({url:`/api/tenants/${tenant._id}`,body:{...tenant,isCurrent:true}, method:'PUT'});
-    showToast(err || msg);
-    fetchTenants(tenant.room);
-  }
+  
 
   return (
     <LoadingSection loading={loading}>
@@ -28,7 +21,7 @@ export default function TenantList({ loading, tenants, onEditClick }:TenantListP
         {tenants.map((tenant) => (
           <article key={tenant._id} className="card">
             <div className="flex justify-between">
-              <LinkText className="tenant-name" href={`/dashboard/tenants/${tenant._id}`} text={tenant.name} />
+              <LinkText className="tenant-name" href={`/dashboard/tenants/${tenant._id}`} text={tenant.name||''} />
               <span className="text-red-400 cursor-pointer" onClick={()=>onEditClick(tenant)}>{t('dashboard.Edit')}</span>
             </div>
             <div className="flex justify-between items-center">

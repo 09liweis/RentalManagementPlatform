@@ -10,6 +10,7 @@ import TenantList from "@/components/tenant/TenantList";
 import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
 import FormBackdrop from "@/components/common/form/FormBackdrop";
+import { Tenant } from "@/types/tenant";
 
 export default function RoomPage({ params }: { params: { roomId: string } }) {
   const {t} = useAppStore();
@@ -67,6 +68,12 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
     }
   };
 
+  const setCurrentTenant = async (tenant:Tenant) => {
+    const {err, msg} = await fetchData({url:`/api/tenants/${tenant._id}`,body:{...tenant,isCurrent:true}, method:'PUT'});
+    showToast(err || msg);
+    fetchTenants();
+  }
+
   useEffect(() => {
     fetchTenants();
   }, []);
@@ -110,6 +117,7 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
         loading={loading}
         tenants={tenants}
         onEditClick={handleTenantClick}
+        setCurrentTenant={setCurrentTenant}
       />
     </>
   );
