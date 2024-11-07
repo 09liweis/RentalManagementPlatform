@@ -34,7 +34,7 @@ export default function Rooms() {
       <LoadingSection loading={loading}>
         <section className="card-container">
         {allRooms.map((room)=>
-          <article key={room._id} className="card">
+          <article key={room._id} className={`card ${room.tenant ? '': 'border-green-500 border'}`}>
             <LinkText text={room.name || ''} href={`/dashboard/rooms/${room._id}`} />
             <p>{t('home.Property')}: {room.property?.name || ''}</p>
             <p>{room.tenant?.name}</p>
