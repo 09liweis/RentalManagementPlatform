@@ -102,7 +102,6 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
   let pendingRents = 0;
   const pendingRentTenants:any[] = [];
   rents.forEach((rent) => {
-    console.log(rent);
     const status = RENT_STATUS[rent.status] || rent.status;
     if (status === PAID) {
       receivedRents += rent.amount;
