@@ -31,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang={lang}>
       <title>Rental Management Platform</title>
+      <meta name="description" content="Rental Management" />
       <body className={inter.className}>
         <ToastProvider>
           <Header />
