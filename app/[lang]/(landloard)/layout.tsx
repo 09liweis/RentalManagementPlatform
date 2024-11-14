@@ -47,7 +47,7 @@ export default function RootLayout({
           <main className="w-4/5 p-2">
             <header className="flex items-center justify-between p-2 shadow mb-2">
               <Logo/>
-              <Button tl={t('home.Logout')} handleClick={handleLogout} />
+              <Button tp="danger" tl={t('home.Logout')} handleClick={handleLogout} />
             </header>
             <section className="shadow-lg min-h-screen p-2">
               <Suspense fallback={<Loading />}>{children}</Suspense>
