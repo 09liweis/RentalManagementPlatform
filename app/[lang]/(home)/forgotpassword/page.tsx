@@ -1,37 +1,25 @@
 'use client';
-import Link from 'next/link';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import useAppStore from '@/stores/appStore';
+import { fetchData } from '@/utils/http';
 
 export default function ForgotPassword() {
   const {t} = useAppStore();
 
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const router = useRouter();
 
   // @ts-ignore
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/sendemail', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    });
-    console.log("email==================: ",email);
-    const data = await response.json();
+    const {err} = await fetchData({url:'/api/sendemail',body:{email},method:'POST'});
 
-    if (response.ok) {
-      setMessage('Verification code sent to your email.');
-      // 跳转到 reset password 页面
-      router.push('/reset');
-    } else {
-      setMessage(`Error: ${data.error}`);
+    let msg = 'Verification code sent to your email.';
+    if (err) {
+      msg = `Error: ${err}`;
     }
+    setMessage(msg);
   };
 
   return (
