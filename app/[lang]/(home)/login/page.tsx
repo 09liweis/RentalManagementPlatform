@@ -2,7 +2,7 @@
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import useUserStore from "@/stores/userStore";
@@ -13,7 +13,7 @@ import LinkText from "@/components/common/LinkText";
 
 function Login() {
   const {t, curLocale} = useAppStore();
-  const { login } = useUserStore();
+  const { login, loginUser } = useUserStore();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -30,6 +30,12 @@ function Login() {
       setLoading(false);
     }
   };
+
+  useEffect(()=>{
+    if (loginUser.email) {
+      return router.push(`/${curLocale}/dashboard`);
+    }
+  },[loginUser]);
 
   return (
     <form
