@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import { ServerClient } from 'postmark';
 import jwt from 'jsonwebtoken';
 import { sendEmail } from '@/lib/email';
+import User from '@/models/user';
 
 const client = new ServerClient(process.env.POSTMARK_SERVER_TOKEN || "");
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -14,7 +15,12 @@ export async function POST(req: Request) {
     const { email } = await req.json();
 
     if (!email) {
-      return NextResponse.json({ error: 'Sorry, Email Address is necessary.' }, { status: 400 });
+      return NextResponse.json({ err: 'Sorry, Email Address is necessary.' }, { status: 400 });
+    }
+
+    const user = await User.findOne({email});
+    if (!user) {
+      return NextResponse.json({err: 'User Not Found'}, {status: 404});
     }
 
     if (!JWT_SECRET) {
@@ -61,7 +67,6 @@ export async function POST(req: Request) {
     };
 
     try {
-      console.log('Sending email with Postmark...');
       sendEmail(emailContent);
       return NextResponse.json({ msg: 'The verification code has been sent to your email' }, { status: 200 });
     } catch (error: any) {
