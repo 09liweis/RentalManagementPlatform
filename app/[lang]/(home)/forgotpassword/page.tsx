@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import useAppStore from '@/stores/appStore';
 import { fetchData } from '@/utils/http';
+import Button from '@/components/common/Button';
 
 export default function ForgotPassword() {
   const {t} = useAppStore();
@@ -39,12 +40,7 @@ export default function ForgotPassword() {
         className="w-full p-3 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
         required
       />
-      <button
-        type="submit"
-        className="w-full bg-orange-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
-      >
-        {t('home.ResetPassword')}
-      </button>
+      <Button tl={t('home.ResetPassword')} handleClick={()=>{}} />
       {message && <p className="text-center mt-4 text-green-500">{message}</p>}
     </form>
 
