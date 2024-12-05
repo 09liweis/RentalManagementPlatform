@@ -2,7 +2,7 @@
 import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
 import { showToast } from "../common/Toast";
-import { EMPTY_PROPERTY, Property, PROPERTY_PTYPE_ARRAY } from "@/types/property";
+import { EMPTY_PROPERTY, Property, PROPERTY_PTYPE_ARRAY, Suggestion } from "@/types/property";
 import usePropertyStore from "@/stores/propertyStore";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
@@ -24,6 +24,9 @@ export default function PropertyForm({
   const { fetchProperties } = usePropertyStore();
 
   const [curProperty, setCurProperty] = useState<Property>(property);
+  const [address, setAddress] = useState<string>('');
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => setCurProperty(property), [property]);
 
@@ -40,6 +43,34 @@ export default function PropertyForm({
     setCurProperty(EMPTY_PROPERTY);
   };
 
+  const handleAddressChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setAddress(value);
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+    }
+    const timeoutId = setTimeout(async () => {
+      if (value) {
+        const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(value)}.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}`);
+        const data = await response.json();
+        setSuggestions(data.features);
+      } else {
+        setSuggestions([]);
+      }
+    }, 300);
+    setDebounceTimeout(timeoutId);
+  };
+
+  const handleSuggestionClick = (suggestion: Suggestion) => {
+    setCurProperty({ 
+      ...curProperty, 
+      address: suggestion.place_name, 
+      loc: suggestion.geometry.coordinates, 
+      mapbox_id: suggestion.id 
+    });
+    setSuggestions([]);
+  };
+
   return (
     <FormBackdrop>
       <form
@@ -54,6 +85,19 @@ export default function PropertyForm({
             setCurProperty({ ...curProperty, name: e.target.value })
           }
         />
+        <Input
+          type="text"
+          placeholder="Enter address"
+          value={address}
+          onChange={handleAddressChange}
+        />
+        {suggestions.length > 0 && (
+          <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md max-h-48 overflow-y-auto">
+            {suggestions.map((suggestion) => (
+              <li key={suggestion.id} className="py-2 px-4 cursor-pointer hover:bg-gray-100 text-gray-800 text-sm" onClick={() => handleSuggestionClick(suggestion)}>{suggestion.place_name}</li>
+            ))}
+          </ul>
+        )}
         <SelectGroup
           value={curProperty.ptype || ""}
           label="Property Type"

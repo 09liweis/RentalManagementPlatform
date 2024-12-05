@@ -13,6 +13,8 @@ const propertySchema = new mongoose.Schema({
   address: {
     type: String,
   },
+  loc: Array,
+  mapbox_id: String
 });
 
 const Property =

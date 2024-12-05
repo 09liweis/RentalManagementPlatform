@@ -37,10 +37,13 @@ export async function PUT(request: NextRequest, { params }: ParamsProps) {
 
   try {
     await connect();
-    const { name, ptype } = await request.json();
+    const { name, ptype, address, loc, mapbox_id } = await request.json();
     const property = await Property.findOne({ _id: propertyId });
     property.name = name;
     property.ptype = ptype;
+    property.address = address;
+    property.loc = loc;
+    property.mapbox_id = mapbox_id;
     await property.save();
     return NextResponse.json({ msg: "updated" }, { status: 200 });
   } catch (err) {

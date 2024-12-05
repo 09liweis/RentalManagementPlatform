@@ -1,7 +1,10 @@
 export interface Property {
   _id?: string,
   name: string,
-  ptype?: string
+  ptype?: string,
+  address?:string,
+  loc?:Array<number>,
+  mapbox_id?:string
 }
 
 export const EMPTY_PROPERTY: Property = {
@@ -32,3 +35,19 @@ function convertMap2Array() {
 }
 
 export const PROPERTY_PTYPE_ARRAY = convertMap2Array();
+
+export interface MapboxSuggestion {
+  place_name: string;
+  geometry: {
+    coordinates: [number, number];
+  };
+  id: string;
+}
+
+export interface Suggestion {
+  place_name: string;
+  geometry: {
+    coordinates: [number, number];
+  };
+  id: string;
+}
