@@ -2,13 +2,23 @@
 
 import { NextResponse } from 'next/server';
 import { ServerClient } from 'postmark';
-import jwt from 'jsonwebtoken';
 import { sendEmail } from '@/lib/email';
 import User from '@/models/user';
 
 const client = new ServerClient(process.env.POSTMARK_SERVER_TOKEN || "");
 const JWT_SECRET = process.env.JWT_SECRET;
 const EMAIL_URL = process.env.POSTMARK_SENDER_EMAIL;
+
+// Function to generate a random 6-character string
+function generateRandomToken(length: number): string {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
+}
 
 export async function POST(req: Request) {
   try {
@@ -31,8 +41,7 @@ export async function POST(req: Request) {
     //   throw new Error("POSTMARK_SENDER_EMAIL is not defined");
     // }
 
-    // 生成 JWT Token，设置有效期为1小时
-    const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' });
+    const token = generateRandomToken(6);
 
     // 创建邮件内容，使用生成的 token 替换链接中的 your_token_here
     const emailContent = {
@@ -49,6 +58,10 @@ export async function POST(req: Request) {
               <a href="${process.env.HOST}/resetpassword?token=${token}" style="background-color: #f97316; color: #ffffff; font-weight: bold; padding: 12px 24px; border-radius: 24px; text-decoration: none; display: inline-block;">
                 RESET PASSWORD
               </a>
+            </div>
+            <div>
+              or copy and paste this link in your browser:
+              ${process.env.HOST}/resetpassword?token=${token}
             </div>
             <p style="color: #718096; text-align: center; font-size: 14px; margin-bottom: 16px;">
               If you received this email in error, you can safely ignore this email.
