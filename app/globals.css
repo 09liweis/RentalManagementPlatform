@@ -132,7 +132,7 @@ body {
 }
 
 .button {
-  @apply px-2 py-1 text-center rounded bg-gray-600 text-white cursor-pointer transition hover:bg-gray-700;
+  @apply px-2 py-1 text-center rounded text-white cursor-pointer transition bg-blue-500 hover:bg-blue-700;
 }
 
 .button.primary {
