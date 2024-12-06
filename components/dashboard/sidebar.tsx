@@ -25,11 +25,15 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-1/4 p-2">
-      <section className="shadow-lg min-h-screen p-2 rounded">
-        {DASHBOARD_MENUS.map((menu, index) => (
-          <LinkText key={menu.tl} text={t(menu.tl)} href={menu.path} className={`sidebar-menu ${isSelected(menu.path) ? "active" : ""}`} />
-        ))}
+    <aside className="w-64 p-4 bg-gray-100 shadow-lg min-h-screen rounded-lg">
+      <section className="p-4 rounded-lg bg-white shadow-md">
+        <ul>
+          {DASHBOARD_MENUS.map((menu, index) => (
+            <li key={menu.tl}>
+              <LinkText text={t(menu.tl)} href={menu.path} className={`block py-2 px-4 text-gray-700 mb-4 transition rounded hover:bg-gray-200 ${isSelected(menu.path) ? "bg-gray-300" : ""}`} />
+            </li>
+          ))}
+        </ul>
       </section>
     </aside>
   );
