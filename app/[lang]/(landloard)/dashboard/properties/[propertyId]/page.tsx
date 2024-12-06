@@ -77,28 +77,27 @@ export default function PropertyPage({
       <RentCards propertyId={propertyId} />
 
       <section className="grid sm:grid-cols-2 gap-4">
-        <section>
+        <section className="bg-white rounded-lg shadow-md p-4">
           <LoadingSection loading={loading}>
-            <section className="card-container flex-col">
+            <section className="grid gap-4">
               {rooms.map((room) => (
-                <article key={room._id} className="card flex justify-between items-center">
+                <article key={room._id} className="bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition-shadow flex justify-between items-center">
                   <div>
-                    <LinkText className="room-name" href={`/dashboard/rooms/${room._id}`} key={room._id} text={room?.name||''} />
-                    <p>{t('home.Tenant')}: {room.tenant?.name}</p>
+                    <LinkText className="text-lg font-semibold text-gray-800" href={`/dashboard/rooms/${room._id}`} text={room?.name || ''} />
+                    <p className="text-gray-600">{t('home.Tenant')}: {room.tenant?.name}</p>
                   </div>
-                  <Button tl={t('dashboard.Edit')} handleClick={() => {setRoom(room);setShowRoomForm(true);}} />
+                  <Button tl={t('dashboard.Edit')} handleClick={() => { setRoom(room); setShowRoomForm(true); }} />
                 </article>
               ))}
             </section>
           </LoadingSection>
-
           <Button tl={t('dashboard.Add')} handleClick={() => setShowRoomForm(true)} />
         </section>
 
-      <section>
-        {costs.map((cost)=><article className="card" key={cost._id}>{t(cost.tpTxt||'')} - {cost.amount}</article>)}
-        <Button tl={'Add Cost'} handleClick={() => setShowCostForm(true)} />
-      </section>
+        <section>
+          {costs.map((cost)=><article className="card" key={cost._id}>{t(cost.tpTxt||'')} - {cost.amount}</article>)}
+          <Button tl={'Add Cost'} handleClick={() => setShowCostForm(true)} />
+        </section>
 
       </section>
       
