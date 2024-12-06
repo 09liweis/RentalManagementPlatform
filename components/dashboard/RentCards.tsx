@@ -37,30 +37,30 @@ export default function RentCards({ propertyId }: RentCardsProps) {
     <>
       <Input type="month" value={rentStats.date||''} placeholder={"Select a month"} onChange={(e)=>setDate(e.target.value)} />
       <LoadingSection loading={loading}>
-        <section className="card-container grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          <article className="card">
-            {properties && <p><span className="rent-price">{properties.length}</span> {t('home.Properties')}</p>}
-            {rooms && <p><span className="rent-price">{rooms.length}</span> {t('home.Rooms')}</p>}
-            {tenants && <p><span className="rent-price">{tenants.length}</span> {t('home.Tenants')}</p>}
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <article className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
+            {properties && <p><span className="rent-price font-bold text-lg">{properties.length}</span> {t('home.Properties')}</p>}
+            {rooms && <p><span className="rent-price font-bold text-lg">{rooms.length}</span> {t('home.Rooms')}</p>}
+            {tenants && <p><span className="rent-price font-bold text-lg">{tenants.length}</span> {t('home.Tenants')}</p>}
           </article>
-          <article className="card text-yellow-600">
+          <article className="bg-yellow-100 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
             <p>{t('dashboard.TotalRents')}</p>
-            <p className="rent-price">${rentStats.totalRents}</p>
+            <p className="rent-price text-yellow-600 font-bold text-lg">${rentStats.totalRents}</p>
           </article>
-          <article className="card text-green-600">
+          <article className="bg-green-100 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
             <p>{t('dashboard.ReceivedRents')}</p>
-            <p className="rent-price">${rentStats.receivedRents}</p>
+            <p className="rent-price text-green-600 font-bold text-lg">${rentStats.receivedRents}</p>
           </article>
-          <article className="card text-red-600">
+          <article className="bg-red-100 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
             <p>{t('dashboard.PendingRents')}</p>
-            <p className="rent-price">${rentStats.pendingRents}</p>
-            {rentStats.pendingRentTenants?.map(({tenant,amount})=>
-              <div key={tenant._id}>{tenant.name} ${amount}</div>
+            <p className="rent-price text-red-600 font-bold text-lg">${rentStats.pendingRents}</p>
+            {rentStats.pendingRentTenants?.map(({tenant,amount}) =>
+              <div key={tenant._id} className="text-red-600">{tenant.name} ${amount}</div>
             )}
           </article>
-          <article className="card text-red-400">
+          <article className="bg-red-200 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
             <p>{t('dashboard.TotalCosts')}</p>
-            <p className="rent-price">${rentStats.totalCost}</p>
+            <p className="rent-price text-red-600 font-bold text-lg">${rentStats.totalCost}</p>
           </article>
         </section>
       </LoadingSection>
