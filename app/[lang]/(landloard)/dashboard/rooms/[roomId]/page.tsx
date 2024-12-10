@@ -66,6 +66,7 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
       fetchTenants();
       setTenant({});
     }
+    setShowTenantForm(false);
   };
 
   const setCurrentTenant = async (tenant:Tenant) => {

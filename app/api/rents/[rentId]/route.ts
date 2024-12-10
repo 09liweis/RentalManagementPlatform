@@ -31,8 +31,10 @@ export async function PUT(request: NextRequest, { params }: ParamsProps) {
       return NextResponse.json({ err: "Rent not found" }, { status: 404 });
     }
 
-    const {status} = await request.json();
+    const {status,amount,startDate} = await request.json();
     foundRent.status = status;
+    foundRent.amount = amount;
+    foundRent.startDate = startDate;
     await foundRent.save();
     
     return NextResponse.json({ msg: "updated" }, { status: 200 });
