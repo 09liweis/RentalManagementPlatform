@@ -81,14 +81,18 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
   
   const tenants = await Tenant.find({ room: { $in: roomIds } });
   const tenantMap:{[key:string]:any} = {};
+  const currentTenantsMap:{[key:string]:any} = {};
     tenants.forEach(tenant=>{
       tenantMap[tenant.room] = tenant;
+      if (tenant.isCurrent) {
+        currentTenantsMap[tenant.room] = tenant;
+      }
     });
   const tenantIds = tenants.map((tenant) => tenant._id);
 
   const rooms = roomsResult.map(({_id,name,tp})=>{
     return {
-      _id,name,tp,tenant:tenantMap[_id]
+      _id,name,tp,tenant:currentTenantsMap[_id]
     };
   });
 
