@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
-import jwt from "jsonwebtoken";
 import Property from "@/models/property";
 import { decodeToken } from "@/utils/jwt";
 import connect from "@/config/db";
