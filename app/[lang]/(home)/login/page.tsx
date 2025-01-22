@@ -4,10 +4,8 @@ import Button from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import Link from "next/link";
 import useUserStore from "@/stores/userStore";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { EMAIL } from "@/constants/text";
 import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
 
