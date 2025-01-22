@@ -55,6 +55,7 @@ export async function GET(request: NextRequest) {
     const properties = await Property.find({ user: verified.userId });
     return NextResponse.json({ properties }, { status: 200 });
   } catch (err) {
+    console.error(err);
     return NextResponse.json({ err }, { status: 500 });
   }
 }
