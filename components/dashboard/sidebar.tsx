@@ -25,7 +25,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-64 p-4 bg-gray-100 shadow-lg min-h-screen rounded-lg">
+    <aside className="w-64 p-4 bg-gray-100 shadow-lg min-h-screen">
       <section className="p-4 rounded-lg bg-white shadow-md">
         <ul>
           {DASHBOARD_MENUS.map((menu, index) => (
