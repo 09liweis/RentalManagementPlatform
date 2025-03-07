@@ -37,7 +37,7 @@ export default function RentCards({ propertyId }: RentCardsProps) {
     <>
       <Input type="month" value={rentStats.date||''} placeholder={"Select a month"} onChange={(e)=>setDate(e.target.value)} />
       <LoadingSection loading={loading}>
-        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
           <article className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
             {properties && <p><span className="rent-price font-bold text-lg">{properties.length}</span> {t('home.Properties')}</p>}
             {rooms && <p><span className="rent-price font-bold text-lg">{rooms.length}</span> {t('home.Rooms')}</p>}
