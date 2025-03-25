@@ -40,9 +40,10 @@ export async function POST(request: NextRequest, { params }: ParamsProps) {
 
   try {
     await connect();
-    const { name, startDate, endDate } = await request.json();
+    const { name, deposit, startDate, endDate } = await request.json();
     const newTenant = new Tenant({
       name,
+      deposit,
       startDate,
       endDate,
       room: roomId,
