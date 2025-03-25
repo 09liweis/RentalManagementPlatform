@@ -10,6 +10,7 @@ interface User {
 }
 
 interface UserState {
+  loadingUser: boolean,
   loginUser: any,
   login: (user: User) => any,
   fetchUser:() => void;
@@ -17,6 +18,7 @@ interface UserState {
 }
 
 const useUserStore = create<UserState>((set, get) => ({
+  loadingUser: true,
   loginUser: {},
   login: async ({email,password}) => {
     const {token,err,locale} = await fetchData({url:USER_LOGIN,method:'POST',body:{email,password}});
@@ -38,6 +40,7 @@ const useUserStore = create<UserState>((set, get) => ({
     } else {
       set({loginUser:user});
     }
+    set({loadingUser:false});
   },
   logout: () => {
     localStorage.setItem('auth-token','');

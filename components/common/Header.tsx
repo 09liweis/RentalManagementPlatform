@@ -6,13 +6,14 @@ import useUserStore from "@/stores/userStore";
 import useAppStore from "@/stores/appStore";
 
 export default function Header() {
-  const {loginUser} = useUserStore();
+  const {loginUser, loadingUser} = useUserStore();
   const {t} = useAppStore();
   return (
     <header className="p-4 shadow flex justify-between items-center">
       <Logo />
       <nav className="flex gap-3">
-        {loginUser._id ? 
+        {loadingUser ? 'Loading' :
+        loginUser._id ? 
         <LinkText href="/dashboard" text={t('home.Dashboard')}/> :
         <>
           <LinkText href={"/signup"} text={t('home.Signup')} />
