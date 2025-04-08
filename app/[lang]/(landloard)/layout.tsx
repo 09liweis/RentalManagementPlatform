@@ -41,10 +41,10 @@ export default function RootLayout({
   return (
     <html lang={lang}>
       <title>Dashboard</title>
-      <body className={`${inter.className} min-h-screen flex`}>
+      <body className={`${inter.className} min-h-screen`}>
         <ToastProvider>
-          <Sidebar />
-          <main className="w-4/5 p-2">
+          {/* <Sidebar /> */}
+          <main className="p-4">
             <header className="flex items-center justify-between p-2 shadow mb-2">
               <Logo/>
               <Button tp="danger" tl={t('home.Logout')} handleClick={handleLogout} />

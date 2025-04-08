@@ -21,7 +21,7 @@ export default function Properties() {
 
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center mb-4">
         <h1 className="page-title">Properties</h1>
         <Button tl={t('dashboard.AddNew')} handleClick={() => setShowPropertyForm(true)} />
       </div>
