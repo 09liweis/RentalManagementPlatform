@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import PropertyForm from "@/components/property/propertyForm";
-import Link from "next/link";
 import LoadingSection from "@/components/common/LoadingSection";
 import usePropertyStore from "@/stores/propertyStore";
 import { EMPTY_PROPERTY, Property } from "@/types/property";
@@ -9,23 +8,10 @@ import Button from "@/components/common/Button";
 import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
 
-export default function PropertiesPage() {
+export default function Properties() {
   const {t} = useAppStore();
-  const { properties, propertiesFetched, fetchProperties } = usePropertyStore();
+  const { properties } = usePropertyStore();
   const [showPropertyForm, setShowPropertyForm] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const fetchPropertiesAsync = async () => {
-    setLoading(true);
-    await fetchProperties();
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    if (!propertiesFetched) {
-      fetchPropertiesAsync();
-    }
-  }, []);
 
   const [property, setProperty] = useState<Property>(EMPTY_PROPERTY);
   const handlePropertyEdit = (property: any) => {
@@ -45,7 +31,7 @@ export default function PropertiesPage() {
           showPropertyForm={setShowPropertyForm}
         />
       )}
-      <LoadingSection loading={loading}>
+      <LoadingSection loading={false}>
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {properties.map((p) => (
             <article key={p._id} className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow border border-gray-200">

@@ -6,7 +6,6 @@ import LinkText from "../common/LinkText";
 
 const DASHBOARD_MENUS = [
   { tl: "home.Dashboard", path: "/dashboard" },
-  { tl: "home.Properties", path: "/dashboard/properties" },
   { tl: "home.Rooms", path: "/dashboard/rooms" },
   { tl: "home.Tenants", path: "/dashboard/tenants" },
 ];
