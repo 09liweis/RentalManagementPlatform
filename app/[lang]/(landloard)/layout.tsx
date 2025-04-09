@@ -44,7 +44,7 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen`}>
         <ToastProvider>
           {/* <Sidebar /> */}
-          <main className="p-4">
+          <main className="p-4 max-w-6xl mx-auto">
             <header className="flex items-center justify-between p-2 shadow mb-2">
               <Logo/>
               <Button tp="danger" tl={t('home.Logout')} handleClick={handleLogout} />
