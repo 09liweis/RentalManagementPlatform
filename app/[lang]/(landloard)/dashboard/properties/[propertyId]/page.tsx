@@ -95,7 +95,7 @@ export default function PropertyPage({
         </section>
 
         <section>
-          {costs.map((cost)=><article className="card" key={cost._id}>{t(cost.tpTxt||'')} - {cost.amount}</article>)}
+          {costs.map((cost)=><article className="card" key={cost._id}>{t(cost.tpTxt||'')} - ${cost.amount}</article>)}
           <Button tl={'Add Cost'} handleClick={() => setShowCostForm(true)} />
         </section>
 
