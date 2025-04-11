@@ -167,7 +167,7 @@ body {
 }
 
 .card {
-  @apply rounded relative shadow p-2 transition hover:shadow-lg;
+  @apply rounded relative shadow p-2 transition hover:shadow-sm;
 }
 
 .property-name {
@@ -180,10 +180,6 @@ body {
 
 .tenant-name {
   @apply text-lg font-semibold cursor-pointer;
-}
-
-.tenant-date {
-  @apply p-1 rounded bg-gray-200 text-gray-800;
 }
 
 .rent-price {
