@@ -1,11 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { fetchData } from "@/utils/http";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import { showToast } from "@/components/common/Toast";
-import LoadingSection from "@/components/common/LoadingSection";
 import TenantList from "@/components/tenant/TenantList";
 import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
