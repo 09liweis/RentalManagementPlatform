@@ -83,8 +83,10 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
     });
     if (propertyId) {
       set({curProperty:properties[0]});
+    } else {
+      set({properties})
     }
-    set({properties,rooms,tenants,costs});
+    set({rooms,tenants,costs});
     set({rentStats:{totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date}})
   },
 
