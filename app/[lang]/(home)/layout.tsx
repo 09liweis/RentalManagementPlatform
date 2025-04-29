@@ -7,6 +7,7 @@ import Header from "@/components/common/Header";
 import useUserStore from "@/stores/userStore";
 import { useEffect } from "react";
 import useAppStore from "@/stores/appStore";
+import { WEBSITE_NAME } from "@/constants/text";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,7 +31,7 @@ export default function RootLayout({
   },[fetchUser, lang, setLocale]);
   return (
     <html lang={lang}>
-      <title>Rental Management Platform</title>
+      <title>{WEBSITE_NAME}</title>
       <meta name="description" content="Rental Management" />
       <body className={inter.className}>
         <ToastProvider>
