@@ -24,29 +24,12 @@ interface ScreenProps {
 }
 export default function Screen({propertyId}:ScreenProps) {
   const {t} = useAppStore();
-  const {costs, rooms, curProperty} = usePropertyStore();
+  const {costs, rooms} = usePropertyStore();
 
   const [loading, setLoading] = useState(false);
 
-  // const fetchPropertyRooms = async () => {
-  //   setLoading(true);
-  //   const { property, rooms, err } =
-  //     await fetchData({
-  //       url: `/api/properties/${propertyId}/rooms`,
-  //     });
-  //   if (err) {
-  //     showToast(err);
-  //   } else {
-  //     setProperty(property);
-  //     setRooms(rooms);
-  //   }
-
-  //   setLoading(false);
-  // };
-
   useEffect(() => {
-    // fetchPropertyRooms();
-    // fetchCosts(propertyId);
+
   }, []);
 
   const [room, setRoom] = useState<Room>({ name: "" });
