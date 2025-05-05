@@ -58,10 +58,10 @@ export default function Screen({propertyId}:ScreenProps) {
 
       <Properties />
 
-      <section className="grid sm:grid-cols-2 gap-4">
+      <section className="grid sm:grid-cols-2 gap-4 mt-5">
         <section className="bg-white rounded-lg shadow-md p-4">
           <LoadingSection loading={loading}>
-            <section className="grid gap-4">
+            <section className="grid gap-4 mb-3">
               {rooms.map((room) => (
                 <article key={room._id} className="bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition-shadow flex justify-between items-center">
                   <div>
