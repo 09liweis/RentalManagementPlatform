@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import ToastProvider from "@/components/common/ToastProvider";
 import Header from "@/components/common/Header";
+import Footer from "@/components/Footer";
 import useUserStore from "@/stores/userStore";
 import { useEffect } from "react";
 import useAppStore from "@/stores/appStore";
@@ -38,6 +39,7 @@ export default function RootLayout({
           <Header />
 
           <main className="min-h-screen flex justify-center items-center">{children}</main>
+          <Footer />
         </ToastProvider>
       </body>
     </html>

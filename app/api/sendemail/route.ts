@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import { ServerClient } from 'postmark';
 import { sendEmail } from '@/lib/email';
 import User from '@/models/user';
+import { WEBSITE_NAME } from '@/constants/text';
 
 const client = new ServerClient(process.env.POSTMARK_SERVER_TOKEN || "");
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -74,7 +75,7 @@ export async function POST(req: Request) {
               </a> if you have any questions.
             </p>
             <p style="color: #4a5568; margin-top: 16px;">Thanks,</p>
-            <p style="color: #4a5568; margin-top: 16px;">The RentalManagementPlatform Team</p>
+            <p style="color: #4a5568; margin-top: 16px;">The ${WEBSITE_NAME} Team</p>
           </div>
         </div>
       `,
