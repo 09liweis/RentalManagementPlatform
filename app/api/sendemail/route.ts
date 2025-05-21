@@ -44,6 +44,7 @@ export async function POST(req: Request) {
     const token = generateRandomToken(6);
 
     // 创建邮件内容，使用生成的 token 替换链接中的 your_token_here
+    const resetLink = `${process.env.HOST}/en-CA/resetpassword?token=${token}`;
     const emailContent = {
       to: email,
       subject: 'Reset your password',
@@ -55,13 +56,13 @@ export async function POST(req: Request) {
               You have requested to reset your password. To continue, click the button below:
             </p>
             <div style="text-align: center; margin-bottom: 16px;">
-              <a href="${process.env.HOST}/resetpassword?token=${token}" style="background-color: #f97316; color: #ffffff; font-weight: bold; padding: 12px 24px; border-radius: 24px; text-decoration: none; display: inline-block;">
+              <a href="${resetLink}" style="background-color: #f97316; color: #ffffff; font-weight: bold; padding: 12px 24px; border-radius: 24px; text-decoration: none; display: inline-block;">
                 RESET PASSWORD
               </a>
             </div>
             <div>
               or copy and paste this link in your browser:
-              ${process.env.HOST}/resetpassword?token=${token}
+              ${resetLink}
             </div>
             <p style="color: #718096; text-align: center; font-size: 14px; margin-bottom: 16px;">
               If you received this email in error, you can safely ignore this email.

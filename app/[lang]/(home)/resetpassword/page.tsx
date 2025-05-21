@@ -63,12 +63,8 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen bg-cover bg-center"
-         style={{backgroundImage: "url('/images/backgroundImage.jpg')"}}>
-
-      <div className="absolute inset-0 bg-blue-500 opacity-70"></div>
-
-      <div className="relative z-10 bg-white p-8 rounded-lg max-w-md w-full">
+    <div className="relative flex items-center justify-center">
+      <div className="relative z-10 bg-white p-8 rounded-lg max-w-md w-full shadow-xl">
         <h2 className="text-center text-2xl font-bold mb-6">Reset Password</h2>
         <form onSubmit={handleResetPassword}>
           <div className="mb-4">
