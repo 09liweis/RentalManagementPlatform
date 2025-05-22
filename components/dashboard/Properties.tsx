@@ -21,7 +21,7 @@ export default function Properties() {
 
   return (
     <>
-      <div className="flex justify-between items-center mt-5 mb-3">
+      <div className="flex justify-between items-center mt-8 pt-4 mb-4 border-t-4 border-sky-800">
         <h1 className="page-title">Properties</h1>
         <Button tl={t('dashboard.AddNew')} handleClick={() => setShowPropertyForm(true)} />
       </div>

@@ -58,29 +58,32 @@ export default function Screen({propertyId}:ScreenProps) {
 
       <Properties />
 
-      <section className="grid sm:grid-cols-2 gap-4 mt-5">
-        <section className="bg-white rounded-lg shadow-md p-4">
-          <LoadingSection loading={loading}>
-            <section className="grid gap-4 mb-3">
-              {rooms.map((room) => (
-                <article key={room._id} className="bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition-shadow flex justify-between items-center">
-                  <div>
-                    <LinkText className="text-lg font-semibold text-gray-800" href={`/dashboard/rooms/${room._id}`} text={room?.name || ''} />
-                    <p className="text-gray-600">{t('home.Tenant')}: {room.tenant?.name}</p>
-                  </div>
-                  <Button tl={t('dashboard.Edit')} handleClick={() => { setRoom(room); setShowRoomForm(true); }} />
-                </article>
-              ))}
-            </section>
-          </LoadingSection>
-          <Button tl={t('dashboard.Add')} handleClick={() => setShowRoomForm(true)} />
-        </section>
+      <section className="mt-8 pt-4 border-t-4 border-green-700">
+        <LoadingSection loading={loading}>
+          <div className="flex justify-between items-center">
+            <h1 className="page-title">Rooms</h1>
+            <Button tl={t('dashboard.Add')} handleClick={() => setShowRoomForm(true)} />
+          </div>
+          <section className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 rounded-lg mb-3">
+            {rooms.map((room) => (
+              <article key={room._id} className="rounded-lg shadow-md hover:shadow-lg p-4 transition-shadow flex justify-between items-center">
+                <div>
+                  <LinkText className="text-lg font-semibold text-gray-800" href={`/dashboard/rooms/${room._id}`} text={room?.name || ''} />
+                  <p className="text-gray-600">{t('home.Tenant')}: {room.tenant?.name}</p>
+                </div>
+                <Button tl={t('dashboard.Edit')} handleClick={() => { setRoom(room); setShowRoomForm(true); }} />
+              </article>
+            ))}
+          </section>
+        </LoadingSection>
+      </section>
 
-        <section>
-          {costs.map((cost)=><article className="card" key={cost._id}>{t(cost.tpTxt||'')} - ${cost.amount}</article>)}
+      <section className="mt-8 pt-4 border-t-4 border-purple-700">
+        <div className="flex justify-between items-center">
+          <h1 className="page-title">Costs</h1>
           <Button tl={'Add Cost'} handleClick={() => setShowCostForm(true)} />
-        </section>
-
+        </div>
+        {costs.map((cost)=><article className="card" key={cost._id}>{t(cost.tpTxt||'')} - ${cost.amount}</article>)}
       </section>
       
       {showRoomForm && <FormBackdrop>
