@@ -1,4 +1,6 @@
-html,body,*{
+html,
+body,
+* {
   font-family: 'Quicksand', sans-serif;
 }
 
@@ -28,22 +30,24 @@ html,body,*{
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: #ffffff;
+  @apply bg-gradient-to-b from-gray-200 to-white;
 }
 
 /*Home page style*/
 .hero-container {
   background-color: #d094ea;
   padding: 100px;
- 
+
 }
+
 .home-page-title {
-  color:white;
+  color: white;
   width: 400px;
   font-size: 3rem;
   line-height: 50px;
   margin-bottom: 20px;
 }
+
 .home-page-subtitle {
   color: white;
   width: 350px;
@@ -55,24 +59,27 @@ body {
   padding: 100px;
   text-align: center;
 }
+
 .video-container-title {
   color: #804ac4;
   font-size: 2rem;
   font-weight: bold;
   line-height: 41px;
   margin-bottom: 20px;
-} 
+}
+
 .video-container-subtitle {
   color: #804ac4;
   width: 350px;
   font-size: 1rem;
   margin: auto;
-} 
+}
 
 .product-analytics-container {
   display: flex;
   padding: 10px;
 }
+
 .product-analytics-container-title {
   color: #804ac4;
   font-size: 2rem;
@@ -80,13 +87,16 @@ body {
   line-height: 41px;
   margin-bottom: 20px;
 }
+
 .product-analytics-container-subtitle {
   margin-bottom: 20px;
 }
+
 .product-analytics-feature {
   padding: 10px;
 
 }
+
 .product-analytics-feature-title {
   color: #804ac4;
   font-size: 1.5rem;
@@ -94,9 +104,8 @@ body {
   line-height: 41px;
   margin-bottom: 10px;
 }
-.product-analytics-feature-subtitle {
 
-}
+.product-analytics-feature-subtitle {}
 
 /*end of Home page style*/
 
@@ -154,6 +163,7 @@ body {
 .sidebar-menu {
   @apply block p-2 rounded mt-5 duration-300 hover:bg-gray-400 hover:text-white;
 }
+
 .sidebar-menu.active {
   @apply bg-gray-400 text-white;
 }

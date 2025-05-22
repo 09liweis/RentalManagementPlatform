@@ -20,17 +20,15 @@ import usePropertyStore from "@/stores/propertyStore";
 import Properties from "./Properties";
 
 interface ScreenProps {
-    propertyId?: string
+  propertyId?: string;
 }
-export default function Screen({propertyId}:ScreenProps) {
-  const {t} = useAppStore();
-  const {costs, rooms} = usePropertyStore();
+export default function Screen({ propertyId }: ScreenProps) {
+  const { t } = useAppStore();
+  const { costs, rooms, curProperty } = usePropertyStore();
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   const [room, setRoom] = useState<Room>({ name: "" });
   const [showRoomForm, setShowRoomForm] = useState(false);
@@ -58,54 +56,96 @@ export default function Screen({propertyId}:ScreenProps) {
 
       <Properties />
 
-      <section className="mt-8 pt-4 border-t-4 border-green-700">
-        <LoadingSection loading={loading}>
-          <div className="flex justify-between items-center">
-            <h1 className="page-title">Rooms</h1>
-            <Button tl={t('dashboard.Add')} handleClick={() => setShowRoomForm(true)} />
-          </div>
-          <section className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 rounded-lg mb-3">
-            {rooms.map((room) => (
-              <article key={room._id} className="rounded-lg shadow-md hover:shadow-lg p-4 transition-shadow flex justify-between items-center">
-                <div>
-                  <LinkText className="text-lg font-semibold text-gray-800" href={`/dashboard/rooms/${room._id}`} text={room?.name || ''} />
-                  <p className="text-gray-600">{t('home.Tenant')}: {room.tenant?.name}</p>
-                </div>
-                <Button tl={t('dashboard.Edit')} handleClick={() => { setRoom(room); setShowRoomForm(true); }} />
-              </article>
-            ))}
-          </section>
-        </LoadingSection>
-      </section>
-
-      <section className="mt-8 pt-4 border-t-4 border-purple-700">
-        <div className="flex justify-between items-center">
-          <h1 className="page-title">Costs</h1>
-          <Button tl={'Add Cost'} handleClick={() => setShowCostForm(true)} />
-        </div>
-        {costs.map((cost)=><article className="card" key={cost._id}>{t(cost.tpTxt||'')} - ${cost.amount}</article>)}
-      </section>
-      
-      {showRoomForm && <FormBackdrop>
-        <section className="form-container">
-          <Input
-            type="text"
-            placeholder={t('dashboard.Name')}
-            value={room["name"] || ""}
-            onChange={(e) => setRoom({ ...room, name: e.target.value })}
-          />
-          <SelectGroup value={room["tp"]||""} options={ROOM_TP_ARRAY} label="Room Type" handleSelect={(value)=>setRoom({...room,tp:value})} />
-          <div className="flex justify-between">
-            <Button
-              tl={`${room?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
-              handleClick={handleRoomSubmit}
-            />
-            <Button tl={t('dashboard.Cancel')} handleClick={()=>{setShowRoomForm(false);setRoom({})}} tp="danger" />
-          </div>
+      {curProperty?._id && (
+        <section className="mt-8 pt-4 border-t-4 border-green-700">
+          <LoadingSection loading={loading}>
+            <div className="flex justify-between items-center">
+              <h1 className="page-title">Rooms</h1>
+              <Button
+                tl={t("dashboard.Add")}
+                handleClick={() => setShowRoomForm(true)}
+              />
+            </div>
+            <section className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 rounded-lg mb-3">
+              {rooms.map((room) => (
+                <article
+                  key={room._id}
+                  className="rounded-lg shadow-md hover:shadow-lg p-4 transition-shadow flex justify-between items-center"
+                >
+                  <div>
+                    <LinkText
+                      className="text-lg font-semibold text-gray-800"
+                      href={`/dashboard/rooms/${room._id}`}
+                      text={room?.name || ""}
+                    />
+                    <p className="text-gray-600">
+                      {t("home.Tenant")}: {room.tenant?.name}
+                    </p>
+                  </div>
+                  <Button
+                    tl={t("dashboard.Edit")}
+                    handleClick={() => {
+                      setRoom(room);
+                      setShowRoomForm(true);
+                    }}
+                  />
+                </article>
+              ))}
+            </section>
+          </LoadingSection>
         </section>
-      </FormBackdrop> }
+      )}
 
-      {showCostForm && propertyId && <CostForm showCostForm={setShowCostForm} propertyId={propertyId} />}
+      {curProperty._id && (
+        <section className="mt-8 pt-4 border-t-4 border-purple-700">
+          <div className="flex justify-between items-center">
+            <h1 className="page-title">Costs</h1>
+            <Button tl={"Add Cost"} handleClick={() => setShowCostForm(true)} />
+          </div>
+          {costs.map((cost) => (
+            <article className="card" key={cost._id}>
+              {t(cost.tpTxt || "")} - ${cost.amount}
+            </article>
+          ))}
+        </section>
+      )}
+
+      {showRoomForm && (
+        <FormBackdrop>
+          <section className="form-container">
+            <Input
+              type="text"
+              placeholder={t("dashboard.Name")}
+              value={room["name"] || ""}
+              onChange={(e) => setRoom({ ...room, name: e.target.value })}
+            />
+            <SelectGroup
+              value={room["tp"] || ""}
+              options={ROOM_TP_ARRAY}
+              label="Room Type"
+              handleSelect={(value) => setRoom({ ...room, tp: value })}
+            />
+            <div className="flex justify-between">
+              <Button
+                tl={`${room?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
+                handleClick={handleRoomSubmit}
+              />
+              <Button
+                tl={t("dashboard.Cancel")}
+                handleClick={() => {
+                  setShowRoomForm(false);
+                  setRoom({});
+                }}
+                tp="danger"
+              />
+            </div>
+          </section>
+        </FormBackdrop>
+      )}
+
+      {showCostForm && propertyId && (
+        <CostForm showCostForm={setShowCostForm} propertyId={propertyId} />
+      )}
     </>
   );
 }
