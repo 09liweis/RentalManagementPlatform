@@ -9,5 +9,5 @@ interface LinkTextProps {
 
 export default function LinkText({ href, text, className }: LinkTextProps) {
   const {curLocale} = useAppStore();
-  return <Link className={`${className || 'link'}`} href={`/${curLocale}${href}`}>{text}</Link>;
+  return <Link className={`${className || 'text-purple-600 hover:text-purple-700 transition-colors duration-300 text-sm font-medium'}`} href={`/${curLocale}${href}`}>{text}</Link>;
 }

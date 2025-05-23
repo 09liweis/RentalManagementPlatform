@@ -20,15 +20,16 @@ const Input: FC<InputProps> = ({
   onChange,
 }) => {
   return (
-    <div className='text-left'>
-      <label>{placeholder}</label>
+    <div className='text-left w-full'>
+      <label className="block text-sm font-medium text-gray-700 mb-1">{placeholder}</label>
       <input
         autoFocus={autoFocus}
-        className='input'
+        className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-400 text-gray-900 transition-all duration-300'
         type={type}
         value={value}
         onChange={onChange}
         disabled={disabled}
+        placeholder={placeholder}
       />
     </div>
   )
