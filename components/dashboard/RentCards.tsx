@@ -12,19 +12,19 @@ interface RentCardsProps {
 }
 
 export default function RentCards({ propertyId }: RentCardsProps) {
+  const { t } = useAppStore();
 
-  const {t} = useAppStore();
-
-  const {fetchPropertyStats, rentStats,properties,rooms,tenants} = usePropertyStore();
+  const { fetchPropertyStats, rentStats, properties, rooms, tenants } =
+    usePropertyStore();
 
   const [loading, setLoading] = useState(false);
 
   const [date, setDate] = useState("");
 
-  const fetchProperty = async (date:string) => {
+  const fetchProperty = async (date: string) => {
     setLoading(true);
 
-    await fetchPropertyStats({propertyId, selectDate:date});
+    await fetchPropertyStats({ propertyId, selectDate: date });
 
     setLoading(false);
   };
@@ -34,36 +34,49 @@ export default function RentCards({ propertyId }: RentCardsProps) {
   }, [date]);
 
   return (
-    <>
-      <Input type="month" value={rentStats.date||''} placeholder={"Select a month"} onChange={(e)=>setDate(e.target.value)} />
-      <LoadingSection loading={loading}>
-        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-          {/* <article className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
-            {properties && <p><span className="rent-price font-bold text-lg">{properties.length}</span> {t('home.Properties')}</p>}
-            {rooms && <p><span className="rent-price font-bold text-lg">{rooms.length}</span> {t('home.Rooms')}</p>}
-            {tenants && <p><span className="rent-price font-bold text-lg">{tenants.length}</span> {t('home.Tenants')}</p>}
-          </article> */}
-          <article className="bg-yellow-100 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
-            <p>{t('dashboard.TotalRents')}</p>
-            <p className="rent-price text-yellow-600 font-bold text-lg">${rentStats.totalRents}</p>
-          </article>
-          <article className="bg-green-100 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
-            <p>{t('dashboard.ReceivedRents')}</p>
-            <p className="rent-price text-green-600 font-bold text-lg">${rentStats.receivedRents}</p>
-          </article>
-          <article className="bg-red-100 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
-            <p>{t('dashboard.PendingRents')}</p>
-            <p className="rent-price text-red-600 font-bold text-lg">${rentStats.pendingRents}</p>
-            {rentStats.pendingRentTenants?.map(({tenant,amount}) =>
-              <div key={tenant._id} className="text-red-600">{tenant.name} ${amount}</div>
-            )}
-          </article>
-          <article className="bg-red-200 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
-            <p>{t('dashboard.TotalCosts')}</p>
-            <p className="rent-price text-red-600 font-bold text-lg">${rentStats.totalCost}</p>
-          </article>
-        </section>
-      </LoadingSection>
-    </>
+    <section className="mt-4">
+      <Input
+        type="month"
+        value={rentStats.date || ""}
+        placeholder={""}
+        onChange={(e) => setDate(e.target.value)}
+      />
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+        {/* <article className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
+          {properties && <p><span className="rent-price font-bold text-lg">{properties.length}</span> {t('home.Properties')}</p>}
+          {rooms && <p><span className="rent-price font-bold text-lg">{rooms.length}</span> {t('home.Rooms')}</p>}
+          {tenants && <p><span className="rent-price font-bold text-lg">{tenants.length}</span> {t('home.Tenants')}</p>}
+        </article> */}
+        <article className="bg-yellow-100 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
+          <p>{t("dashboard.TotalRents")}</p>
+          <p className="rent-price text-yellow-600 font-bold text-lg">
+            ${rentStats.totalRents}
+          </p>
+        </article>
+        <article className="bg-green-100 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
+          <p>{t("dashboard.ReceivedRents")}</p>
+          <p className="rent-price text-green-600 font-bold text-lg">
+            ${rentStats.receivedRents}
+          </p>
+        </article>
+        <article className="bg-red-100 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
+          <p>{t("dashboard.PendingRents")}</p>
+          <p className="rent-price text-red-600 font-bold text-lg">
+            ${rentStats.pendingRents}
+          </p>
+          {rentStats.pendingRentTenants?.map(({ tenant, amount }) => (
+            <div key={tenant._id} className="text-red-600">
+              {tenant.name} ${amount}
+            </div>
+          ))}
+        </article>
+        <article className="bg-red-200 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
+          <p>{t("dashboard.TotalCosts")}</p>
+          <p className="rent-price text-red-600 font-bold text-lg">
+            ${rentStats.totalCost}
+          </p>
+        </article>
+      </section>
+    </section>
   );
 }

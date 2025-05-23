@@ -18,17 +18,17 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
-  params:{lang}
+  params: { lang },
 }: Readonly<{
   children: React.ReactNode;
-  params:any
+  params: any;
 }>) {
-  const {setLocale, t, curLocale} = useAppStore();
-  const {fetchUser} = useUserStore();
-  useEffect(()=>{
+  const { setLocale, t, curLocale } = useAppStore();
+  const { fetchUser } = useUserStore();
+  useEffect(() => {
     fetchUser();
     setLocale(lang);
-  },[fetchUser,setLocale,lang]);
+  }, [fetchUser, setLocale, lang]);
 
   const router = useRouter();
 
@@ -45,11 +45,15 @@ export default function RootLayout({
         <ToastProvider>
           {/* <Sidebar /> */}
           <main className="p-4 max-w-6xl mx-auto">
-            <header className="flex items-center justify-between p-4 shadow mb-4">
-              <Logo/>
-              <Button tp="danger" tl={t('home.Logout')} handleClick={handleLogout} />
+            <header className="flex items-center justify-between p-4 shadow mb-4 bg-white">
+              <Logo />
+              <Button
+                tp="danger"
+                tl={t("home.Logout")}
+                handleClick={handleLogout}
+              />
             </header>
-            <section className="shadow-lg min-h-screen p-4">
+            <section className="shadow-lg min-h-screen p-4 bg-white">
               <Suspense fallback={<Loading />}>{children}</Suspense>
             </section>
           </main>
