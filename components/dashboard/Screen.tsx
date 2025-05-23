@@ -15,6 +15,7 @@ import CostForm from "@/components/property/CostForm";
 import { Cost } from "@/types/cost";
 import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
+import FormWrapper from "@/components/common/form/FormWrapper";
 import SelectGroup from "@/components/common/SelectGroup";
 import usePropertyStore from "@/stores/propertyStore";
 import Properties from "./Properties";
@@ -112,7 +113,7 @@ export default function Screen({ propertyId }: ScreenProps) {
 
       {showRoomForm && (
         <FormBackdrop>
-          <section className="form-container">
+          <FormWrapper onSubmit={handleRoomSubmit}>
             <Input
               type="text"
               placeholder={t("dashboard.Name")}
@@ -128,7 +129,7 @@ export default function Screen({ propertyId }: ScreenProps) {
             <div className="flex justify-between">
               <Button
                 tl={`${room?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
-                handleClick={handleRoomSubmit}
+                handleClick={()=>{}}
               />
               <Button
                 tl={t("dashboard.Cancel")}
@@ -139,7 +140,7 @@ export default function Screen({ propertyId }: ScreenProps) {
                 tp="danger"
               />
             </div>
-          </section>
+          </FormWrapper>
         </FormBackdrop>
       )}
 

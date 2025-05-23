@@ -6,6 +6,7 @@ import { EMPTY_PROPERTY, Property, PROPERTY_PTYPE_ARRAY, Suggestion } from "@/ty
 import usePropertyStore from "@/stores/propertyStore";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
+import FormWrapper from "@/components/common/form/FormWrapper";
 import SelectGroup from "../common/SelectGroup";
 import FormBackdrop from "../common/form/FormBackdrop";
 import FormTitle from "../common/form/FormTitle";
@@ -73,8 +74,7 @@ export default function PropertyForm({
 
   return (
     <FormBackdrop>
-      <form
-        className="form-container"
+      <FormWrapper
         onSubmit={handlePropertySubmit}
       >
         <Input
@@ -113,7 +113,7 @@ export default function PropertyForm({
             showPropertyForm(false);
           }} tp="danger" />
         </div>
-      </form>
+      </FormWrapper>
     </FormBackdrop>
   );
 }

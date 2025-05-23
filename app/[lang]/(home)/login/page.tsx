@@ -8,6 +8,7 @@ import useUserStore from "@/stores/userStore";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
+import FormWrapper from "@/components/common/form/FormWrapper";
 
 function Login() {
   const {t, curLocale} = useAppStore();
@@ -36,10 +37,7 @@ function Login() {
   },[loginUser]);
 
   return (
-    <form
-      onSubmit={handleLogin}
-      className="auth-form"
-    >
+    <FormWrapper onSubmit={handleLogin}>
       <h1 className="font-bold text-lg">{t('home.LoginAsALandlord')}</h1>
       <Input
         autoFocus={true}
@@ -64,7 +62,7 @@ function Login() {
       </nav>
 
       <Button disabled={loading} handleClick={handleLogin} tl={loading ? <LoadingSpinner /> : t('home.Login')} />
-    </form>
+    </FormWrapper>
   );
 }
 

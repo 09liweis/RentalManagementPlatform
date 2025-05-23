@@ -41,11 +41,11 @@ export default function RootLayout({
   return (
     <html lang={lang}>
       <title>Dashboard</title>
-      <body className={`${inter.className} min-h-screen`}>
+      <body className={`${inter.className} min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 `}>
         <ToastProvider>
           {/* <Sidebar /> */}
           <main className="p-4 max-w-6xl mx-auto">
-            <header className="flex items-center justify-between p-4 shadow mb-4 bg-white">
+            <header className="flex items-center justify-between p-4 shadow mb-4 bg-white/80">
               <Logo />
               <Button
                 tp="danger"

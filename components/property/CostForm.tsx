@@ -9,6 +9,7 @@ import Input from "@/components/common/Input";
 import SelectGroup from "@/components/common/SelectGroup";
 import FormBackdrop from "@/components/common/form/FormBackdrop";
 import FormTitle from "@/components/common/form/FormTitle";
+import FormWrapper from "@/components/common/form/FormWrapper";
 import { Cost, COST_TP_ARRAY } from "@/types/cost";
 import useAppStore from "@/stores/appStore";
 
@@ -45,8 +46,7 @@ export default function CostForm({
 
   return (
     <FormBackdrop>
-      <form
-        className="form-container"
+      <FormWrapper
         onSubmit={handleCostSubmit}
       >
         <FormTitle title="Add New Cost" />
@@ -78,7 +78,7 @@ export default function CostForm({
           <Button tl={t(`dashboard.Add`)} handleClick={()=>{}} />
           <Button tl={t(`dashboard.Cancel`)} handleClick={()=>{showCostForm(false)}} tp="danger" />
         </div>
-      </form>
+      </FormWrapper>
     </FormBackdrop>
   );
 }
