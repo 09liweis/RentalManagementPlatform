@@ -49,7 +49,7 @@ export default function TenantPage({
 
 
       <LoadingSection loading={loading}>
-        <section className="card-container">
+        <section className="card-container sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {rents.map(({ _id, amount, startDate, status, statusTxt }) => (
             <article className="card" key={_id}>
               <p className="rent-date">{startDate}</p>

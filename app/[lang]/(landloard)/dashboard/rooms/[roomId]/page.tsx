@@ -8,6 +8,7 @@ import TenantList from "@/components/tenant/TenantList";
 import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
 import FormBackdrop from "@/components/common/form/FormBackdrop";
+import FormWrapper from "@/components/common/form/FormWrapper";
 import { Tenant } from "@/types/tenant";
 
 export default function RoomPage({ params }: { params: { roomId: string } }) {
@@ -91,7 +92,7 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
 
       {showTenantForm &&
       <FormBackdrop>
-      <section className="form-container">
+      <FormWrapper onSubmit={handleSubmit}>
         {tenantFields.map(({ field, inputType, placeholder }) => (
           <Input
             key={field}
@@ -104,11 +105,11 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
         <div className="flex justify-between">
           <Button
             tl={`${tenant?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
-            handleClick={handleSubmit}
+            handleClick={()=>{}}
           />
           <Button tl={t('dashboard.Cancel')} handleClick={()=>{setShowTenantForm(false);setTenant({});}} tp="danger" />
         </div>
-      </section>
+      </FormWrapper>
       </FormBackdrop>
       }
 

@@ -8,6 +8,7 @@ import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import SelectGroup from "@/components/common/SelectGroup";
 import FormBackdrop from "@/components/common/form/FormBackdrop";
+import FormWrapper from "@/components/common/form/FormWrapper";
 import FormTitle from "@/components/common/form/FormTitle";
 import useAppStore from "@/stores/appStore";
 
@@ -22,8 +23,7 @@ export default function RentForm() {
 
   return (
     <FormBackdrop>
-      <form
-        className="form-container"
+      <FormWrapper
         onSubmit={handleRentSubmit}
       >
         <FormTitle title="Add New Rent" />
@@ -48,7 +48,7 @@ export default function RentForm() {
             setShowRentForm();
           }} tp="danger" />
         </div>
-      </form>
+      </FormWrapper>
     </FormBackdrop>
   );
 }
