@@ -32,11 +32,21 @@ export default function RentCard({ rent, handleClick, handleDeleteRent }: any) {
       </div>
 
       <div className="flex justify-between gap-3">
-        <Button tl={t("dashboard.Edit")} handleClick={handleClick} />
+        <Button 
+          tl={t("dashboard.Edit")} 
+          handleClick={handleClick}
+          tp="secondary"
+          outline={true}
+          size="sm"
+          fullWidth={true}
+        />
         <Button
           tp="danger"
           tl={t("dashboard.Delete")}
           handleClick={handleDeleteRent}
+          outline={true}
+          size="sm"
+          fullWidth={true}
         />
       </div>
     </article>
