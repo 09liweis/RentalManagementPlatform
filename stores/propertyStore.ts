@@ -57,11 +57,11 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
   },
 
   fetchTenants: async(roomId: string) => {
-    const {tenants, err} = await fetchData({url:`/api/rooms/${roomId}/tenants`});
+    const {tenants, room, property, err} = await fetchData({url:`/api/rooms/${roomId}/tenants`});
     if (err) {
       showToast(err);
     } else {
-      set({tenants});
+      set({tenants, curRoom:room, curProperty:property});
     }
   },
 

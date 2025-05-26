@@ -10,28 +10,18 @@ import LinkText from "@/components/common/LinkText";
 import FormBackdrop from "@/components/common/form/FormBackdrop";
 import FormWrapper from "@/components/common/form/FormWrapper";
 import { Tenant } from "@/types/tenant";
+import usePropertyStore from "@/stores/propertyStore";
 
 export default function RoomPage({ params }: { params: { roomId: string } }) {
   const {t} = useAppStore();
+  const {fetchTenants, tenants, curProperty, curRoom} = usePropertyStore();
   const { roomId } = params;
   const [loading, setLoading] = useState(false);
   const [showTenantForm, setShowTenantForm] = useState(false);
-  const [tenants, setTenants] = useState<any[]>([]);
-  const [room, setRoom] = useState<any>({});
-  const [property, setProperty] = useState<any>({});
 
-  const fetchTenants = async () => {
+  const fetchRoomTenants = async () => {
     setLoading(true);
-    const { tenants, room, property, err } = await fetchData({
-      url: `/api/rooms/${roomId}/tenants`,
-    });
-    if (err) {
-      showToast(err);
-    } else {
-      setTenants(tenants);
-      setRoom(room);
-      setProperty(property);
-    }
+    await fetchTenants(roomId);
     setLoading(false);
   };
 
@@ -62,7 +52,7 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
       showToast(err);
     } else {
       showToast(msg);
-      fetchTenants();
+      fetchRoomTenants();
       setTenant({});
     }
     setShowTenantForm(false);
@@ -71,22 +61,22 @@ export default function RoomPage({ params }: { params: { roomId: string } }) {
   const setCurrentTenant = async (tenant:Tenant) => {
     const {err, msg} = await fetchData({url:`/api/tenants/${tenant._id}`,body:{...tenant,isCurrent:true}, method:'PUT'});
     showToast(err || msg);
-    fetchTenants();
+    fetchRoomTenants();
   }
 
   useEffect(() => {
-    fetchTenants();
+    fetchRoomTenants();
   }, []);
 
   return (
     <>
       <LinkText
-        href={`/dashboard/properties/${property?._id}`}
+        href={`/dashboard/properties/${curProperty?._id}`}
         className="page-title"
-        text={`${t('home.Property')}: ${property?.name}`}
+        text={`${t('home.Property')}: ${curProperty?.name}`}
       />
       <div className="flex justify-between">
-        <h1 className="page-title">{t('home.Room')}: {room?.name}</h1>
+        <h1 className="page-title">{t('home.Room')}: {curRoom?.name}</h1>
         <Button tl={t('dashboard.Add')} handleClick={()=>setShowTenantForm(true)} />
       </div>
 
