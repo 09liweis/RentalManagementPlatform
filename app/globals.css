@@ -140,18 +140,6 @@ body {
   @apply bg-gray-200;
 }
 
-.button {
-  @apply px-2 py-1 text-center rounded text-white cursor-pointer transition bg-blue-500 hover:bg-blue-700;
-}
-
-.button.primary {
-  @apply bg-sky-600 hover:bg-sky-700;
-}
-
-.button.danger {
-  @apply bg-red-600 hover:bg-red-700;
-}
-
 .auth-form {
   @apply gap-6 p-6 shadow m-auto w-full sm:w-96 flex flex-col justify-center text-center;
 }

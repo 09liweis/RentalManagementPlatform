@@ -64,6 +64,7 @@ export default function TenantPage({
         <section className="card-container sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {rents.map((rent, index) => (
             <RentCard
+              key={rent._id}
               rent={rent}
               handleClick={() => {
                 setShowRentForm();
