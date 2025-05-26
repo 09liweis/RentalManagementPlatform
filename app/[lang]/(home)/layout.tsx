@@ -38,7 +38,7 @@ export default function RootLayout({
         <ToastProvider>
           <Header />
 
-          <main className="min-h-screen flex justify-center items-center bg-gradient-to-br from-purple-50 to-indigo-100 ">{children}</main>
+          <main className="min-h-screen">{children}</main>
           <Footer />
         </ToastProvider>
       </body>
