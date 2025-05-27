@@ -6,6 +6,7 @@ import {RENT_STATUS, PENDING, PAID, CANCELLED} from "@/types/rent";
 import Cost from "@/models/cost";
 import { COST_TP_MAP } from "@/types/cost";
 import { ROOM_TP_MAP } from "@/types/room";
+import { PROPERTY_PTYPE_MAP } from "@/types/property";
 
 const getCurrentYearMonth = (date: string | undefined) => {
   if (date) {
@@ -43,18 +44,25 @@ interface Stats {
 export const getStats = async ({ date, userId, propertyId }: Stats) => {
   const { currentYearMonth, nextYearMonth } = getCurrentYearMonth(date);
 
-  let properties;
-  const propertyQuery: any = {};
-  if (userId) {
-    propertyQuery.user = userId;
-  } else {
-    propertyQuery._id = propertyId;
+  const propertiesResults = await Property.find({user: userId});
+  const properties = propertiesResults.map((p)=>{
+    return {
+      _id:p._id,
+      name:p.name,
+      address:p.address,
+      ptype: p.ptype,
+      ptypeTxt: PROPERTY_PTYPE_MAP[p.ptype] || p.ptype,
+    }
+  });
+  
+  let curProperty =  null;
+  if (propertyId) {
+    curProperty = properties.find((p)=>p._id == propertyId);
   }
-  properties = await Property.find(propertyQuery);
 
   const roomsQuery: any = {};
   const costQuery: any = {};
-  if (userId) {
+  if (!propertyId) {
     const propertyIds = properties.map((prop: any) => prop._id);
     roomsQuery.property = { $in: propertyIds };
     costQuery.property = {$in:propertyIds};
@@ -124,5 +132,5 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
 
   const totalCost = costs.reduce((acc, cost)=>acc+cost.amount,0);
 
-  return {date:currentYearMonth, properties, rooms, costs, totalCost, tenants, totalRents, receivedRents, pendingRents, pendingRentTenants };
+  return {date:currentYearMonth, properties, curProperty, rooms, costs, totalCost, tenants, totalRents, receivedRents, pendingRents, pendingRentTenants };
 };

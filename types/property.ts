@@ -2,6 +2,7 @@ export interface Property {
   _id?: string,
   name: string,
   ptype?: string,
+  ptypeTxt?: string,
   address?:string,
   loc?:Array<number>,
   mapbox_id?:string

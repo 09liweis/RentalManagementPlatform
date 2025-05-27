@@ -20,7 +20,7 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   try {
     await connect();
     const date = request.nextUrl.searchParams.get("date") ||'';
-    const stats = await getStats({ date, propertyId });
+    const stats = await getStats({ date, propertyId, userId: verified.userId });
 
     return NextResponse.json(stats, { status: OK });
   } catch (err) {

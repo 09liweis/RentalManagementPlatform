@@ -78,16 +78,15 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
 
   fetchPropertyStats: async ({propertyId, selectDate}:any) => {
     const apiUrl = propertyId ? `/api/properties/${propertyId}?date=${selectDate||''}` : `/api/overview?date=${selectDate||''}`;
-    const {properties,rooms,tenants,costs,totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date} = await fetchData({
+    const {properties,rooms,tenants,curProperty,costs,totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date} = await fetchData({
       url: apiUrl,
     });
+    set({rooms,tenants,costs,properties});
+    set({rentStats:{totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date}});
+
     if (propertyId) {
-      set({curProperty:properties[0]});
-    } else {
-      set({properties})
+      set({curProperty});
     }
-    set({rooms,tenants,costs});
-    set({rentStats:{totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date}})
   },
 
   costs:[],

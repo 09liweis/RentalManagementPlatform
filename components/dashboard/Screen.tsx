@@ -76,7 +76,7 @@ export default function Screen({ propertyId }: ScreenProps) {
         </section>
       )}
 
-      {curProperty._id && (
+      {curProperty?._id && (
         <section className="mt-8 pt-4 border-t-4 border-purple-700">
           <div className="flex justify-between items-center">
             <h1 className="page-title">Costs</h1>
