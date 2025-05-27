@@ -42,6 +42,9 @@ const translates:{[key:string]:any} = {
       PendingRents: 'Pending Rents',
       TotalCosts: 'Total Costs',
     },
+    room: {
+      Available: 'Available',
+    },
     House: "House",
     Townhouse: "Townhouse",
     Condo: "Condo",
@@ -98,6 +101,9 @@ const translates:{[key:string]:any} = {
       ReceivedRents: '收到的房租',
       PendingRents: '还没收到的房租',
       TotalCosts: '总支出',
+    },
+    room: {
+      Available: '空闲',
     },
     House: "独立屋",
     Townhouse: "联排别墅",

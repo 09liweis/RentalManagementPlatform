@@ -5,6 +5,7 @@ import Rent from "@/models/rent";
 import {RENT_STATUS, PENDING, PAID, CANCELLED} from "@/types/rent";
 import Cost from "@/models/cost";
 import { COST_TP_MAP } from "@/types/cost";
+import { ROOM_TP_MAP } from "@/types/room";
 
 const getCurrentYearMonth = (date: string | undefined) => {
   if (date) {
@@ -92,7 +93,7 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
 
   const rooms = roomsResult.map(({_id,name,tp})=>{
     return {
-      _id,name,tp,tenant:currentTenantsMap[_id]
+      _id,name,tp,tenant:currentTenantsMap[_id],tpTxt:ROOM_TP_MAP[tp] || tp
     };
   });
 
