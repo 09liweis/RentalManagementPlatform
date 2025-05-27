@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="w-full">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-24">
         <div className="absolute inset-0 bg-pattern opacity-10"></div>

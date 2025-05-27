@@ -38,7 +38,7 @@ export default function RootLayout({
         <ToastProvider>
           <Header />
 
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen flex justify-center items-center">{children}</main>
           <Footer />
         </ToastProvider>
       </body>

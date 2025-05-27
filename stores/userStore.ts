@@ -33,7 +33,10 @@ const useUserStore = create<UserState>((set, get) => ({
     return {err,locale};
   },
   fetchUser: async () => {
-    if (!localStorage.getItem("auth-token")) return;
+    if (!localStorage.getItem("auth-token")) {
+      set({loadingUser:false});
+      return;
+    }
     const {user, err} = await fetchData({method:'POST',url:USER_DETAIL,body:{locale:localStorage.getItem('locale')}});
     if (err) {
       showToast(err);
