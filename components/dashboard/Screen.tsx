@@ -2,9 +2,7 @@
 
 import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Room, ROOM_TP_ARRAY } from "@/types/room";
-import { Property } from "@/types/property";
 import LoadingSection from "@/components/common/LoadingSection";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
@@ -12,13 +10,12 @@ import { showToast } from "@/components/common/Toast";
 import RentCards from "@/components/dashboard/RentCards";
 import FormBackdrop from "@/components/common/form/FormBackdrop";
 import CostForm from "@/components/property/CostForm";
-import { Cost } from "@/types/cost";
 import useAppStore from "@/stores/appStore";
-import LinkText from "@/components/common/LinkText";
 import FormWrapper from "@/components/common/form/FormWrapper";
 import SelectGroup from "@/components/common/SelectGroup";
 import usePropertyStore from "@/stores/propertyStore";
 import Properties from "./Properties";
+import RoomCard from "../room/RoomCard";
 
 interface ScreenProps {
   propertyId?: string;
@@ -69,28 +66,10 @@ export default function Screen({ propertyId }: ScreenProps) {
             </div>
             <section className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 rounded-lg mb-3">
               {rooms.map((room) => (
-                <article
-                  key={room._id}
-                  className="rounded-lg shadow-md hover:shadow-lg p-4 transition-shadow flex justify-between items-center"
-                >
-                  <div>
-                    <LinkText
-                      className="text-lg font-semibold text-gray-800"
-                      href={`/dashboard/rooms/${room._id}`}
-                      text={room?.name || ""}
-                    />
-                    <p className="text-gray-600">
-                      {t("home.Tenant")}: {room.tenant?.name}
-                    </p>
-                  </div>
-                  <Button
-                    tl={t("dashboard.Edit")}
-                    handleClick={() => {
-                      setRoom(room);
-                      setShowRoomForm(true);
-                    }}
-                  />
-                </article>
+                <RoomCard key={room._id} room={room} handleEditRoom={() => {
+                  setRoom(room);
+                  setShowRoomForm(true);
+                }} />
               ))}
             </section>
           </LoadingSection>
