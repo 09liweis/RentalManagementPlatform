@@ -14,17 +14,15 @@ import { Cost, COST_TP_ARRAY } from "@/types/cost";
 import useAppStore from "@/stores/appStore";
 
 interface PropertyFormProps {
-  propertyId: String;
   showCostForm: Function;
   cost?: Cost;
 }
 
 export default function CostForm({
   showCostForm,
-  cost,
-  propertyId
+  cost
 }: PropertyFormProps) {
-  const { fetchPropertyStats } = usePropertyStore();
+  const { fetchPropertyStats, curProperty } = usePropertyStore();
   const {t} = useAppStore();
 
   const [curCost, setCurCost] = useState<Cost>();
@@ -32,6 +30,7 @@ export default function CostForm({
   useEffect(() => setCurCost(cost), [cost]);
 
   const handleCostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const propertyId = curProperty?._id;
     e.preventDefault();
     const method = curCost?._id ? "PUT" : "POST";
     const url = curCost?._id

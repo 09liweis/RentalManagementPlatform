@@ -16,11 +16,13 @@ import SelectGroup from "@/components/common/SelectGroup";
 import usePropertyStore from "@/stores/propertyStore";
 import Properties from "./Properties";
 import RoomCard from "../room/RoomCard";
+import TenantsScreen from "../tenant/TenantsScreen";
 
 interface ScreenProps {
   propertyId?: string;
+  roomId?: string;
 }
-export default function Screen({ propertyId }: ScreenProps) {
+export default function Screen({ propertyId, roomId }: ScreenProps) {
   const { t } = useAppStore();
   const { costs, rooms, curProperty } = usePropertyStore();
 
@@ -50,9 +52,26 @@ export default function Screen({ propertyId }: ScreenProps) {
 
   return (
     <>
-      <RentCards propertyId={propertyId} />
+      <RentCards propertyId={propertyId} roomId={roomId} />
 
       <Properties />
+
+      {curProperty?._id && (
+        <section className="mt-8 pt-4 border-t-4 border-purple-700">
+          <div className="flex justify-between items-center">
+            <h1 className="page-title">Costs</h1>
+            <Button tl={"Add Cost"} handleClick={() => setShowCostForm(true)} />
+          </div>
+          {costs.map((cost) => (
+            <article className="card" key={cost._id}>
+              {t(cost.tpTxt || "")} - ${cost.amount}
+            </article>
+          ))}
+        </section>
+      )}
+      {showCostForm && (
+        <CostForm showCostForm={setShowCostForm} />
+      )}
 
       {curProperty?._id && (
         <section className="mt-8 pt-4 border-t-4 border-green-700">
@@ -66,27 +85,17 @@ export default function Screen({ propertyId }: ScreenProps) {
             </div>
             <section className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 rounded-lg mb-3">
               {rooms.map((room) => (
-                <RoomCard key={room._id} room={room} handleEditRoom={() => {
-                  setRoom(room);
-                  setShowRoomForm(true);
-                }} />
+                <RoomCard
+                  key={room._id}
+                  room={room}
+                  handleEditRoom={() => {
+                    setRoom(room);
+                    setShowRoomForm(true);
+                  }}
+                />
               ))}
             </section>
           </LoadingSection>
-        </section>
-      )}
-
-      {curProperty?._id && (
-        <section className="mt-8 pt-4 border-t-4 border-purple-700">
-          <div className="flex justify-between items-center">
-            <h1 className="page-title">Costs</h1>
-            <Button tl={"Add Cost"} handleClick={() => setShowCostForm(true)} />
-          </div>
-          {costs.map((cost) => (
-            <article className="card" key={cost._id}>
-              {t(cost.tpTxt || "")} - ${cost.amount}
-            </article>
-          ))}
         </section>
       )}
 
@@ -108,7 +117,7 @@ export default function Screen({ propertyId }: ScreenProps) {
             <div className="flex justify-between">
               <Button
                 tl={`${room?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
-                handleClick={()=>{}}
+                handleClick={() => {}}
               />
               <Button
                 tl={t("dashboard.Cancel")}
@@ -123,9 +132,7 @@ export default function Screen({ propertyId }: ScreenProps) {
         </FormBackdrop>
       )}
 
-      {showCostForm && propertyId && (
-        <CostForm showCostForm={setShowCostForm} propertyId={propertyId} />
-      )}
+      {roomId && <TenantsScreen roomId={roomId} />}
     </>
   );
 }

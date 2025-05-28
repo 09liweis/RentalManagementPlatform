@@ -32,7 +32,7 @@ interface PropertyState {
   costs: Cost[],
   fetchCosts: (propertyId:string) => void;
   fetchRents:(tenantId:String) => void;
-  fetchPropertyStats: ({propertyId,date}:any) => void;
+  fetchPropertyStats: ({propertyId,roomId,date}:any) => void;
   curRent: Rent;
   setCurRent:(rent:Rent) => void;
   showRentForm:Boolean;
@@ -57,11 +57,12 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
   },
 
   fetchTenants: async(roomId: string) => {
-    const {tenants, room, property, err} = await fetchData({url:`/api/rooms/${roomId}/tenants`});
+    const {properties,rooms,curRoom,tenants,curProperty,costs,totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date, err} = await fetchData({url:`/api/rooms/${roomId}/tenants`});
     if (err) {
       showToast(err);
     } else {
-      set({tenants, curRoom:room, curProperty:property});
+      set({rooms,tenants,costs,properties,curProperty,curRoom});
+      set({rentStats:{totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date}});
     }
   },
 
@@ -76,12 +77,15 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
     }
   },
 
-  fetchPropertyStats: async ({propertyId, selectDate}:any) => {
-    const apiUrl = propertyId ? `/api/properties/${propertyId}?date=${selectDate||''}` : `/api/overview?date=${selectDate||''}`;
-    const {properties,rooms,tenants,curProperty,costs,totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date} = await fetchData({
+  fetchPropertyStats: async ({propertyId, roomId, selectDate}:any) => {
+    let apiUrl = propertyId ? `/api/properties/${propertyId}?date=${selectDate||''}` : `/api/overview?date=${selectDate||''}`;
+    if (roomId) {
+      apiUrl = `/api/rooms/${roomId}/tenants`;
+    }
+    const {properties,rooms,curRoom,tenants,curProperty,costs,totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date} = await fetchData({
       url: apiUrl,
     });
-    set({rooms,tenants,costs,properties,curProperty});
+    set({rooms,curRoom,tenants,costs,properties,curProperty});
     set({rentStats:{totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date}});
   },
 

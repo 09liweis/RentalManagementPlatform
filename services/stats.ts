@@ -2,7 +2,7 @@ import Property from "@/models/property";
 import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
-import {RENT_STATUS, PENDING, PAID, CANCELLED} from "@/types/rent";
+import { RENT_STATUS, PENDING, PAID, CANCELLED } from "@/types/rent";
 import Cost from "@/models/cost";
 import { COST_TP_MAP } from "@/types/cost";
 import { ROOM_TP_MAP } from "@/types/room";
@@ -39,25 +39,30 @@ interface Stats {
   date?: string;
   userId?: string;
   propertyId?: string;
+  roomId?: string;
 }
 
-export const getStats = async ({ date, userId, propertyId }: Stats) => {
+export const getStats = async ({ date, userId, propertyId, roomId }: Stats) => {
   const { currentYearMonth, nextYearMonth } = getCurrentYearMonth(date);
 
-  const propertiesResults = await Property.find({user: userId});
-  const properties = propertiesResults.map((p)=>{
+  const propertiesResults = await Property.find({ user: userId });
+  const properties = propertiesResults.map((p) => {
     return {
-      _id:p._id,
-      name:p.name,
-      address:p.address,
+      _id: p._id,
+      name: p.name,
+      address: p.address,
       ptype: p.ptype,
       ptypeTxt: PROPERTY_PTYPE_MAP[p.ptype] || p.ptype,
-    }
+    };
   });
-  
-  let curProperty =  null;
+
+  let curProperty = null;
   if (propertyId) {
-    curProperty = properties.find((p)=>p._id == propertyId);
+    curProperty = properties.find((p) => p._id == propertyId);
+  } else if (roomId) {
+    const room = await Room.findOne({ _id: roomId });
+    propertyId = room?.property.toString();
+    curProperty = properties.find((p) => p._id == propertyId);
   }
 
   const roomsQuery: any = {};
@@ -65,7 +70,7 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
   if (!propertyId) {
     const propertyIds = properties.map((prop: any) => prop._id);
     roomsQuery.property = { $in: propertyIds };
-    costQuery.property = {$in:propertyIds};
+    costQuery.property = { $in: propertyIds };
   } else {
     roomsQuery.property = propertyId;
     costQuery.property = propertyId;
@@ -76,34 +81,49 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
   const costsResult = await Cost.find(costQuery);
   const costs = costsResult.map((cost) => {
     return {
-      _id:cost._id,
-      amount:cost.amount,
-      date:cost.date,
-      tp:cost.tp,
-      tpTxt:COST_TP_MAP[cost.tp] || cost.tp
-    }
+      _id: cost._id,
+      amount: cost.amount,
+      date: cost.date,
+      tp: cost.tp,
+      tpTxt: COST_TP_MAP[cost.tp] || cost.tp,
+    };
   });
-
 
   const roomsResult = await Room.find(roomsQuery);
   const roomIds = roomsResult.map((room) => room._id);
-  
-  const tenants = await Tenant.find({ room: { $in: roomIds } });
-  const tenantMap:{[key:string]:any} = {};
-  const currentTenantsMap:{[key:string]:any} = {};
-    tenants.forEach(tenant=>{
-      tenantMap[tenant.room] = tenant;
-      if (tenant.isCurrent) {
-        currentTenantsMap[tenant.room] = tenant;
-      }
-    });
-  const tenantIds = tenants.map((tenant) => tenant._id);
 
-  const rooms = roomsResult.map(({_id,name,tp})=>{
+  const tenantsResult = await Tenant.find({ room: { $in: roomIds } }).sort({ startDate: -1 });
+  const tenantMap: { [key: string]: any } = {};
+  const currentTenantsMap: { [key: string]: any } = {};
+  tenantsResult.forEach((tenant) => {
+    tenantMap[tenant.room] = tenant;
+    if (tenant.isCurrent) {
+      currentTenantsMap[tenant.room] = tenant;
+    }
+  });
+  const tenantIds = tenantsResult.map((tenant) => tenant._id);
+  let tenants = [];
+  if (roomId) {
+    tenants = tenantsResult.filter((tenant) => tenant.room == roomId);
+  } else {
+    tenants = tenantsResult;
+  }
+
+  const rooms = roomsResult.map(({ _id, name, tp, property }) => {
     return {
-      _id,name,tp,tenant:currentTenantsMap[_id],tpTxt:ROOM_TP_MAP[tp] || tp
+      _id,
+      name,
+      tp,
+      tenant: currentTenantsMap[_id],
+      tpTxt: ROOM_TP_MAP[tp] || tp,
+      property,
     };
   });
+
+  let curRoom = null;
+  if (roomId) {
+    curRoom = rooms.find((room) => room._id == roomId);
+  }
 
   const rents = await Rent.find({
     tenant: { $in: tenantIds },
@@ -113,7 +133,7 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
   let totalRents = 0;
   let receivedRents = 0;
   let pendingRents = 0;
-  const pendingRentTenants:any[] = [];
+  const pendingRentTenants: any[] = [];
   rents.forEach((rent) => {
     const status = RENT_STATUS[rent.status] || rent.status;
     if (status === PAID) {
@@ -123,14 +143,26 @@ export const getStats = async ({ date, userId, propertyId }: Stats) => {
 
       pendingRentTenants.push({
         tenant: tenantMap[rent.room],
-        amount: rent.amount
+        amount: rent.amount,
       });
-
     }
     totalRents += rent.amount;
   });
 
-  const totalCost = costs.reduce((acc, cost)=>acc+cost.amount,0);
+  const totalCost = costs.reduce((acc, cost) => acc + cost.amount, 0);
 
-  return {date:currentYearMonth, properties, curProperty, rooms, costs, totalCost, tenants, totalRents, receivedRents, pendingRents, pendingRentTenants };
+  return {
+    date: currentYearMonth,
+    properties,
+    curProperty,
+    rooms,
+    curRoom,
+    costs,
+    totalCost,
+    tenants,
+    totalRents,
+    receivedRents,
+    pendingRents,
+    pendingRentTenants,
+  };
 };
