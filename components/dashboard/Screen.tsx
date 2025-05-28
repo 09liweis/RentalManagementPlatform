@@ -17,14 +17,16 @@ import usePropertyStore from "@/stores/propertyStore";
 import Properties from "./Properties";
 import RoomCard from "../room/RoomCard";
 import TenantsScreen from "../tenant/TenantsScreen";
+import RentsScreen from "../rent/RentsScreen";
 
 interface ScreenProps {
   propertyId?: string;
   roomId?: string;
+  tenantId?: string
 }
-export default function Screen({ propertyId, roomId }: ScreenProps) {
+export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
   const { t } = useAppStore();
-  const { costs, rooms, curProperty } = usePropertyStore();
+  const { costs, rooms, curProperty,curRoom, curTenant } = usePropertyStore();
 
   const [loading, setLoading] = useState(false);
 
@@ -52,7 +54,7 @@ export default function Screen({ propertyId, roomId }: ScreenProps) {
 
   return (
     <>
-      <RentCards propertyId={propertyId} roomId={roomId} />
+      <RentCards propertyId={propertyId} roomId={roomId} tenantId={tenantId} />
 
       <Properties />
 
@@ -132,7 +134,9 @@ export default function Screen({ propertyId, roomId }: ScreenProps) {
         </FormBackdrop>
       )}
 
-      {roomId && <TenantsScreen roomId={roomId} />}
+      {curRoom?._id && <TenantsScreen roomId={curRoom?._id} />}
+
+      {curTenant?._id && <RentsScreen tenantId={curTenant?._id} />}
     </>
   );
 }

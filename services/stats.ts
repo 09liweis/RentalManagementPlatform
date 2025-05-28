@@ -40,9 +40,10 @@ interface Stats {
   userId?: string;
   propertyId?: string;
   roomId?: string;
+  tenantId?: string
 }
 
-export const getStats = async ({ date, userId, propertyId, roomId }: Stats) => {
+export const getStats = async ({ date, userId, propertyId, roomId, tenantId }: Stats) => {
   const { currentYearMonth, nextYearMonth } = getCurrentYearMonth(date);
 
   const propertiesResults = await Property.find({ user: userId });
@@ -61,6 +62,12 @@ export const getStats = async ({ date, userId, propertyId, roomId }: Stats) => {
     curProperty = properties.find((p) => p._id == propertyId);
   } else if (roomId) {
     const room = await Room.findOne({ _id: roomId });
+    propertyId = room?.property.toString();
+    curProperty = properties.find((p) => p._id == propertyId);
+  } else if (tenantId) {
+    const tenant = await Tenant.findOne({ _id: tenantId });
+    const room = await Room.findOne({ _id: tenant.room });
+    roomId = room?._id.toString()
     propertyId = room?.property.toString();
     curProperty = properties.find((p) => p._id == propertyId);
   }
@@ -103,8 +110,10 @@ export const getStats = async ({ date, userId, propertyId, roomId }: Stats) => {
   });
   const tenantIds = tenantsResult.map((tenant) => tenant._id);
   let tenants = [];
+  let curTenant = null;
   if (roomId) {
     tenants = tenantsResult.filter((tenant) => tenant.room == roomId);
+    curTenant = tenants.find((tenant) => tenant._id == tenantId);
   } else {
     tenants = tenantsResult;
   }
@@ -125,7 +134,7 @@ export const getStats = async ({ date, userId, propertyId, roomId }: Stats) => {
     curRoom = rooms.find((room) => room._id == roomId);
   }
 
-  const rents = await Rent.find({
+  const rentResult = await Rent.find({
     tenant: { $in: tenantIds },
     startDate: { $gte: currentYearMonth, $lt: nextYearMonth },
   });
@@ -134,7 +143,7 @@ export const getStats = async ({ date, userId, propertyId, roomId }: Stats) => {
   let receivedRents = 0;
   let pendingRents = 0;
   const pendingRentTenants: any[] = [];
-  rents.forEach((rent) => {
+  rentResult.forEach((rent) => {
     const status = RENT_STATUS[rent.status] || rent.status;
     if (status === PAID) {
       receivedRents += rent.amount;
@@ -149,6 +158,13 @@ export const getStats = async ({ date, userId, propertyId, roomId }: Stats) => {
     totalRents += rent.amount;
   });
 
+  let rents = [];
+  if (tenantId) {
+    rents = rentResult.filter((rent) => rent.tenant == tenantId);
+  } else {
+    rents = rentResult;
+  }
+
   const totalCost = costs.reduce((acc, cost) => acc + cost.amount, 0);
 
   return {
@@ -160,6 +176,8 @@ export const getStats = async ({ date, userId, propertyId, roomId }: Stats) => {
     costs,
     totalCost,
     tenants,
+    rents,
+    curTenant,
     totalRents,
     receivedRents,
     pendingRents,

@@ -14,16 +14,21 @@ const useAppStore = create<AppState>((set, get) => ({
     set({curLocale:locale})
   },
   t: (key:string) => {
-    const trans = translates[get().curLocale];
-    const keyArray = key.split('.');
+    try {
+      const trans = translates[get().curLocale];
+      const keyArray = key.split('.');
+
+      let result = trans;
+
+      keyArray.forEach(field => {
+        result = result[field];
+      });
+
+      return result;
+    } catch (err) {
+      return key;
+    }
     
-    let result = trans;
-
-    keyArray.forEach(field => {
-      result = result[field];
-    });
-
-    return result;
   }
 }));
 

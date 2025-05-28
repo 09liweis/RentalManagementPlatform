@@ -32,7 +32,7 @@ interface PropertyState {
   costs: Cost[],
   fetchCosts: (propertyId:string) => void;
   fetchRents:(tenantId:String) => void;
-  fetchPropertyStats: ({propertyId,roomId,date}:any) => void;
+  fetchPropertyStats: ({propertyId,roomId,tenantId,date}:any) => void;
   curRent: Rent;
   setCurRent:(rent:Rent) => void;
   showRentForm:Boolean;
@@ -77,15 +77,17 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
     }
   },
 
-  fetchPropertyStats: async ({propertyId, roomId, selectDate}:any) => {
+  fetchPropertyStats: async ({propertyId, roomId, tenantId, selectDate}:any) => {
     let apiUrl = propertyId ? `/api/properties/${propertyId}?date=${selectDate||''}` : `/api/overview?date=${selectDate||''}`;
     if (roomId) {
       apiUrl = `/api/rooms/${roomId}/tenants`;
+    } else if (tenantId) {
+      apiUrl = `/api/tenants/${tenantId}/rents`;
     }
-    const {properties,rooms,curRoom,tenants,curProperty,costs,totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date} = await fetchData({
+    const {properties,rooms,curRoom,tenants,curTenant,curProperty,costs,rents,totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date} = await fetchData({
       url: apiUrl,
     });
-    set({rooms,curRoom,tenants,costs,properties,curProperty});
+    set({rooms,curRoom,tenants,curTenant,costs,properties,curProperty,rents});
     set({rentStats:{totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date}});
   },
 

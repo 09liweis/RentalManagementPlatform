@@ -9,10 +9,11 @@ import useAppStore from "@/stores/appStore";
 
 interface RentCardsProps {
   propertyId?: string;
-  roomId?: string
+  roomId?: string;
+  tenantId?: string;
 }
 
-export default function RentCards({ propertyId, roomId }: RentCardsProps) {
+export default function RentCards({ propertyId, roomId, tenantId }: RentCardsProps) {
   const { t } = useAppStore();
 
   const { fetchPropertyStats, rentStats, properties, rooms, tenants } =
@@ -25,7 +26,7 @@ export default function RentCards({ propertyId, roomId }: RentCardsProps) {
   const fetchProperty = async (date: string) => {
     setLoading(true);
 
-    await fetchPropertyStats({ propertyId, roomId, selectDate: date });
+    await fetchPropertyStats({ propertyId, roomId, tenantId, selectDate: date });
 
     setLoading(false);
   };
