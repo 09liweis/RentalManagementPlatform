@@ -1,5 +1,3 @@
-import LoadingSection from "@/components/common/LoadingSection";
-
 import { Tenant } from "@/types/tenant";
 import TenantCard from "./TenantCard";
 
@@ -10,9 +8,7 @@ interface TenantListProps {
   setCurrentTenant: (tenant: Tenant) => void;
 }
 
-export default function TenantList({ loading, tenants, onEditClick, setCurrentTenant }: TenantListProps) {
-  
-
+export default function TenantList({ tenants, onEditClick, setCurrentTenant }: TenantListProps) {
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
       {tenants.map((tenant) => (
