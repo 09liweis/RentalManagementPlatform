@@ -7,6 +7,7 @@ import { EMPTY_PROPERTY, Property } from "@/types/property";
 import Button from "@/components/common/Button";
 import useAppStore from "@/stores/appStore";
 import PropertyCard from "../property/PropertyCard";
+import LinkText from "../common/LinkText";
 
 export default function Properties() {
   const {t} = useAppStore();
@@ -22,7 +23,7 @@ export default function Properties() {
   return (
     <>
       <div className="flex justify-between items-center mt-8 pt-4 mb-4 border-t-4 border-sky-800">
-        <h1 className="page-title">Properties</h1>
+        <LinkText text="Properties" href="/dashboard" className="page-title" />
         <Button tl={t('dashboard.AddNew')} handleClick={() => setShowPropertyForm(true)} />
       </div>
       {showPropertyForm && (
