@@ -45,7 +45,7 @@ export default function RootLayout({
         <ToastProvider>
           {/* <Sidebar /> */}
           <main className="p-4 max-w-6xl mx-auto">
-            <header className="flex items-center justify-between p-4 shadow mb-4 bg-white/80">
+            <header className="flex items-center justify-between rounded p-4 shadow mb-4 bg-white/80">
               <Logo />
               <Button
                 tp="danger"
@@ -53,7 +53,7 @@ export default function RootLayout({
                 handleClick={handleLogout}
               />
             </header>
-            <section className="shadow-lg min-h-screen p-4 bg-white">
+            <section className="shadow-lg min-h-screen p-4 bg-white/80 rounded">
               <Suspense fallback={<Loading />}>{children}</Suspense>
             </section>
           </main>

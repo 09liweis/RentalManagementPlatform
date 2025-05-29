@@ -161,8 +161,6 @@ export const getStats = async ({ date, userId, propertyId, roomId, tenantId }: S
   let rents = [];
   if (tenantId) {
     rents = rentResult.filter((rent) => rent.tenant == tenantId);
-  } else {
-    rents = rentResult;
   }
 
   const totalCost = costs.reduce((acc, cost) => acc + cost.amount, 0);
