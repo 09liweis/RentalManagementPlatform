@@ -40,10 +40,16 @@ interface Stats {
   userId?: string;
   propertyId?: string;
   roomId?: string;
-  tenantId?: string
+  tenantId?: string;
 }
 
-export const getStats = async ({ date, userId, propertyId, roomId, tenantId }: Stats) => {
+export const getStats = async ({
+  date,
+  userId,
+  propertyId,
+  roomId,
+  tenantId,
+}: Stats) => {
   const { currentYearMonth, nextYearMonth } = getCurrentYearMonth(date);
 
   const propertiesResults = await Property.find({ user: userId });
@@ -67,7 +73,7 @@ export const getStats = async ({ date, userId, propertyId, roomId, tenantId }: S
   } else if (tenantId) {
     const tenant = await Tenant.findOne({ _id: tenantId });
     const room = await Room.findOne({ _id: tenant.room });
-    roomId = room?._id.toString()
+    roomId = room?._id.toString();
     propertyId = room?.property.toString();
     curProperty = properties.find((p) => p._id == propertyId);
   }
@@ -99,7 +105,9 @@ export const getStats = async ({ date, userId, propertyId, roomId, tenantId }: S
   const roomsResult = await Room.find(roomsQuery);
   const roomIds = roomsResult.map((room) => room._id);
 
-  const tenantsResult = await Tenant.find({ room: { $in: roomIds } }).sort({ startDate: -1 });
+  const tenantsResult = await Tenant.find({ room: { $in: roomIds } }).sort({
+    startDate: -1,
+  });
   const tenantMap: { [key: string]: any } = {};
   const currentTenantsMap: { [key: string]: any } = {};
   tenantsResult.forEach((tenant) => {
