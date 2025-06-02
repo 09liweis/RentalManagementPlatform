@@ -15,7 +15,8 @@ import FormWrapper from "@/components/common/form/FormWrapper";
 import SelectGroup from "@/components/common/SelectGroup";
 import usePropertyStore from "@/stores/propertyStore";
 import Properties from "./Properties";
-import RoomCard from "../room/RoomCard";
+import RoomList from "../room/RoomList";
+import RoomForm from "../room/RoomForm";
 import TenantsScreen from "../tenant/TenantsScreen";
 import RentsScreen from "../rent/RentsScreen";
 
@@ -76,62 +77,11 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
       )}
 
       {curProperty?._id && (
-        <section className="mt-8 pt-4 border-t-4 border-green-700">
-          <LoadingSection loading={loading}>
-            <div className="flex justify-between items-center">
-              <h1 className="page-title">Rooms</h1>
-              <Button
-                tl={t("dashboard.Add")}
-                handleClick={() => setShowRoomForm(true)}
-              />
-            </div>
-            <section className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 rounded-lg mb-3">
-              {rooms.map((room) => (
-                <RoomCard
-                  key={room._id}
-                  room={room}
-                  handleEditRoom={() => {
-                    setRoom(room);
-                    setShowRoomForm(true);
-                  }}
-                />
-              ))}
-            </section>
-          </LoadingSection>
-        </section>
+        <RoomList rooms={rooms} setRoom={setRoom} setShowRoomForm={setShowRoomForm} />
       )}
 
       {showRoomForm && (
-        <FormBackdrop>
-          <FormWrapper onSubmit={handleRoomSubmit}>
-            <Input
-              type="text"
-              placeholder={t("dashboard.Name")}
-              value={room["name"] || ""}
-              onChange={(e) => setRoom({ ...room, name: e.target.value })}
-            />
-            <SelectGroup
-              value={room["tp"] || ""}
-              options={ROOM_TP_ARRAY}
-              label="Room Type"
-              handleSelect={(value) => setRoom({ ...room, tp: value })}
-            />
-            <div className="flex justify-between">
-              <Button
-                tl={`${room?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
-                handleClick={() => {}}
-              />
-              <Button
-                tl={t("dashboard.Cancel")}
-                handleClick={() => {
-                  setShowRoomForm(false);
-                  setRoom({});
-                }}
-                tp="danger"
-              />
-            </div>
-          </FormWrapper>
-        </FormBackdrop>
+        <RoomForm room={room} setRoom={setRoom} handleRoomSubmit={handleRoomSubmit} setShowRoomForm={setShowRoomForm} />
       )}
 
       {curRoom?._id && <TenantsScreen roomId={curRoom?._id} />}
