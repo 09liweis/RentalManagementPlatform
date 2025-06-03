@@ -70,6 +70,7 @@ export default function RoomCard({ room, handleEditRoom }: any) {
           href={`/dashboard/rooms/${room._id}`}
           text={room?.name || ""}
         />
+        {(isSelected || !hasSelected) &&
         <Button
           tl={t("dashboard.Edit")}
           tp="primary"
@@ -77,7 +78,7 @@ export default function RoomCard({ room, handleEditRoom }: any) {
           size="sm"
           handleClick={handleEditRoom}
           className="hover:scale-105 transform transition-transform duration-200"
-        />
+        />}
       </div>
       {!hasSelected &&
       <div className="space-y-1">

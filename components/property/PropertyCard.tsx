@@ -82,6 +82,7 @@ export default function PropertyCard({p, handlePropertyEdit}:PropertyCardProps) 
             </>
             }
           </div>
+          {(isSelected || !hasSelected) && 
           <Button
             tl={t("dashboard.Edit")}
             tp="primary"
@@ -89,7 +90,7 @@ export default function PropertyCard({p, handlePropertyEdit}:PropertyCardProps) 
             size="sm"
             handleClick={() => handlePropertyEdit(p)}
             className="hover:scale-105 transform transition-transform duration-200"
-          />
+          />}
         </div>
     </article>
   );
