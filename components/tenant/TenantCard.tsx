@@ -14,10 +14,8 @@ export default function TenantCard({
   return (
     <article
       className={`bg-white rounded-xl shadow hover:shadow-md transition-all ${
-        hasCurTenant ? "p-2" : "p-4"
-      } border ${
-        isCurrent ? "border-blue-500" : "border-gray-200"
-      } group`}
+        hasCurTenant ? "p-2" : "p-3"
+      } border ${isCurrent ? "border-blue-500" : "border-gray-200"} group`}
     >
       <div className="flex items-center gap-4">
         <button
@@ -29,18 +27,20 @@ export default function TenantCard({
           }`}
           title={tenant.isCurrent ? "Current Tenant" : "Set as Current Tenant"}
         />
-        <LinkText
-          className="text-lg font-medium text-gray-900 hover:text-blue-600"
-          href={`/dashboard/tenants/${tenant._id}`}
-          text={tenant.name || ""}
-        />
+        <h3 className="text-lg font-medium text-gray-900 hover:text-blue-600">
+          {tenant.name}
+        </h3>
       </div>
 
       {!hasCurTenant && (
         <div className="space-y-4 mt-4">
           <div className="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg">
-            <span className="text-sm text-gray-600">{t("dashboard.Deposit")}</span>
-            <span className="text-lg font-medium text-blue-600">${tenant.deposit}</span>
+            <span className="text-sm text-gray-600">
+              {t("dashboard.Deposit")}
+            </span>
+            <span className="text-lg font-medium text-blue-600">
+              ${tenant.deposit}
+            </span>
           </div>
 
           <div className="text-sm text-gray-600 bg-gray-50 rounded-lg p-2.5">

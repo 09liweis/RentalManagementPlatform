@@ -5,7 +5,7 @@ export default function RentCard({ rent, handleClick, handleDeleteRent }: any) {
   const { _id, amount, startDate, status, statusTxt } = rent;
   const { t } = useAppStore();
   return (
-    <article className="bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300 p-6 border border-gray-100/80 hover:border-gray-200 group">
+    <article className="bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300 p-3 border border-gray-100/80 hover:border-gray-200 group">
       <div className="flex items-center gap-2 mb-4">
         <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
         <p className="text-sm font-medium text-gray-600 tracking-wide">
@@ -30,8 +30,8 @@ export default function RentCard({ rent, handleClick, handleDeleteRent }: any) {
       </div>
 
       <div className="flex justify-between gap-3">
-        <Button 
-          tl={t("dashboard.Edit")} 
+        <Button
+          tl={t("dashboard.Edit")}
           handleClick={handleClick}
           tp="secondary"
           outline={true}

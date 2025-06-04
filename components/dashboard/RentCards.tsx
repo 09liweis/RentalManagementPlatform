@@ -13,7 +13,11 @@ interface RentCardsProps {
   tenantId?: string;
 }
 
-export default function RentCards({ propertyId, roomId, tenantId }: RentCardsProps) {
+export default function RentCards({
+  propertyId,
+  roomId,
+  tenantId,
+}: RentCardsProps) {
   const { t } = useAppStore();
 
   const { fetchPropertyStats, rentStats, properties, rooms, tenants } =
@@ -26,7 +30,12 @@ export default function RentCards({ propertyId, roomId, tenantId }: RentCardsPro
   const fetchProperty = async (date: string) => {
     setLoading(true);
 
-    await fetchPropertyStats({ propertyId, roomId, tenantId, selectDate: date });
+    await fetchPropertyStats({
+      propertyId,
+      roomId,
+      tenantId,
+      selectDate: date,
+    });
 
     setLoading(false);
   };
@@ -49,19 +58,19 @@ export default function RentCards({ propertyId, roomId, tenantId }: RentCardsPro
           {rooms && <p><span className="rent-price font-bold text-lg">{rooms.length}</span> {t('home.Rooms')}</p>}
           {tenants && <p><span className="rent-price font-bold text-lg">{tenants.length}</span> {t('home.Tenants')}</p>}
         </article> */}
-        <article className="bg-yellow-100 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
+        <article className="bg-yellow-100 shadow-md rounded-lg p-3 hover:shadow-lg transition-shadow">
           <p>{t("dashboard.TotalRents")}</p>
           <p className="rent-price text-yellow-600 font-bold text-lg">
             ${rentStats.totalRents}
           </p>
         </article>
-        <article className="bg-green-100 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
+        <article className="bg-green-100 shadow-md rounded-lg p-3 hover:shadow-lg transition-shadow">
           <p>{t("dashboard.ReceivedRents")}</p>
           <p className="rent-price text-green-600 font-bold text-lg">
             ${rentStats.receivedRents}
           </p>
         </article>
-        <article className="bg-red-100 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
+        <article className="bg-red-100 shadow-md rounded-lg p-3 hover:shadow-lg transition-shadow">
           <p>{t("dashboard.PendingRents")}</p>
           <p className="rent-price text-red-600 font-bold text-lg">
             ${rentStats.pendingRents}
@@ -72,7 +81,7 @@ export default function RentCards({ propertyId, roomId, tenantId }: RentCardsPro
             </div>
           ))}
         </article>
-        <article className="bg-red-200 shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
+        <article className="bg-red-200 shadow-md rounded-lg p-3 hover:shadow-lg transition-shadow">
           <p>{t("dashboard.TotalCosts")}</p>
           <p className="rent-price text-red-600 font-bold text-lg">
             ${rentStats.totalCost}
