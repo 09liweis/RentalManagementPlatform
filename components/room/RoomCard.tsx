@@ -68,7 +68,7 @@ export default function RoomCard({ room, handleEditRoom }: any) {
 
   return (
     <article
-      className={`bg-white rounded-xl shadow-sm hover:shadow-md ${hasSelected?'p-2':'p-3'} transition-all duration-300 border ${isSelected ? "border-blue-500 hover:border-blue-800" : "border-gray-100 hover:border-gray-200"} transform hover:-translate-y-1`}
+      className={`bg-white rounded-xl shadow-sm hover:shadow-md p-3 transition-all duration-300 border ${isSelected ? "border-blue-500 hover:border-blue-800" : "border-gray-100 hover:border-gray-200"} transform hover:-translate-y-1`}
     >
       <div className="flex justify-between items-center">
         <LinkText
@@ -87,7 +87,6 @@ export default function RoomCard({ room, handleEditRoom }: any) {
           className="hover:scale-105 transform transition-transform duration-200"
         />}
       </div>
-      {!hasSelected &&
       <div className="space-y-1">
         <div className="flex items-center">
           <svg
@@ -108,7 +107,6 @@ export default function RoomCard({ room, handleEditRoom }: any) {
         </div>
         <StatusIndicator />
       </div>
-      }
     </article>
   );
 }

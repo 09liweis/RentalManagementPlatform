@@ -3,23 +3,16 @@
 import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Room, ROOM_TP_ARRAY } from "@/types/room";
-import LoadingSection from "@/components/common/LoadingSection";
-import Input from "@/components/common/Input";
+import { Room } from "@/types/room";
 import Button from "@/components/common/Button";
 import { showToast } from "@/components/common/Toast";
 import RentCards from "@/components/dashboard/RentCards";
-import FormBackdrop from "@/components/common/form/FormBackdrop";
 import CostForm from "@/components/property/CostForm";
 import useAppStore from "@/stores/appStore";
-import FormWrapper from "@/components/common/form/FormWrapper";
-import SelectGroup from "@/components/common/SelectGroup";
 import usePropertyStore from "@/stores/propertyStore";
 import Properties from "./Properties";
 import RoomList from "../room/RoomList";
 import RoomForm from "../room/RoomForm";
-import TenantsScreen from "../tenant/TenantsScreen";
-import RentsScreen from "../rent/RentsScreen";
 
 interface ScreenProps {
   propertyId?: string;
@@ -162,18 +155,6 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
             setShowRoomForm={setShowRoomForm} 
           />
         )}
-
-      {curRoom?._id && (
-        <motion.div variants={itemVariants}>
-          <TenantsScreen roomId={curRoom?._id} />
-        </motion.div>
-      )}
-
-      {curTenant?._id && (
-        <motion.div variants={itemVariants}>
-          <RentsScreen tenantId={curTenant?._id} />
-        </motion.div>
-      )}
     </motion.div>
   );
 }

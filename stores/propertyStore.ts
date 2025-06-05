@@ -83,10 +83,10 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
     } else if (tenantId) {
       apiUrl = `/api/tenants/${tenantId}/rents`;
     }
-    const {properties,rooms,curRoom,tenants,curTenant,curProperty,costs,rents,totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date} = await fetchData({
+    const {properties,rooms,curProperty,costs,totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date} = await fetchData({
       url: apiUrl,
     });
-    set({rooms,curRoom,tenants,curTenant,costs,properties,curProperty,rents});
+    set({rooms,costs,properties,curProperty});
     set({rentStats:{totalRents,receivedRents,pendingRents,pendingRentTenants,totalCost,date}});
   },
 
