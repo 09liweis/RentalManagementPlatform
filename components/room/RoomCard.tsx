@@ -55,8 +55,21 @@ export default function RoomCard({ room, handleEditRoom }: any) {
         </p>
       </div>
         {room.rent && 
-          <div className="flex items-center text-sm">
-            ${room.rent.amount} - {room.rent.status}
+          <div className="flex items-center justify-between mt-2">
+            <div className="flex items-baseline gap-1">
+              <span className="text-xs text-gray-500">$</span>
+              <p className="text-lg font-bold text-gray-900">{room.rent.amount}</p>
+            </div>
+            <div
+              className={`
+              px-2 py-1 rounded-full text-xs font-medium transition-colors duration-300
+              ${room.rent.status === "paid" ? "bg-emerald-100 text-emerald-700" : ""}
+              ${room.rent.status === "pending" ? "bg-amber-100 text-amber-700" : ""}
+              ${!["paid", "pending"].includes(room.rent.status) ? "bg-gray-100 text-gray-700" : ""}
+            `}
+            >
+              {t(room.rent.status)}
+            </div>
           </div>
         }
       </>
