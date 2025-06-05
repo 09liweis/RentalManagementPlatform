@@ -62,7 +62,7 @@ const formVariants = {
 
 export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
   const { t } = useAppStore();
-  const { costs, rooms, curProperty, curRoom, curTenant } = usePropertyStore();
+  const { costs, rooms, curProperty, curRoom, curTenant, fetchPropertyStats } = usePropertyStore();
 
   const [loading, setLoading] = useState(false);
 
@@ -70,7 +70,8 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
 
   const [room, setRoom] = useState<Room>({ name: "" });
   const [showRoomForm, setShowRoomForm] = useState(false);
-  const handleRoomSubmit = async () => {
+  const handleRoomSubmit = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
     const method = room?._id ? "PUT" : "POST";
     const url = room?._id
       ? `/api/rooms/${room._id}`
@@ -84,6 +85,7 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
     showToast(err || msg);
     setRoom({ name: "" });
     setShowRoomForm(false);
+    fetchPropertyStats({ propertyId });
   };
 
   const [showCostForm, setShowCostForm] = useState(false);
