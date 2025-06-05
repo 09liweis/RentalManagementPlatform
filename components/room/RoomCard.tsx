@@ -90,7 +90,7 @@ export default function RoomCard({ room, handleEditRoom }: any) {
           href={`/dashboard/rooms/${room._id}`}
           text={room?.name || ""}
         />
-        {(isSelected || !hasSelected) &&
+        {(isSelected || !hasSelected) && handleEditRoom &&
         <Button
           tl={t("dashboard.Edit")}
           tp="primary"

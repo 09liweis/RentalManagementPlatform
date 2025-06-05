@@ -2,6 +2,15 @@
   "home":{
     "login":"Login",
     "signup": "Signup",
-    "Dashboard": "Dashboard"
+    "Dashboard": "Dashboard",
+    "Tenants": "Tenants"
+  },
+  "dashboard": {
+    "CurrentSelection": "Current Selection",
+    "Property": "Property",
+    "Room": "Room",
+    "Add": "Add",
+    "BackToProperty": "Back to Property",
+    "RoomDetails": "Room Details"
   }
 }

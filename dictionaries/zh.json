@@ -2,6 +2,15 @@
   "home":{
     "login":"登陆",
     "signup": "注册",
-    "Dashboard": "控制面板"
+    "Dashboard": "控制面板",
+    "Tenants": "租户"
+  },
+  "dashboard": {
+    "CurrentSelection": "当前选择",
+    "Property": "物业",
+    "Room": "房间",
+    "Add": "添加",
+    "BackToProperty": "返回物业",
+    "RoomDetails": "房间详情"
   }
 }

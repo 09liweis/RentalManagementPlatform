@@ -6,7 +6,7 @@ import usePropertyStore from "@/stores/propertyStore";
 
 interface PropertyCardProps {
   p: Property;
-  handlePropertyEdit: Function;
+  handlePropertyEdit?: Function;
 }
 
 export default function PropertyCard({
@@ -83,7 +83,7 @@ export default function PropertyCard({
             </>
           )}
         </div>
-        {(isSelected || !hasSelected) && (
+        {(isSelected || !hasSelected) && handlePropertyEdit && (
           <Button
             tl={t("dashboard.Edit")}
             tp="primary"
