@@ -27,9 +27,7 @@ export default function TenantCard({
           }`}
           title={tenant.isCurrent ? "Current Tenant" : "Set as Current Tenant"}
         />
-        <h3 className="text-lg font-medium text-gray-900 hover:text-blue-600">
-          {tenant.name}
-        </h3>
+        <LinkText className="text-lg font-medium text-gray-900 hover:text-blue-600" text={tenant.name} href={`/dashboard/tenants/${tenant._id}`} />
       </div>
 
       {!hasCurTenant && (

@@ -1,4 +1,4 @@
-import Screen from "@/components/dashboard/Screen";
+import TenantsScreen from "@/components/tenant/TenantsScreen";
 
 export default function RoomPage({
   params,
@@ -6,5 +6,7 @@ export default function RoomPage({
   params: { roomId: string };
 }) {
   const {roomId} = params;
-  return <Screen roomId={roomId} />
+  return (
+    <TenantsScreen roomId={roomId} />
+  )
 }

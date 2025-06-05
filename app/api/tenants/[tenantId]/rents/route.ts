@@ -24,27 +24,26 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
 
   try {
     await connect();
-    const stats = await getStats({tenantId, userId:verified.userId})
-    // let rents = [];
-    // const rentsResult = await Rent.find({ tenant: tenantId }).sort({
-    //   startDate: -1,
-    // });
+    let rents = [];
+    const rentsResult = await Rent.find({ tenant: tenantId }).sort({
+      startDate: -1,
+    });
 
-    // rents = rentsResult.map((rent) => {
-    //   return {
-    //     _id:rent._id,
-    //     amount:rent.amount,
-    //     startDate:rent.startDate,
-    //     status:rent.status,
-    //     statusTxt:RENT_STATUS[rent.status] || rent.status
-    //   }
-    // });
+    rents = rentsResult.map((rent) => {
+      return {
+        _id:rent._id,
+        amount:rent.amount,
+        startDate:rent.startDate,
+        status:rent.status,
+        statusTxt:RENT_STATUS[rent.status] || rent.status
+      }
+    });
 
-    // const tenant = await Tenant.findOne({ _id: tenantId });
-    // const room = await Room.findOne({ _id: tenant.room });
-    // const property = await Property.findOne({ _id: room.property });
+    const tenant = await Tenant.findOne({ _id: tenantId });
+    const room = await Room.findOne({ _id: tenant.room });
+    const property = await Property.findOne({ _id: room.property });
     return NextResponse.json(
-      stats,
+      {rents, curTenant:tenant, curRoom: room, curProperty: property},
       { status: 200 },
     );
   } catch (err) {

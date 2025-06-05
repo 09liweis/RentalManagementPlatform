@@ -75,11 +75,6 @@ export default function RentCards({
           <p className="rent-price text-red-600 font-bold text-lg">
             ${rentStats.pendingRents}
           </p>
-          {rentStats.pendingRentTenants?.map(({ tenant, amount }) => (
-            <div key={tenant._id} className="text-red-600">
-              {tenant.name} ${amount}
-            </div>
-          ))}
         </article>
         <article className="bg-red-200 shadow-md rounded-lg p-3 hover:shadow-lg transition-shadow">
           <p>{t("dashboard.TotalCosts")}</p>

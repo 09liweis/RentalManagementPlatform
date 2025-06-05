@@ -3,6 +3,8 @@ import { decodeToken } from "@/utils/jwt";
 import Tenant from "@/models/tenant";
 import {getStats} from "@/services/stats";
 import connect from "@/config/db";
+import Room from "@/models/room";
+import Property from "@/models/property";
 
 interface ParamsProps {
   params: {
@@ -21,11 +23,10 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   try {
     await connect();
 
-    const stats = await getStats({ roomId, userId: verified.userId });
-    // const tenants = await Tenant.find({ room: roomId }).sort({ startDate: -1 });
-    // const room = await Room.findOne({ _id: roomId });
-    // const property = await Property.findOne({ _id: room.property });
-    return NextResponse.json(stats, { status: 200 });
+    const tenants = await Tenant.find({ room: roomId }).sort({ startDate: -1 });
+    const room = await Room.findOne({ _id: roomId });
+    const property = await Property.findOne({ _id: room.property });
+    return NextResponse.json({tenants, curRoom:room, curProperty: property}, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
   }

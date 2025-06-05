@@ -19,6 +19,7 @@ export default function RentsScreen({
 
   const {
     rents,
+    fetchRents,
     setCurRent,
     curTenant,
     curRoom,
@@ -29,6 +30,10 @@ export default function RentsScreen({
   } = usePropertyStore();
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchRents(tenantId);
+  }, [tenantId]);
 
   return (
     <>

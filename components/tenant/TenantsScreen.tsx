@@ -18,6 +18,10 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
   const [loading, setLoading] = useState(false);
   const [showTenantForm, setShowTenantForm] = useState(false);
 
+  useEffect(() => {
+    fetchRoomTenants();
+  }, [roomId]);
+
   const fetchRoomTenants = async () => {
     setLoading(true);
     await fetchTenants(roomId);
