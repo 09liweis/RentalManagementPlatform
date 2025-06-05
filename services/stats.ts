@@ -101,6 +101,7 @@ export const getStats = async ({
       tpTxt: COST_TP_MAP[cost.tp] || cost.tp,
     };
   });
+  const totalCost = costs.reduce((acc, cost) => acc + cost.amount, 0);
 
   const roomsResult = await Room.find(roomsQuery);
   const roomIds = roomsResult.map((room) => room._id);
@@ -108,39 +109,21 @@ export const getStats = async ({
   const tenantsResult = await Tenant.find({ room: { $in: roomIds } }).sort({
     startDate: -1,
   });
-  const tenantMap: { [key: string]: any } = {};
+  
   const currentTenantsMap: { [key: string]: any } = {};
   tenantsResult.forEach((tenant) => {
-    tenantMap[tenant.room] = tenant;
     if (tenant.isCurrent) {
       currentTenantsMap[tenant.room] = tenant;
     }
   });
+  
   const tenantIds = tenantsResult.map((tenant) => tenant._id);
-  let tenants = [];
-  let curTenant = null;
-  if (roomId) {
-    tenants = tenantsResult.filter((tenant) => tenant.room == roomId);
-    curTenant = tenants.find((tenant) => tenant._id == tenantId);
-  } else {
-    tenants = tenantsResult;
-  }
-
-  const rooms = roomsResult.map(({ _id, name, tp, property }) => {
-    return {
-      _id,
-      name,
-      tp,
-      tenant: currentTenantsMap[_id],
-      tpTxt: ROOM_TP_MAP[tp] || tp,
-      property,
-    };
-  });
-
-  let curRoom = null;
-  if (roomId) {
-    curRoom = rooms.find((room) => room._id == roomId);
-  }
+  // let tenants = [];
+  // if (roomId) {
+  //   tenants = tenantsResult.filter((tenant) => tenant.room == roomId);
+  // } else {
+  //   tenants = tenantsResult;
+  // }
 
   const rentResult = await Rent.find({
     tenant: { $in: tenantIds },
@@ -151,6 +134,8 @@ export const getStats = async ({
   let receivedRents = 0;
   let pendingRents = 0;
   const pendingRentTenants: any[] = [];
+
+  const rentsMap: { [key: string]: any } = {};
   rentResult.forEach((rent) => {
     const status = RENT_STATUS[rent.status] || rent.status;
     if (status === PAID) {
@@ -159,31 +144,36 @@ export const getStats = async ({
       pendingRents += rent.amount;
 
       pendingRentTenants.push({
-        tenant: tenantMap[rent.room],
+        tenant: currentTenantsMap[rent.room] || null,
         amount: rent.amount,
       });
     }
     totalRents += rent.amount;
+
+    rent.status = status;
+    rentsMap[rent.room] = rent;
+    
   });
 
-  let rents = [];
-  if (tenantId) {
-    rents = rentResult.filter((rent) => rent.tenant == tenantId);
-  }
-
-  const totalCost = costs.reduce((acc, cost) => acc + cost.amount, 0);
+  const rooms = roomsResult.map(({ _id, name, tp, property }) => {
+    return {
+      _id,
+      name,
+      tp,
+      tenant: currentTenantsMap[_id],
+      rent: rentsMap[_id],
+      tpTxt: ROOM_TP_MAP[tp] || tp,
+      property,
+    };
+  });
 
   return {
     date: currentYearMonth,
     properties,
     curProperty,
     rooms,
-    curRoom,
     costs,
     totalCost,
-    tenants,
-    rents,
-    curTenant,
     totalRents,
     receivedRents,
     pendingRents,

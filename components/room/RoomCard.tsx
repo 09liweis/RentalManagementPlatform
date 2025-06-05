@@ -33,6 +33,7 @@ export default function RoomCard({ room, handleEditRoom }: any) {
     }
 
     return (
+      <>
       <div className="flex items-center text-gray-600">
         <svg
           className="w-4 h-4 mr-2 text-gray-500"
@@ -53,6 +54,12 @@ export default function RoomCard({ room, handleEditRoom }: any) {
           <span className="font-medium ml-1">{room.tenant?.name}</span>
         </p>
       </div>
+        {room.rent && 
+          <div className="flex items-center text-sm">
+            ${room.rent.amount} - {room.rent.status}
+          </div>
+        }
+      </>
     );
   };
 
