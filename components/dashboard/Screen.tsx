@@ -154,23 +154,14 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
         </motion.div>
       )}
 
-      <AnimatePresence>
         {showRoomForm && (
-          <motion.div
-            variants={formVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          >
-            <RoomForm 
-              room={room} 
-              setRoom={setRoom} 
-              handleRoomSubmit={handleRoomSubmit} 
-              setShowRoomForm={setShowRoomForm} 
-            />
-          </motion.div>
+          <RoomForm 
+            room={room} 
+            setRoom={setRoom} 
+            handleRoomSubmit={handleRoomSubmit} 
+            setShowRoomForm={setShowRoomForm} 
+          />
         )}
-      </AnimatePresence>
 
       {curRoom?._id && (
         <motion.div variants={itemVariants}>
