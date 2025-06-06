@@ -13,9 +13,7 @@ export default function TenantCard({
   const hasCurTenant = curTenant?._id;
   return (
     <article
-      className={`bg-white rounded-xl shadow hover:shadow-md transition-all ${
-        hasCurTenant ? "p-2" : "p-3"
-      } border ${isCurrent ? "border-blue-500" : "border-gray-200"} group`}
+      className={`bg-white rounded-xl shadow hover:shadow-md transition-all p-3 border ${isCurrent ? "border-blue-500" : "border-gray-200"} group`}
     >
       <div className="flex items-center gap-4">
         <button
@@ -30,7 +28,6 @@ export default function TenantCard({
         <LinkText className="text-lg font-medium text-gray-900 hover:text-blue-600" text={tenant.name} href={`/dashboard/tenants/${tenant._id}`} />
       </div>
 
-      {!hasCurTenant && (
         <div className="space-y-4 mt-4">
           <div className="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg">
             <span className="text-sm text-gray-600">
@@ -61,7 +58,7 @@ export default function TenantCard({
             {t("dashboard.Edit")}
           </button>
         </div>
-      )}
+      
     </article>
   );
 }

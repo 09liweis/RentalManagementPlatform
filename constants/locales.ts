@@ -41,6 +41,8 @@ const translates:{[key:string]:any} = {
       ReceivedRents: 'Received Rents',
       PendingRents: 'Pending Rents',
       TotalCosts: 'Total Costs',
+      BackToProperty: 'Back to Property',
+      BackToRoom: 'Back to Room',
     },
     room: {
       Available: 'Available',
@@ -101,6 +103,8 @@ const translates:{[key:string]:any} = {
       ReceivedRents: '收到的房租',
       PendingRents: '还没收到的房租',
       TotalCosts: '总支出',
+      BackToProperty: '返回房屋',
+      BackToRoom: '返回房间'
     },
     room: {
       Available: '空闲',
