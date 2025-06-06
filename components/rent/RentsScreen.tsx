@@ -110,9 +110,6 @@ export default function RentsScreen({ tenantId }: { tenantId: string }) {
             <h4 className="text-lg font-semibold text-gray-900 mb-2">
               {curRoom?.name}
             </h4>
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-              {curRoom?.tpTxt}
-            </span>
           </motion.div>
 
           {/* Tenant Card */}
