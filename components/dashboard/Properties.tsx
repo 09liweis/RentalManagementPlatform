@@ -11,7 +11,7 @@ import LinkText from "../common/LinkText";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Properties() {
-  const {t} = useAppStore();
+  const { t } = useAppStore();
   const { properties } = usePropertyStore();
   const [showPropertyForm, setShowPropertyForm] = useState(false);
 
@@ -27,75 +27,77 @@ export default function Properties() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1 // 子元素之间的延迟
-      }
-    }
+        staggerChildren: 0.1, // 子元素之间的延迟
+      },
+    },
   };
 
   const headerVariants = {
     hidden: { opacity: 0, y: -20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.5,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   const formVariants = {
     hidden: { opacity: 0, height: 0, overflow: "hidden" },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       height: "auto",
       transition: {
         duration: 0.4,
-        ease: "easeInOut"
-      }
+        ease: "easeInOut",
+      },
     },
     exit: {
       opacity: 0,
       height: 0,
       transition: {
         duration: 0.3,
-        ease: "easeInOut"
-      }
-    }
+        ease: "easeInOut",
+      },
+    },
   };
 
   return (
     <>
-      <motion.div 
+      <motion.div
         className="flex justify-between items-center mt-8 pt-4 mb-4 border-t-4 border-sky-800"
         variants={headerVariants}
         initial="hidden"
         animate="visible"
       >
         <LinkText text="Properties" href="/dashboard" className="page-title" />
-        <Button tl={t('dashboard.AddNew')} handleClick={() => setShowPropertyForm(true)} />
+        <Button
+          tl={t("dashboard.AddNew")}
+          handleClick={() => setShowPropertyForm(true)}
+        />
       </motion.div>
-      
-        {showPropertyForm && (
-            <PropertyForm
-              property={property}
-              showPropertyForm={setShowPropertyForm}
-            />
-        )}
-      
+
+      {showPropertyForm && (
+        <PropertyForm
+          property={property}
+          showPropertyForm={setShowPropertyForm}
+        />
+      )}
+
       <LoadingSection loading={false}>
-        <motion.section 
+        <motion.section
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           {properties.map((p, index) => (
-            <PropertyCard 
-              p={p} 
-              key={p._id} 
+            <PropertyCard
+              p={p}
+              key={p._id}
               handlePropertyEdit={handlePropertyEdit}
-              index={index}
             />
           ))}
         </motion.section>

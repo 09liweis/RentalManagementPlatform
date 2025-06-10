@@ -11,7 +11,8 @@ import Button from "@/components/common/Button";
 export default function PropertyList() {
   const { properties, fetchProperties } = usePropertyStore();
   const [showPropertyForm, setShowPropertyForm] = useState(false);
-  const [selectedProperty, setSelectedProperty] = useState<Property>(EMPTY_PROPERTY);
+  const [selectedProperty, setSelectedProperty] =
+    useState<Property>(EMPTY_PROPERTY);
 
   useEffect(() => {
     fetchProperties();
@@ -29,20 +30,20 @@ export default function PropertyList() {
 
   // Container animation variants
   const containerVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
-      scale: 0.9
+      scale: 0.9,
     },
-    visible: { 
+    visible: {
       opacity: 1,
       scale: 1,
       transition: {
         duration: 0.5,
         ease: "easeOut",
         when: "beforeChildren",
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   // Grid animation variants
@@ -51,43 +52,43 @@ export default function PropertyList() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   // Empty state animation variants
   const emptyStateVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
-      y: 20
+      y: 20,
     },
-    visible: { 
+    visible: {
       opacity: 1,
       y: 0,
       transition: {
         delay: 0.2,
         duration: 0.5,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   // Button animation variants
   const buttonVariants = {
-    hover: { 
+    hover: {
       scale: 1.05,
       transition: {
         duration: 0.2,
-        ease: "easeInOut"
-      }
+        ease: "easeInOut",
+      },
     },
-    tap: { 
+    tap: {
       scale: 0.95,
       transition: {
-        duration: 0.1
-      }
-    }
+        duration: 0.1,
+      },
+    },
   };
 
   return (
@@ -105,24 +106,23 @@ export default function PropertyList() {
             whileTap="tap"
             variants={buttonVariants}
           >
-            <Button 
-              tl="Add Property" 
+            <Button
+              tl="Add Property"
               handleClick={handleAddProperty}
               tp="primary"
             />
           </motion.div>
         </div>
-        
+
         {properties && properties.length > 0 ? (
           <motion.div
             variants={gridVariants}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {properties.map((property: Property, index: number) => (
-              <PropertyCard 
-                key={property._id} 
+              <PropertyCard
+                key={property._id}
                 p={property}
-                index={index}
                 handlePropertyEdit={handlePropertyEdit}
               />
             ))}
@@ -137,15 +137,16 @@ export default function PropertyList() {
               No Properties Yet
             </h3>
             <p className="text-gray-600 mb-6">
-              Add your first property to start managing your real estate portfolio
+              Add your first property to start managing your real estate
+              portfolio
             </p>
             <motion.div
               whileHover="hover"
               whileTap="tap"
               variants={buttonVariants}
             >
-              <Button 
-                tl="Add Your First Property" 
+              <Button
+                tl="Add Your First Property"
                 handleClick={handleAddProperty}
                 tp="primary"
               />
@@ -155,8 +156,8 @@ export default function PropertyList() {
       </motion.div>
 
       {showPropertyForm && (
-        <PropertyForm 
-          showPropertyForm={setShowPropertyForm} 
+        <PropertyForm
+          showPropertyForm={setShowPropertyForm}
           property={selectedProperty}
         />
       )}
