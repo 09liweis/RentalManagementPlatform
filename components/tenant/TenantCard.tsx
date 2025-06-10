@@ -1,64 +1,143 @@
 import useAppStore from "@/stores/appStore";
 import LinkText from "../common/LinkText";
 import usePropertyStore from "@/stores/propertyStore";
+import { motion } from "framer-motion";
+
+// 卡片动画变体
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.05,
+      duration: 0.4,
+      type: "spring",
+      stiffness: 100
+    }
+  }),
+  hover: { 
+    scale: 1.03,
+    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+    transition: { duration: 0.2 }
+  }
+};
 
 export default function TenantCard({
   tenant,
   onEditClick,
   setCurrentTenant,
+  index = 0
 }: any) {
   const { t } = useAppStore();
   const { curTenant } = usePropertyStore();
   const isCurrent = curTenant?._id == tenant._id;
   const hasCurTenant = curTenant?._id;
   return (
-    <article
-      className={`bg-white rounded-xl shadow hover:shadow-md transition-all p-3 border ${isCurrent ? "border-blue-500" : "border-gray-200"} group`}
+    <motion.article
+      className={`bg-white rounded-xl shadow hover:shadow-md p-3 border ${isCurrent ? "border-blue-500" : "border-gray-200"} group`}
+      variants={cardVariants}
+      custom={index}
+      initial="hidden"
+      animate="visible"
+      whileHover="hover"
+      layout
     >
-      <div className="flex items-center gap-4">
-        <button
+      <motion.div 
+        className="flex items-center gap-4"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.1 }}
+      >
+        <motion.button
           onClick={() => setCurrentTenant(tenant)}
-          className={`w-3 h-3 rounded-full transition ${
+          className={`w-3 h-3 rounded-full ${
             tenant.isCurrent
               ? "bg-emerald-500 ring-1 ring-emerald-200"
               : "bg-gray-300 hover:bg-gray-400"
           }`}
           title={tenant.isCurrent ? "Current Tenant" : "Set as Current Tenant"}
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 0.9 }}
         />
-        <LinkText className="text-lg font-medium text-gray-900 hover:text-blue-600" text={tenant.name} href={`/dashboard/tenants/${tenant._id}`} />
-      </div>
+        <motion.div whileHover={{ x: 5 }} transition={{ type: "spring", stiffness: 300 }}>
+          <LinkText 
+            className="text-lg font-medium text-gray-900 hover:text-blue-600" 
+            text={tenant.name} 
+            href={`/dashboard/tenants/${tenant._id}`} 
+          />
+        </motion.div>
+      </motion.div>
 
-        <div className="space-y-4 mt-4">
-          <div className="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg">
-            <span className="text-sm text-gray-600">
-              {t("dashboard.Deposit")}
-            </span>
-            <span className="text-lg font-medium text-blue-600">
-              ${tenant.deposit}
-            </span>
-          </div>
-
-          <div className="text-sm text-gray-600 bg-gray-50 rounded-lg p-2.5">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 hover:translate-x-1 transition-transform">
-                <span className="w-2 h-2 bg-emerald-500 rounded-full" />
-                <span>{tenant.startDate}</span>
-              </div>
-              <div className="flex items-center gap-2 hover:translate-x-1 transition-transform">
-                <span className="w-2 h-2 bg-rose-500 rounded-full" />
-                <span>{tenant.endDate || t("dashboard.Ongoing")}</span>
-              </div>
-            </div>
-          </div>
-
-          <button
-            onClick={() => onEditClick(tenant)}
-            className="w-full text-sm text-gray-700 hover:text-blue-600 flex items-center justify-center py-2 border rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all"
+      <motion.div 
+        className="space-y-4 mt-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        <motion.div 
+          className="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg"
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <span className="text-sm text-gray-600">
+            {t("dashboard.Deposit")}
+          </span>
+          <motion.span 
+            className="text-lg font-medium text-blue-600"
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.3 }}
           >
-            {t("dashboard.Edit")}
-          </button>
-        </div>
-      
-    </article>
+            ${tenant.deposit}
+          </motion.span>
+        </motion.div>
+
+        <motion.div 
+          className="text-sm text-gray-600 bg-gray-50 rounded-lg p-2.5"
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <div className="space-y-2">
+            <motion.div 
+              className="flex items-center gap-2"
+              whileHover={{ x: 8 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <motion.span 
+                className="w-2 h-2 bg-emerald-500 rounded-full"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.4 }}
+              />
+              <span>{tenant.startDate}</span>
+            </motion.div>
+            <motion.div 
+              className="flex items-center gap-2"
+              whileHover={{ x: 8 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <motion.span 
+                className="w-2 h-2 bg-rose-500 rounded-full"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.5 }}
+              />
+              <span>{tenant.endDate || t("dashboard.Ongoing")}</span>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        <motion.button
+          onClick={() => onEditClick(tenant)}
+          className="w-full text-sm text-gray-700 hover:text-blue-600 flex items-center justify-center py-2 border rounded-lg hover:border-blue-300 hover:bg-blue-50"
+          whileHover={{ scale: 1.02, backgroundColor: "rgb(239 246 255)" }}
+          whileTap={{ scale: 0.98 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          {t("dashboard.Edit")}
+        </motion.button>
+      </motion.div>
+    </motion.article>
   );
 }
