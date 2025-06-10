@@ -6,6 +6,7 @@ import useAppStore from "@/stores/appStore"
 import { Room } from "@/types/room";
 import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Rooms() {
   const {t} = useAppStore();
@@ -28,19 +29,79 @@ export default function Rooms() {
     fetchRooms();
   },[]);
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1 // 子元素之间的延迟
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut"
+      }
+    },
+    hover: { 
+      scale: 1.05,
+      boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",
+      transition: {
+        duration: 0.2
+      }
+    }
+  };
+
   return (
     <>
-      <h1 className="page-title">{t('home.Rooms')}</h1>
+      <motion.h1 
+        className="page-title"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {t('home.Rooms')}
+      </motion.h1>
       <LoadingSection loading={loading}>
-        <section className="card-container">
-        {allRooms.map((room)=>
-          <article key={room._id} className={`card ${room.tenant ? '': 'border-green-500 border'}`}>
+        <motion.section 
+          className="card-container"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+        {allRooms.map((room, index)=>
+          <motion.article 
+            key={room._id} 
+            className={`card ${room.tenant ? '': 'border-green-500 border'}`}
+            variants={cardVariants}
+            whileHover="hover"
+            custom={index}
+          >
             <LinkText text={room.name || ''} href={`/dashboard/rooms/${room._id}`} />
-            <p>{t('home.Property')}: {room.property?.name || ''}</p>
-            <p>{room.tenant?.name}</p>
-          </article>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 + index * 0.05 }}
+            >
+              {t('home.Property')}: {room.property?.name || ''}
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 + index * 0.05 }}
+            >
+              {room.tenant?.name}
+            </motion.p>
+          </motion.article>
         )}
-        </section>
+        </motion.section>
       </LoadingSection>
     </>
   )

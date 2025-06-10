@@ -130,18 +130,9 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
         </motion.section>
       )}
 
-      <AnimatePresence>
         {showCostForm && (
-          <motion.div
-            variants={formVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          >
             <CostForm showCostForm={setShowCostForm} />
-          </motion.div>
         )}
-      </AnimatePresence>
 
       {curProperty?._id && (
         <motion.div variants={itemVariants}>
