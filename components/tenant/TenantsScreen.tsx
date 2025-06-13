@@ -186,9 +186,6 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
                         </svg>
                       </motion.div>
                       <div className="flex-1">
-                        <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
-                          {t("dashboard.Property")}
-                        </h3>
                         <h4 className="text-lg font-semibold text-gray-900 mb-1">
                           {curProperty.name}
                         </h4>
@@ -249,9 +246,6 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
                           </svg>
                         </motion.div>
                         <div className="flex-1">
-                          <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
-                            {t("dashboard.Room")}
-                          </h3>
                           <h4 className="text-lg font-semibold text-gray-900 mb-1">
                             {curRoom.name}
                           </h4>
