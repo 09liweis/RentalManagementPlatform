@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decodeToken } from "@/utils/jwt";
 import Tenant from "@/models/tenant";
-import {getStats} from "@/services/stats";
+import { ROOM_TP_MAP } from "@/types/room";
 import connect from "@/config/db";
 import Room from "@/models/room";
 import Property from "@/models/property";
@@ -24,9 +24,16 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
     await connect();
 
     const tenants = await Tenant.find({ room: roomId }).sort({ startDate: -1 });
-    const room = await Room.findOne({ _id: roomId });
+    
+    const roomResult = await Room.findOne({ _id: roomId });
+    const room = roomResult.toObject();
+    room.tpTxt = ROOM_TP_MAP[room.tp];
+    
     const property = await Property.findOne({ _id: room.property });
-    return NextResponse.json({tenants, curRoom:room, curProperty: property}, { status: 200 });
+    return NextResponse.json(
+      { tenants, curRoom: room, curProperty: property },
+      { status: 200 },
+    );
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
   }
