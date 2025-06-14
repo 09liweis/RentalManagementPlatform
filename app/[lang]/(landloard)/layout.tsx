@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 
 import "@/app/globals.css";
 import Sidebar from "@/components/dashboard/sidebar";
+import LangSwitch from "@/components/common/LangSwtich";
 import Button from "@/components/common/Button";
 import ToastProvider from "@/components/common/ToastProvider";
 import { showToast } from "@/components/common/Toast";
@@ -47,11 +48,15 @@ export default function RootLayout({
           <main className="p-4 max-w-6xl mx-auto">
             <header className="flex items-center justify-between rounded p-4 shadow mb-4 bg-white/80">
               <Logo />
-              <Button
-                tp="danger"
-                tl={t("home.Logout")}
-                handleClick={handleLogout}
-              />
+              
+              <div className="flex items-center gap-3">
+                <LangSwitch />
+                <Button
+                  tp="danger"
+                  tl={t("home.Logout")}
+                  handleClick={handleLogout}
+                />
+              </div>
             </header>
             <section className="shadow-lg min-h-screen p-4 bg-white/80 rounded">
               <Suspense fallback={<Loading />}>{children}</Suspense>
