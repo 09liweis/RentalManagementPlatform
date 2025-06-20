@@ -437,7 +437,7 @@ export default function ProfilePage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>Don't reuse passwords from other accounts</span>
+                  <span>Don&apos;t reuse passwords from other accounts</span>
                 </li>
               </ul>
             </motion.div>
