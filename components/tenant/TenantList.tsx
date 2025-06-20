@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 interface TenantListProps {
   loading: boolean;
   tenants: Tenant[];
-  onEditClick: (tenant: any) => void;
-  setCurrentTenant: (tenant: Tenant) => void;
+  onEditClick?: (tenant: any) => void;
+  setCurrentTenant?: (tenant: Tenant) => void;
 }
 
 // 动画变体

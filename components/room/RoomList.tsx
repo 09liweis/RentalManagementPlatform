@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 
 interface RoomListProps {
   rooms: Room[];
-  setShowRoomForm: (show: boolean) => void;
-  setRoom: (room: Room) => void;
+  setShowRoomForm?: (show: boolean) => void;
+  setRoom?: (room: Room) => void;
 }
 
 // Animation variants for empty state
@@ -61,10 +61,12 @@ export default function RoomList({
     <section className="mt-8 pt-4 border-t-4 border-green-700">
       <div className="flex justify-between items-center">
         <h1 className="page-title">Rooms</h1>
-        <Button
-          tl={t("dashboard.Add")}
-          handleClick={() => setShowRoomForm(true)}
-        />
+        {setShowRoomForm && (
+          <Button
+            tl={t("dashboard.Add")}
+            handleClick={() => setShowRoomForm(true)}
+          />
+        )}
       </div>
 
       {rooms && rooms.length > 0 ? (
@@ -74,8 +76,12 @@ export default function RoomList({
               key={room._id}
               room={room}
               handleEditRoom={() => {
-                setRoom(room);
-                setShowRoomForm(true);
+                if (setRoom) {
+                  setRoom(room);
+                }
+                if (setShowRoomForm) {
+                  setShowRoomForm(true);
+                }
               }}
             />
           ))}
@@ -123,18 +129,20 @@ export default function RoomList({
               its own tenants, rent tracking, and management details.
             </p>
 
-            <motion.div
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-            >
-              <Button
-                tl="Add Your First Room"
-                handleClick={() => setShowRoomForm(true)}
-                tp="primary"
-                className="px-8 py-3 text-base font-semibold shadow-lg"
-              />
-            </motion.div>
+            {setShowRoomForm && (
+              <motion.div
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                <Button
+                  tl="Add Your First Room"
+                  handleClick={() => setShowRoomForm(true)}
+                  tp="primary"
+                  className="px-8 py-3 text-base font-semibold shadow-lg"
+                />
+              </motion.div>
+            )}
           </motion.div>
 
           {/* Decorative elements */}

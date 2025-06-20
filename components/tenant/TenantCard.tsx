@@ -13,21 +13,22 @@ const cardVariants = {
       delay: i * 0.05,
       duration: 0.4,
       type: "spring",
-      stiffness: 100
-    }
+      stiffness: 100,
+    },
   }),
-  hover: { 
+  hover: {
     scale: 1.03,
-    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-    transition: { duration: 0.2 }
-  }
+    boxShadow:
+      "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+    transition: { duration: 0.2 },
+  },
 };
 
 export default function TenantCard({
   tenant,
   onEditClick,
   setCurrentTenant,
-  index = 0
+  index = 0,
 }: any) {
   const { t } = useAppStore();
   const { curTenant } = usePropertyStore();
@@ -43,14 +44,16 @@ export default function TenantCard({
       whileHover="hover"
       layout
     >
-      <motion.div 
+      <motion.div
         className="flex items-center gap-4"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.1 }}
       >
         <motion.button
-          onClick={() => setCurrentTenant(tenant)}
+          onClick={() =>
+            setCurrentTenant ? setCurrentTenant(tenant) : () => {}
+          }
           className={`w-3 h-3 rounded-full ${
             tenant.isCurrent
               ? "bg-emerald-500 ring-1 ring-emerald-200"
@@ -60,22 +63,25 @@ export default function TenantCard({
           whileHover={{ scale: 1.2 }}
           whileTap={{ scale: 0.9 }}
         />
-        <motion.div whileHover={{ x: 5 }} transition={{ type: "spring", stiffness: 300 }}>
-          <LinkText 
-            className="text-lg font-medium text-gray-900 hover:text-blue-600" 
-            text={tenant.name} 
-            href={`/dashboard/tenants/${tenant._id}`} 
+        <motion.div
+          whileHover={{ x: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <LinkText
+            className="text-lg font-medium text-gray-900 hover:text-blue-600"
+            text={tenant.name}
+            href={`/dashboard/tenants/${tenant._id}`}
           />
         </motion.div>
       </motion.div>
 
-      <motion.div 
+      <motion.div
         className="space-y-4 mt-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        <motion.div 
+        <motion.div
           className="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg"
           whileHover={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300 }}
@@ -83,7 +89,7 @@ export default function TenantCard({
           <span className="text-sm text-gray-600">
             {t("dashboard.Deposit")}
           </span>
-          <motion.span 
+          <motion.span
             className="text-lg font-medium text-blue-600"
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
@@ -93,18 +99,18 @@ export default function TenantCard({
           </motion.span>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="text-sm text-gray-600 bg-gray-50 rounded-lg p-2.5"
           whileHover={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
           <div className="space-y-2">
-            <motion.div 
+            <motion.div
               className="flex items-center gap-2"
               whileHover={{ x: 8 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <motion.span 
+              <motion.span
                 className="w-2 h-2 bg-emerald-500 rounded-full"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -112,12 +118,12 @@ export default function TenantCard({
               />
               <span>{tenant.startDate}</span>
             </motion.div>
-            <motion.div 
+            <motion.div
               className="flex items-center gap-2"
               whileHover={{ x: 8 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <motion.span 
+              <motion.span
                 className="w-2 h-2 bg-rose-500 rounded-full"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -128,15 +134,17 @@ export default function TenantCard({
           </div>
         </motion.div>
 
-        <motion.button
-          onClick={() => onEditClick(tenant)}
-          className="w-full text-sm text-gray-700 hover:text-blue-600 flex items-center justify-center py-2 border rounded-lg hover:border-blue-300 hover:bg-blue-50"
-          whileHover={{ scale: 1.02, backgroundColor: "rgb(239 246 255)" }}
-          whileTap={{ scale: 0.98 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
-          {t("dashboard.Edit")}
-        </motion.button>
+        {onEditClick && (
+          <motion.button
+            onClick={() => onEditClick(tenant)}
+            className="w-full text-sm text-gray-700 hover:text-blue-600 flex items-center justify-center py-2 border rounded-lg hover:border-blue-300 hover:bg-blue-50"
+            whileHover={{ scale: 1.02, backgroundColor: "rgb(239 246 255)" }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            {t("dashboard.Edit")}
+          </motion.button>
+        )}
       </motion.div>
     </motion.article>
   );

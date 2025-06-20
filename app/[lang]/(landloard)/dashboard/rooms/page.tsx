@@ -7,6 +7,7 @@ import { Room } from "@/types/room";
 import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import RoomList from "@/components/room/RoomList";
 
 export default function Rooms() {
   const {t} = useAppStore();
@@ -60,49 +61,6 @@ export default function Rooms() {
   };
 
   return (
-    <>
-      <motion.h1 
-        className="page-title"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        {t('home.Rooms')}
-      </motion.h1>
-      <LoadingSection loading={loading}>
-        <motion.section 
-          className="card-container"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-        {allRooms.map((room, index)=>
-          <motion.article 
-            key={room._id} 
-            className={`card ${room.tenant ? '': 'border-green-500 border'}`}
-            variants={cardVariants}
-            whileHover="hover"
-            custom={index}
-          >
-            <LinkText text={room.name || ''} href={`/dashboard/rooms/${room._id}`} />
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 + index * 0.05 }}
-            >
-              {t('home.Property')}: {room.property?.name || ''}
-            </motion.p>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 + index * 0.05 }}
-            >
-              {room.tenant?.name}
-            </motion.p>
-          </motion.article>
-        )}
-        </motion.section>
-      </LoadingSection>
-    </>
+    <RoomList rooms={allRooms} />
   )
 }
