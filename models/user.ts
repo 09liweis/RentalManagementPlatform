@@ -1,7 +1,7 @@
 //models/user.ts
 
 import mongoose from "mongoose";
-import {number} from "prop-types";
+import { number } from "prop-types";
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -15,12 +15,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide a password"],
   },
+  phone: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
   locale: String,
   isVerified: {
     type: Boolean,
     default: false,
   },
-  isAdmin:{
+  isAdmin: {
     type: Number,
     default: false,
   },
