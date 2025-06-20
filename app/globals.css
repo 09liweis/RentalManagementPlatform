@@ -125,3 +125,29 @@ body {
 .rent-status.paid {
   @apply text-green-600 bg-green-100;
 }
+
+/* Sidebar responsive adjustments */
+@media (max-width: 1024px) {
+  .sidebar-collapsed {
+    width: 4rem;
+  }
+
+  .main-content-expanded {
+    margin-left: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-mobile {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar-mobile.open {
+    transform: translateX(0);
+  }
+
+  .main-content-mobile {
+    margin-left: 0;
+  }
+}

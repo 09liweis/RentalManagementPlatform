@@ -42,26 +42,34 @@ export default function RootLayout({
   return (
     <html lang={lang}>
       <title>Dashboard</title>
-      <body className={`${inter.className} min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 `}>
+      <body
+        className={`${inter.className} min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100`}
+      >
         <ToastProvider>
-          {/* <Sidebar /> */}
-          <main className="p-4 max-w-6xl mx-auto">
-            <header className="flex items-center justify-between rounded p-4 shadow mb-4 bg-white/80">
-              <Logo />
-              
-              <div className="flex items-center gap-3">
-                <LangSwitch />
-                <Button
-                  tp="danger"
-                  tl={t("home.Logout")}
-                  handleClick={handleLogout}
-                />
-              </div>
-            </header>
-            <section className="shadow-lg min-h-screen p-4 bg-white/80 rounded">
-              <Suspense fallback={<Loading />}>{children}</Suspense>
-            </section>
-          </main>
+          <div className="flex">
+            <Sidebar />
+
+            {/* Main Content Area */}
+            <div className="flex-1 ml-64">
+              <main className="p-4 max-w-6xl mx-auto">
+                <header className="flex items-center justify-between rounded-xl p-4 shadow-sm mb-4 bg-white/80 backdrop-blur-sm border border-gray-100">
+                  <Logo />
+
+                  <div className="flex items-center gap-3">
+                    <LangSwitch />
+                    <Button
+                      tp="danger"
+                      tl={t("home.Logout")}
+                      handleClick={handleLogout}
+                    />
+                  </div>
+                </header>
+                <section className="shadow-lg min-h-screen p-6 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-100">
+                  <Suspense fallback={<Loading />}>{children}</Suspense>
+                </section>
+              </main>
+            </div>
+          </div>
         </ToastProvider>
       </body>
     </html>
