@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fetchData } from "@/utils/http";
 import useAppStore from "@/stores/appStore";
-import LinkText from "./LinkText";
+import Link from "next/link";
 
 interface SearchResult {
   id: string;
@@ -12,6 +12,13 @@ interface SearchResult {
   subtitle: string;
   type: "property" | "room" | "tenant";
   href: string;
+  metadata?: any;
+}
+
+interface SearchResponse {
+  results: SearchResult[];
+  total: number;
+  query: string;
 }
 
 interface SearchModalProps {
@@ -25,6 +32,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Focus input when modal opens
@@ -73,81 +81,28 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
     const searchTimeout = setTimeout(async () => {
       if (searchQuery.trim().length < 2) {
         setSearchResults([]);
+        setError(null);
         return;
       }
 
       setLoading(true);
+      setError(null);
+
       try {
-        // Fetch properties, rooms, and tenants
-        const [propertiesRes, roomsRes, tenantsRes] = await Promise.all([
-          fetchData({ url: "/api/properties" }),
-          fetchData({ url: "/api/rooms" }),
-          fetchData({ url: "/api/tenants" }),
-        ]);
+        const response: SearchResponse = await fetchData({
+          url: `/api/search?q=${encodeURIComponent(searchQuery.trim())}&limit=20`,
+        });
 
-        const results: SearchResult[] = [];
-
-        // Search properties
-        if (propertiesRes.properties) {
-          propertiesRes.properties
-            .filter(
-              (property: any) =>
-                property.name
-                  .toLowerCase()
-                  .includes(searchQuery.toLowerCase()) ||
-                property.address
-                  ?.toLowerCase()
-                  .includes(searchQuery.toLowerCase()),
-            )
-            .forEach((property: any) => {
-              results.push({
-                id: property._id,
-                title: property.name,
-                subtitle: property.address || "No address",
-                type: "property",
-                href: `/dashboard/properties/${property._id}`,
-              });
-            });
+        if (response.results) {
+          setSearchResults(response.results);
+          setSelectedIndex(-1);
+        } else {
+          setError("Failed to search");
+          setSearchResults([]);
         }
-
-        // Search rooms
-        if (roomsRes.rooms) {
-          roomsRes.rooms
-            .filter((room: any) =>
-              room.name?.toLowerCase().includes(searchQuery.toLowerCase()),
-            )
-            .forEach((room: any) => {
-              results.push({
-                id: room._id,
-                title: room.name,
-                subtitle: `${room.property?.name || "Unknown Property"} - ${room.tpTxt || "Room"}`,
-                type: "room",
-                href: `/dashboard/rooms/${room._id}`,
-              });
-            });
-        }
-
-        // Search tenants
-        if (tenantsRes.tenants) {
-          tenantsRes.tenants
-            .filter((tenant: any) =>
-              tenant.name?.toLowerCase().includes(searchQuery.toLowerCase()),
-            )
-            .forEach((tenant: any) => {
-              results.push({
-                id: tenant._id,
-                title: tenant.name,
-                subtitle: `Tenant - $${tenant.deposit || 0} deposit`,
-                type: "tenant",
-                href: `/dashboard/tenants/${tenant._id}`,
-              });
-            });
-        }
-
-        setSearchResults(results);
-        setSelectedIndex(-1);
       } catch (error) {
         console.error("Search error:", error);
+        setError("Search failed. Please try again.");
         setSearchResults([]);
       } finally {
         setLoading(false);
@@ -163,6 +118,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
       setSearchQuery("");
       setSearchResults([]);
       setSelectedIndex(-1);
+      setError(null);
     }
   }, [isOpen]);
 
@@ -378,6 +334,24 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                     tenants
                   </p>
                 </div>
+              ) : error ? (
+                <div className="p-8 text-center text-red-500">
+                  <svg
+                    className="mx-auto h-12 w-12 text-red-300 mb-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1}
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                    />
+                  </svg>
+                  <p className="text-lg font-medium mb-2">Search Error</p>
+                  <p className="text-sm">{error}</p>
+                </div>
               ) : searchResults.length === 0 && !loading ? (
                 <div className="p-8 text-center text-gray-500">
                   <svg
@@ -408,9 +382,8 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                       initial="hidden"
                       animate="visible"
                     >
-                      <LinkText
+                      <Link
                         href={result.href}
-                        text=""
                         className={`block px-4 py-3 hover:bg-gray-50 transition-colors duration-150 ${
                           selectedIndex === index ? "bg-blue-50" : ""
                         }`}
@@ -442,7 +415,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                             </span>
                           </div>
                         </div>
-                      </LinkText>
+                      </Link>
                     </motion.div>
                   ))}
                 </div>
