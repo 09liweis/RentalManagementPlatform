@@ -13,7 +13,10 @@ interface LoginUser {
   _id?: string;
   name: string;
   email: string;
-  isAdmin: boolean;
+  phone?: string;
+  locale?: string;
+  address?: string;
+  isAdmin?: boolean;
   isVerified: boolean;
 }
 
