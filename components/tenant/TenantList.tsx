@@ -1,6 +1,7 @@
 import { Tenant } from "@/types/tenant";
 import TenantCard from "./TenantCard";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 interface TenantListProps {
   loading: boolean;
@@ -22,21 +23,30 @@ const containerVariants = {
 
 export default function TenantList({ tenants, onEditClick, setCurrentTenant }: TenantListProps) {
   return (
-    <motion.section 
-      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      {tenants.map((tenant, index) => (
-        <TenantCard 
-          key={tenant._id} 
-          tenant={tenant} 
-          onEditClick={onEditClick} 
-          setCurrentTenant={setCurrentTenant}
-          index={index} // 传递索引用于计算延迟
-        />
-      ))}
-    </motion.section>
+    <div className="space-y-6">
+
+      {tenants.length === 0 ? (
+        <div className="text-center py-12">
+          <h3 className="text-lg font-medium text-gray-700">No tenants found</h3>
+        </div>
+      ) : (
+        <motion.section 
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {tenants.map((tenant, index) => (
+            <TenantCard 
+              key={tenant._id} 
+              tenant={tenant} 
+              onEditClick={onEditClick} 
+              setCurrentTenant={setCurrentTenant}
+              index={index}
+            />
+          ))}
+        </motion.section>
+      )}
+    </div>
   );
 }
