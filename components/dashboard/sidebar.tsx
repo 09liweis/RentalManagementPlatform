@@ -1,5 +1,6 @@
 "use client";
 import useAppStore from "@/stores/appStore";
+import useUserStore from "@/stores/userStore";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LinkText from "../common/LinkText";
@@ -149,6 +150,7 @@ const textVariants = {
 export default function Sidebar() {
   const curPathname = usePathname();
   const { t, curLocale } = useAppStore();
+  const { loginUser } = useUserStore();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const isSelected = (path: string) => {
@@ -314,8 +316,8 @@ export default function Sidebar() {
               </svg>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-900">Landlord</p>
-              <p className="text-xs text-gray-500">Premium Account</p>
+              <p className="text-sm font-medium text-gray-900">{loginUser?.name || 'Guest'}</p>
+              <p className="text-xs text-gray-500">{loginUser?.email || 'No email'}</p>
             </div>
           </div>
         </div>
