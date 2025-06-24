@@ -91,7 +91,7 @@ export default function RentCard({ rent, handleClick, handleDeleteRent, index = 
       >
         <Button
           onClick={handleClick}
-          type="secondary"
+          buttonType="secondary"
           outline={true}
           size="sm"
           fullWidth={true}
