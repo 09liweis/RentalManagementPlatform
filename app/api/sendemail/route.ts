@@ -1,19 +1,17 @@
 // api/sendemail/route.ts
+import connect from "@/config/db"
+import { NextResponse } from "next/server";
+import { sendEmail } from "@/lib/email";
+import User from "@/models/user";
+import { WEBSITE_NAME } from "@/constants/text";
 
-import { NextResponse } from 'next/server';
-import { ServerClient } from 'postmark';
-import { sendEmail } from '@/lib/email';
-import User from '@/models/user';
-import { WEBSITE_NAME } from '@/constants/text';
-
-const client = new ServerClient(process.env.POSTMARK_SERVER_TOKEN || "");
 const JWT_SECRET = process.env.JWT_SECRET;
-const EMAIL_URL = process.env.POSTMARK_SENDER_EMAIL;
 
 // Function to generate a random 6-character string
 function generateRandomToken(length: number): string {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
   for (let i = 0; i < length; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
     result += characters[randomIndex];
@@ -26,12 +24,17 @@ export async function POST(req: Request) {
     const { email } = await req.json();
 
     if (!email) {
-      return NextResponse.json({ err: 'Sorry, Email Address is necessary.' }, { status: 400 });
+      return NextResponse.json(
+        { err: "Sorry, Email Address is necessary." },
+        { status: 400 },
+      );
     }
 
-    const user = await User.findOne({email});
+    await connect();
+
+    const user = await User.findOne({ email });
     if (!user) {
-      return NextResponse.json({err: 'User Not Found'}, {status: 404});
+      return NextResponse.json({ err: "User Not Found" }, { status: 404 });
     }
 
     if (!JWT_SECRET) {
@@ -48,7 +51,7 @@ export async function POST(req: Request) {
     const resetLink = `${process.env.HOST}/en-CA/resetpassword?token=${token}`;
     const emailContent = {
       to: email,
-      subject: 'Reset your password',
+      subject: "Reset your password",
       html: `
         <div style="background-color: #f7fafc; padding: 32px; max-width: 600px; margin: auto; font-family: Arial, sans-serif;">
           <div style="background-color: #ffffff; padding: 24px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
@@ -83,12 +86,22 @@ export async function POST(req: Request) {
 
     try {
       sendEmail(emailContent);
-      return NextResponse.json({ msg: 'The verification code has been sent to your email' }, { status: 200 });
+      return NextResponse.json(
+        { msg: "The verification code has been sent to your email" },
+        { status: 200 },
+      );
     } catch (error: any) {
-      console.error('Error sending email:', error.message, error.response);
-      return NextResponse.json({ error: 'Error sending email' }, { status: 500 });
+      console.error("Error sending email:", error.message, error.response);
+      return NextResponse.json(
+        { error: "Error sending email" },
+        { status: 500 },
+      );
     }
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Invalid request' }, { status: 400 });
+    console.error("Error in POST request:", error.message);
+    return NextResponse.json(
+      { error: error.message || "Invalid request" },
+      { status: 400 },
+    );
   }
 }

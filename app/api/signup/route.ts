@@ -24,7 +24,10 @@ export async function POST(request: NextRequest) {
     }
 
     if (!password.trim()) {
-      return NextResponse.json({ err: "Password is required" }, { status: 400 });
+      return NextResponse.json(
+        { err: "Password is required" },
+        { status: 400 },
+      );
     }
 
     await connect();
@@ -42,13 +45,19 @@ export async function POST(request: NextRequest) {
       });
 
       existingUser = await newUser.save();
-      sendEmail({to:email, subject:'Welcome to Tenant Tracker', html:'<p>Please activte</p>'})
-      return NextResponse.json({ msg: "Sign up successfully!" }, { status: 200 });
+      sendEmail({
+        to: email,
+        subject: `Welcome to ${WEBSITE_NAME}`,
+        html: "<p>Please activte</p>",
+      });
+      return NextResponse.json(
+        { msg: "Sign up successfully!" },
+        { status: 200 },
+      );
     } else {
-
       const response = NextResponse.json(
-          {err: "Already Registered"},
-          {status: 400},
+        { err: "Already Registered" },
+        { status: 400 },
       );
       // response.cookies.set("token", token, {
       //   httpOnly: true,
