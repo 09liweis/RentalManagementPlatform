@@ -68,15 +68,11 @@ export default function RentsScreen({ tenantId }: { tenantId: string }) {
         <div className="flex items-center space-x-2 text-sm text-gray-600">
           <LinkText
             href={`/dashboard/properties/${curProperty?._id}`}
-            text={t("dashboard.BackToProperty")}
-            className="text-blue-600 hover:text-blue-700 flex items-center transition-colors duration-200"
-          />
+          >{t("dashboard.BackToProperty")}</LinkText>
           <span className="text-gray-400">/</span>
           <LinkText
             href={`/dashboard/rooms/${curRoom?._id}`}
-            text={t("dashboard.BackToRoom")}
-            className="text-blue-600 hover:text-blue-700 transition-colors duration-200"
-          />
+          >{t("dashboard.BackToRoom")}</LinkText>
         </div>
       </motion.div>
 
