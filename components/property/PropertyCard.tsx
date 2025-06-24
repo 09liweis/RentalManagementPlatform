@@ -32,11 +32,8 @@ export default function PropertyCard({
       <div className="flex justify-between items-start gap-4">
         <div className="space-y-1">
           <LinkText
-            className="text-lg font-semibold text-gray-800 hover:text-blue-600 transition-colors
-                         inline-block hover:scale-[1.02] transform duration-200"
             href={`/dashboard/properties/${p._id}`}
-            text={p.name}
-          />
+          >{p.name}</LinkText>
           <div className="flex items-center text-gray-500">
             <svg
               className="w-4 h-4 mr-2"
