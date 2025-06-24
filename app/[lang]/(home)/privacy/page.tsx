@@ -108,14 +108,14 @@ export default function Privacy() {
             <div className="mt-4 space-x-4">
               <LinkText
                 href="/"
-                text="Back to Home"
-                className="text-blue-600 hover:text-blue-800 font-medium"
-              />
+              >
+                Back to Home
+              </LinkText>
               <LinkText
                 href="/terms"
-                text="Terms of Service"
-                className="text-blue-600 hover:text-blue-800 font-medium"
-              />
+              >
+                Terms of Service
+              </LinkText>
             </div>
           </div>
         </div>

@@ -88,9 +88,9 @@ export default function Terms() {
             <div className="mt-4">
               <LinkText
                 href="/"
-                text="Back to Home"
-                className="text-blue-600 hover:text-blue-800 font-medium"
-              />
+              >
+                Back to Home
+              </LinkText>
             </div>
           </div>
         </div>

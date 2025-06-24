@@ -134,9 +134,9 @@ export default function ForgotPassword() {
           >
             <LinkText
               href="/login"
-              text="Back to Login"
-              className="inline-block w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-all duration-200 text-center"
-            />
+            >
+              Back to Login
+            </LinkText>
 
             <Button
               size="sm"
@@ -208,16 +208,16 @@ export default function ForgotPassword() {
 
         {/* Back to Login Link */}
         <motion.div
-          className="text-center mt-6"
+          className="text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
         >
           <LinkText
             href="/login"
-            text="Back to Login"
-            className="text-gray-600 hover:text-blue-600 transition-colors duration-300 text-sm font-medium flex items-center justify-center gap-2"
-          />
+          >
+            Back to Login
+          </LinkText>
         </motion.div>
 
         {/* Help Text */}

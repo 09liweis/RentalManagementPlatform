@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import LinkText from '@/components/common/LinkText';
 export default function ResetPassword() {
   return (
     <div
@@ -17,12 +18,9 @@ export default function ResetPassword() {
         <h2 className="text-lg md:text-xl font-bold text-center mb-2 text-gray-800">
           Please check your email to reset your password.
         </h2>
-        <Link href="/login" legacyBehavior>
-          <a
-            className="bg-orange-500 text-white text-sm py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-            Back to Login
-          </a>
-        </Link>
+        <LinkText href="/login">
+          Back to Login
+        </LinkText>
       </div>
     </div>
   );

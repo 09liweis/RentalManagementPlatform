@@ -55,10 +55,10 @@ function Login() {
 
       <nav className="text-right">
         <LinkText
-          text={t('home.ForgotPassword')}
           href="/forgotpassword"
-          className="text-black-800 underline decoration-1 underline-offset-4"
-        />
+        >
+          {t('home.ForgotPassword')}
+        </LinkText>
       </nav>
 
       <Button 

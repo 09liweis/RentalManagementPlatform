@@ -30,21 +30,21 @@ export default function Header() {
             ) : loginUser._id ? (
               <LinkText 
                 href="/dashboard" 
-                text={t('home.Dashboard')}
-                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200"
-              />
+              >
+                {t('home.Dashboard')}
+              </LinkText>
             ) : (
               <>
                 <LinkText 
                   href="/signup" 
-                  text={t('home.Signup')}
-                  className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200"
-                />
+                >
+                  {t('home.Signup')}
+                </LinkText>
                 <LinkText 
                   href="/login" 
-                  text={t('home.Login')}
-                  className="px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-all duration-200 shadow-sm hover:shadow"
-                />
+                >
+                  {t('home.Login')}
+                </LinkText>
               </>
             )}
             <div className="pl-2 border-l border-gray-200">

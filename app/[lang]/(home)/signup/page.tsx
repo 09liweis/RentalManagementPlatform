@@ -66,8 +66,9 @@ function Signup() {
           <div className="text-sm">
             <LinkText 
               href={'/login'} 
-              text={t('home.HaveAlreadyRegister')}
-            />
+            >
+              {t('home.HaveAlreadyRegister')}
+            </LinkText>
           </div>
         </div>
         
