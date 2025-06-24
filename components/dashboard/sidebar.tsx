@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LinkText from "../common/LinkText";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const DASHBOARD_MENUS = [
   {
@@ -98,14 +98,20 @@ const sidebarVariants = {
     width: "16rem",
     transition: {
       duration: 0.3,
-      ease: "easeInOut",
+      ease: [0.25, 0.1, 0.25, 1.0], // 使用cubic-bezier曲线使动画更自然
+      type: "spring",
+      stiffness: 300,
+      damping: 30
     },
   },
   closed: {
     width: "4rem",
     transition: {
       duration: 0.3,
-      ease: "easeInOut",
+      ease: [0.25, 0.1, 0.25, 1.0],
+      type: "spring",
+      stiffness: 300,
+      damping: 30
     },
   },
 };
@@ -117,13 +123,21 @@ const menuItemVariants = {
     x: 0,
     transition: {
       delay: i * 0.1,
-      duration: 0.3,
-      ease: "easeOut",
+      duration: 0.4,
+      ease: [0.25, 0.1, 0.25, 1.0],
+      type: "spring",
+      stiffness: 400,
+      damping: 25
     },
   }),
   hover: {
-    scale: 1.02,
-    transition: { duration: 0.2 },
+    scale: 1.03,
+    transition: { 
+      duration: 0.2,
+      type: "spring",
+      stiffness: 400,
+      damping: 15
+    },
   },
 };
 
@@ -152,6 +166,27 @@ export default function Sidebar() {
   const { t, curLocale } = useAppStore();
   const { loginUser } = useUserStore();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  
+  // 响应式折叠
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsCollapsed(true);
+      } else if (window.innerWidth > 1280) {
+        setIsCollapsed(false);
+      }
+    };
+    
+    // 初始化时检查
+    handleResize();
+    
+    // 监听窗口大小变化
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const isSelected = (path: string) => {
     const comparedPath = "/" + curLocale + path;
@@ -164,7 +199,7 @@ export default function Sidebar() {
 
   return (
     <motion.aside
-      className="fixed left-0 top-0 h-screen bg-white/95 backdrop-blur-md shadow-xl border-r border-gray-100 z-40"
+      className="h-screen bg-white/95 backdrop-blur-md shadow-xl border-r border-gray-100 z-40 flex flex-col overflow-hidden"
       variants={sidebarVariants}
       animate={isCollapsed ? "closed" : "open"}
       initial="open"
@@ -200,12 +235,17 @@ export default function Sidebar() {
 
           <motion.button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            className="p-2.5 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200 relative group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
+            <motion.div
+              className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-100/50 to-purple-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              initial={false}
+              animate={{ rotate: isCollapsed ? 180 : 0 }}
+            />
             <motion.svg
-              className="w-4 h-4 text-gray-600"
+              className="w-5 h-5 text-gray-600 relative z-10 group-hover:text-blue-600 transition-colors duration-200"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -240,7 +280,7 @@ export default function Sidebar() {
               <Link
                 href={`/${curLocale}${menu.path}`}
                 className={`
-                  flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 group relative overflow-hidden
+                  flex items-center ${isCollapsed ? 'justify-center' : 'justify-start space-x-3'} px-4 py-3 rounded-xl transition-all duration-300 group relative overflow-hidden
                   ${
                     selected
                       ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
@@ -261,8 +301,8 @@ export default function Sidebar() {
 
                 {/* Icon */}
                 <motion.div
-                  className={`relative z-10 ${selected ? "text-white" : "text-gray-500 group-hover:text-blue-600"}`}
-                  whileHover={{ scale: 1.1 }}
+                  className={`relative z-10 ${selected ? "text-white" : "text-gray-500 group-hover:text-blue-600"} ${isCollapsed ? 'scale-125' : ''}`}
+                  whileHover={{ scale: isCollapsed ? 1.2 : 1.1 }}
                   transition={{ duration: 0.2 }}
                 >
                   {menu.icon}
@@ -271,8 +311,24 @@ export default function Sidebar() {
                 {/* Text */}
                 <motion.span
                   className={`relative z-10 font-medium ${selected ? "text-white" : "group-hover:text-blue-600"}`}
-                  variants={textVariants}
+                  variants={{
+                    open: { 
+                      opacity: 1, 
+                      display: "block",
+                      x: 0,
+                      transition: { duration: 0.3, delay: 0.1 }
+                    },
+                    closed: { 
+                      opacity: 0,
+                      x: -10, 
+                      transitionEnd: {
+                        display: "none",
+                      },
+                      transition: { duration: 0.2 }
+                    }
+                  }}
                   animate={isCollapsed ? "closed" : "open"}
+                  initial="open"
                 >
                   {menu.tl === "Profile" ? "Profile" : t(menu.tl)}
                 </motion.span>
@@ -293,35 +349,70 @@ export default function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-100"
-        variants={textVariants}
-        animate={isCollapsed ? "closed" : "open"}
-      >
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <svg
-                className="w-5 h-5 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                />
-              </svg>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-gray-900">{loginUser?.name || 'Guest'}</p>
-              <p className="text-xs text-gray-500">{loginUser?.email || 'No email'}</p>
+      <div className="absolute bottom-0 left-0 right-0 border-t border-gray-100">
+        {/* Expanded Footer */}
+        <motion.div
+          className="p-4"
+          variants={textVariants}
+          animate={isCollapsed ? "closed" : "open"}
+          initial="open"
+        >
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-900">{loginUser?.name || 'Guest'}</p>
+                <p className="text-xs text-gray-500">{loginUser?.email || 'No email'}</p>
+              </div>
             </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+        
+        {/* Collapsed Footer */}
+        <motion.div
+          className="p-4 flex justify-center"
+          variants={{
+            open: { opacity: 0, display: "none" },
+            closed: { 
+              opacity: 1, 
+              display: "flex",
+              transition: { delay: 0.2, duration: 0.2 }
+            }
+          }}
+          animate={isCollapsed ? "closed" : "open"}
+          initial="closed"
+        >
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+            <svg
+              className="w-5 h-5 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
+          </div>
+        </motion.div>
+      </div>
     </motion.aside>
   );
 }

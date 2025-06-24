@@ -67,8 +67,8 @@ export default function RootLayout({
             <Sidebar />
 
             {/* Main Content Area */}
-            <div className="flex-1 ml-64">
-              <main className="p-4 max-w-6xl mx-auto">
+            <div className="flex-1">
+              <main className="p-4">
                 <header className="flex items-center justify-between rounded-xl p-4 shadow-sm mb-4 bg-white/80 backdrop-blur-sm border border-gray-100">
                   <Logo />
 
