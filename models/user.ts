@@ -34,8 +34,6 @@ const userSchema = new mongoose.Schema({
   forgotPasswardTokenExpiry: Date,
   verifyToken: String,
   verifyTokenExpiry: Date,
-  // the record creates timestamp
-  ct: Date,
   // 0 for valid, 1 for delete
   isDelete: {
     type: Number,
@@ -46,6 +44,9 @@ const userSchema = new mongoose.Schema({
     enum: ['free', 'premium', 'enterprise'],
     default: 'free'
   },
+  ts: Date,
+  mt: Date,
+  lts: Date,
 });
 
 const User = mongoose.models.users || mongoose.model("users", userSchema);

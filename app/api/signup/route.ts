@@ -43,6 +43,8 @@ export async function POST(request: NextRequest) {
       const newUser = new User({
         email,
         password: hashedPassword,
+        ts: new Date(),
+        mt: new Date()
       });
 
       existingUser = await newUser.save();

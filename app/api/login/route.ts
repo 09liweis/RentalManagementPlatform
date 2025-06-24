@@ -61,6 +61,7 @@ export async function POST(request: NextRequest) {
       expiresIn: "1d",
     });
     //TODO: set secret on env, set expired
+    await User.findByIdAndUpdate(existingUser._id, { lts: new Date() });
 
     const response = NextResponse.json({
       message: "Login successful",
