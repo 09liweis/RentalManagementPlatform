@@ -7,7 +7,28 @@ interface LinkTextProps {
   children?: React.ReactNode;
 }
 
-export default function LinkText({ href, className, children }: LinkTextProps) {
+interface LinkTextProps {
+  href: string;
+  className?: string;
+  children?: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+export default function LinkText({ href, className, children, size = 'md' }: LinkTextProps) {
   const {curLocale} = useAppStore();
-  return <Link className={`${className || 'text-purple-600 hover:text-purple-700 transition-colors duration-300 text-sm font-medium'}`} href={`/${curLocale}${href}`}>{children}</Link>;
+  
+  const sizeClasses = {
+    sm: 'text-sm',
+    md: 'text-base',
+    lg: 'text-lg'
+  };
+
+  return (
+    <Link 
+      className={`${className || `text-gray-700 hover:text-gray-800 transition-colors duration-300 ${sizeClasses[size]} font-medium`}`} 
+      href={`/${curLocale}${href}`}
+    >
+      {children}
+    </Link>
+  );
 }
