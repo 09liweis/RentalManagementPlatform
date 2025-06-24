@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 
     const user = await User.findOne(
       { _id: verified.userId },
-      "name email phone address locale roles",
+      "name email phone address locale roles isAdmin",
     );
 
     if (locale) {
