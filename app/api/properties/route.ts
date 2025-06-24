@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Property from "@/models/property";
+import User from "@/models/user";
 import { decodeToken } from "@/utils/jwt";
 import connect from "@/config/db";
 
@@ -76,6 +77,18 @@ export async function POST(request: NextRequest) {
     }
 
     await connect();
+
+    // Check user's plan and property count
+    const user = await User.findById(verified.userId);
+    if (user.plan === 'free') {
+      const propertyCount = await Property.countDocuments({ user: verified.userId });
+      if (propertyCount >= 1) {
+        return NextResponse.json(
+          { err: "Free plan users can only have one property. Upgrade to add more." },
+          { status: 403 }
+        );
+      }
+    }
 
     const newProperty = new Property({ name, user: verified.userId });
     await newProperty.save();

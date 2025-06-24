@@ -41,6 +41,11 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  plan: {
+    type: String,
+    enum: ['free', 'premium', 'enterprise'],
+    default: 'free'
+  },
 });
 
 const User = mongoose.models.users || mongoose.model("users", userSchema);
