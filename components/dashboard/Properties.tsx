@@ -72,7 +72,7 @@ export default function Properties() {
         initial="hidden"
         animate="visible"
       >
-        <LinkText text="Properties" href="/dashboard" className="page-title" />
+        <LinkText href="/dashboard" className="page-title">Properties</LinkText>
         <Button
           onClick={() => setShowPropertyForm(true)}
         >
