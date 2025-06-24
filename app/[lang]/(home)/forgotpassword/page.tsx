@@ -122,7 +122,7 @@ export default function ForgotPassword() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            We've sent a password reset link to <strong>{email}</strong>. Please
+            We&apos;ve sent a password reset link to <strong>{email}</strong>. Please
             check your email and follow the instructions to reset your password.
           </motion.p>
 
@@ -142,7 +142,7 @@ export default function ForgotPassword() {
               onClick={() => setEmailSent(false)}
               className="w-full text-sm text-gray-600 hover:text-gray-800 transition-colors duration-200"
             >
-              Didn't receive the email? Try again
+              Didn&apos;t receive the email? Try again
             </button>
           </motion.div>
         </div>
@@ -242,7 +242,7 @@ export default function ForgotPassword() {
                 Need Help?
               </h3>
               <p className="text-sm text-blue-800">
-                If you don't receive the email within a few minutes, please
+                If you don&apos;t receive the email within a few minutes, please
                 check your spam folder or contact support.
               </p>
             </div>
