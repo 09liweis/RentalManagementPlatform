@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LinkText from "../common/LinkText";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useUserStore from "@/stores/userStore";
 
 const DASHBOARD_MENUS = [
@@ -173,6 +173,29 @@ export default function Sidebar() {
   const { t, curLocale } = useAppStore();
   const { loginUser } = useUserStore();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      if (mobile) {
+        setIsCollapsed(true);
+      }
+    };
+
+    // Initial check
+    checkMobile();
+
+    // Add event listener
+    window.addEventListener('resize', checkMobile);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const closeMobileSidebar = () => setIsMobileOpen(false);
 
   const isSelected = (path: string) => {
     const comparedPath = "/" + curLocale + path;
@@ -189,11 +212,31 @@ export default function Sidebar() {
     : DASHBOARD_MENUS;
 
   return (
-    <motion.aside
-      className="h-screen bg-white/95 backdrop-blur-md shadow-xl border-r border-gray-100 z-40"
+    <>
+      {/* Mobile overlay */}
+      {isMobile && isMobileOpen && (
+        <motion.div
+          className="fixed inset-0 bg-black/50 z-30"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={closeMobileSidebar}
+        />
+      )}
+
+      <motion.aside
+        className="h-screen bg-white/95 backdrop-blur-md shadow-xl border-r border-gray-100"
       variants={sidebarVariants}
-      animate={isCollapsed ? "closed" : "open"}
-      initial="open"
+      animate={
+        isMobile
+          ? isMobileOpen
+            ? "mobileOpen"
+            : "closed"
+          : isCollapsed
+          ? "closed"
+          : "open"
+      }
+      initial={isMobile ? "closed" : "open"}
     >
       {/* Header */}
       <div className="p-6 border-b border-gray-100">
@@ -365,6 +408,31 @@ export default function Sidebar() {
           </div>
         </div>
       </motion.div>
-    </motion.aside>
+      </motion.aside>
+
+      {/* Mobile menu button */}
+      {isMobile && (
+        <motion.button
+          onClick={() => setIsMobileOpen(!isMobileOpen)}
+          className="fixed bottom-6 right-6 z-50 p-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full shadow-lg text-white md:hidden"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d={isMobileOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+            />
+          </svg>
+        </motion.button>
+      )}
+    </>
   );
 }
