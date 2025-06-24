@@ -151,7 +151,7 @@ const menuItemVariants = {
 const textVariants = {
   open: {
     opacity: 1,
-    display: "block",
+    display: "flex",
     transition: {
       delay: 0.2,
       duration: 0.2,
@@ -184,8 +184,8 @@ export default function Sidebar() {
   };
 
   // Combine regular menus with admin menu if user is admin
-  const allMenus = loginUser.isAdmin 
-    ? [...DASHBOARD_MENUS, ADMIN_MENU] 
+  const allMenus = loginUser.isAdmin
+    ? [...DASHBOARD_MENUS, ADMIN_MENU]
     : DASHBOARD_MENUS;
 
   return (
@@ -263,10 +263,10 @@ export default function Sidebar() {
               custom={index}
               whileHover="hover"
             >
-              <Link
-                href={`/${curLocale}${menu.path}`}
+              <LinkText
+                href={`/${menu.path}`}
                 className={`
-                  flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 group relative overflow-hidden
+                  flex items-center ${isCollapsed ? "" : "space-x-3 px-4"} py-3 rounded-xl transition-all duration-300 group relative overflow-hidden
                   ${
                     selected
                       ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
@@ -301,7 +301,9 @@ export default function Sidebar() {
                   variants={textVariants}
                   animate={isCollapsed ? "closed" : "open"}
                 >
-                  {menu.tl === "Profile" || menu.tl === "Admin" ? menu.tl : t(menu.tl)}
+                  {menu.tl === "Profile" || menu.tl === "Admin"
+                    ? menu.tl
+                    : t(menu.tl)}
                 </motion.span>
 
                 {/* Admin badge */}
@@ -323,7 +325,7 @@ export default function Sidebar() {
                     transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
                   />
                 )}
-              </Link>
+              </LinkText>
             </motion.div>
           );
         })}
