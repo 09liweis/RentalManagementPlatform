@@ -5,7 +5,7 @@ import Input from "@/components/common/Input";
 import { fetchData } from "@/utils/http";
 import { useRouter } from "next/navigation";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EMAIL } from "@/constants/text";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import Link from "next/link";
@@ -13,16 +13,19 @@ import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
 import FormWrapper from "@/components/common/form/FormWrapper";
 import Button from "@/components/common/Button";
+import useUserStore from "@/stores/userStore";
 
 function Signup() {
+  const {t, curLocale} = useAppStore();
+  const { loginUser } = useUserStore();
 
-  const {t} = useAppStore();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSignup = async () => {
+  const handleSignup = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
     setLoading(true);
     const {msg,err} = await fetchData({url:"/api/signup",method:"POST",body:{email,password}});
     setLoading(false);
@@ -32,6 +35,13 @@ function Signup() {
       router.push("/login");
     }
   };
+
+  useEffect(()=>{
+    if (loginUser.email) {
+      return router.push(`/${curLocale}/dashboard`);
+    }
+  },[loginUser]);
+
   return (
     <FormWrapper onSubmit={handleSignup}>
 
