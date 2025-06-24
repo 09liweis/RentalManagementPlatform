@@ -63,9 +63,8 @@ export default function RoomList({
         <h1 className="page-title">Rooms</h1>
         {setShowRoomForm && (
           <Button
-            tl={t("dashboard.Add")}
-            handleClick={() => setShowRoomForm(true)}
-          />
+            onClick={() => setShowRoomForm(true)}
+          >{t("dashboard.Add")}</Button>
         )}
       </div>
 
@@ -136,11 +135,9 @@ export default function RoomList({
                 whileTap="tap"
               >
                 <Button
-                  tl="Add Your First Room"
-                  handleClick={() => setShowRoomForm(true)}
-                  tp="primary"
-                  className="px-8 py-3 text-base font-semibold shadow-lg"
-                />
+                  onClick={() => setShowRoomForm(true)}
+                  buttonType="primary"
+                >{"Add Your First Room"}</Button>
               </motion.div>
             )}
           </motion.div>

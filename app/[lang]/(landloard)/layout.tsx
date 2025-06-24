@@ -100,10 +100,10 @@ export default function RootLayout({
 
                     <LangSwitch />
                     <Button
-                      tp="danger"
-                      tl={t("home.Logout")}
-                      handleClick={handleLogout}
-                    />
+                      buttonType="danger"
+                      outline={true}
+                      onClick={handleLogout}
+                    >{t("home.Logout")}</Button>
                   </div>
                 </header>
                 <section className="shadow-lg min-h-screen p-6 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-100">

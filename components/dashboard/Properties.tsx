@@ -74,9 +74,10 @@ export default function Properties() {
       >
         <LinkText text="Properties" href="/dashboard" className="page-title" />
         <Button
-          tl={t("dashboard.AddNew")}
-          handleClick={() => setShowPropertyForm(true)}
-        />
+          onClick={() => setShowPropertyForm(true)}
+        >
+          {t("dashboard.AddNew")}
+        </Button>
       </motion.div>
 
       {showPropertyForm && (

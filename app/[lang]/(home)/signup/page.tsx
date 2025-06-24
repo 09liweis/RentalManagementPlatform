@@ -12,6 +12,7 @@ import Link from "next/link";
 import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
 import FormWrapper from "@/components/common/form/FormWrapper";
+import Button from "@/components/common/Button";
 
 function Signup() {
 
@@ -70,10 +71,12 @@ function Signup() {
           </div>
         </div>
         
-        <button
+        <Button
           type="submit"
-          className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-300 transform hover:-translate-y-0.5"
+          size="lg"
+          fullWidth
           disabled={loading}
+          className="group relative flex justify-center"
         >
           <span className="absolute left-0 inset-y-0 flex items-center pl-3">
             <svg className="h-5 w-5 text-purple-500 group-hover:text-purple-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -81,7 +84,7 @@ function Signup() {
             </svg>
           </span>
           {loading ? <LoadingSpinner /> : t('home.Signup')}
-        </button>
+        </Button>
         
         <div className="mt-4 text-center">
           <p className="text-xs text-gray-500">

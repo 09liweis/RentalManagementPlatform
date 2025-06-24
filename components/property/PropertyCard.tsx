@@ -80,13 +80,13 @@ export default function PropertyCard({
         </div>
         {(isSelected || !hasSelected) && handlePropertyEdit && (
           <Button
-            tl={t("dashboard.Edit")}
-            tp="primary"
             outline={true}
             size="sm"
-            handleClick={() => handlePropertyEdit(p)}
+            onClick={() => handlePropertyEdit(p)}
             className="hover:scale-105 transform transition-transform duration-200"
-          />
+          >
+            {t("dashboard.Edit")}
+          </Button>
         )}
       </div>
     </article>

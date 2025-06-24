@@ -107,10 +107,10 @@ export default function PropertyList() {
             variants={buttonVariants}
           >
             <Button
-              tl="Add Property"
-              handleClick={handleAddProperty}
-              tp="primary"
-            />
+              onClick={handleAddProperty}
+            >
+              Add Property
+            </Button>
           </motion.div>
         </div>
 
@@ -146,10 +146,10 @@ export default function PropertyList() {
               variants={buttonVariants}
             >
               <Button
-                tl="Add Your First Property"
-                handleClick={handleAddProperty}
-                tp="primary"
-              />
+                onClick={handleAddProperty}
+              >
+                Add Your First Property
+              </Button>
             </motion.div>
           </motion.div>
         )}

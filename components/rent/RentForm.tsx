@@ -43,10 +43,17 @@ export default function RentForm() {
           handleSelect={(value) => setCurRent({ ...curRent, status: value })}
         />
         <div className="flex justify-between">
-          <Button tl={curRent._id?t('dashboard.Update'):t('dashboard.Add')} handleClick={()=>{}} />
-          <Button tl={t('dashboard.Cancel')} handleClick={()=>{
-            setShowRentForm();
-          }} tp="danger" />
+          <Button type="submit">
+            {curRent._id ? t('dashboard.Update') : t('dashboard.Add')}
+          </Button>
+          <Button
+            buttonType="danger"
+            onClick={() => {
+              setShowRentForm();
+            }}
+          >
+            {t('dashboard.Cancel')}
+          </Button>
         </div>
       </FormWrapper>
     </FormBackdrop>

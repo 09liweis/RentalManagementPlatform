@@ -26,17 +26,15 @@ export default function RoomForm({room,setRoom,handleRoomSubmit,setShowRoomForm}
         />
         <div className="flex justify-between">
           <Button
-            tl={`${room?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
-            handleClick={() => {}}
-          />
+            onClick={() => {}}
+          >{room?._id ? t("dashboard.Update") : t("dashboard.Add")}</Button>
           <Button
-            tl={t("dashboard.Cancel")}
-            handleClick={() => {
+            onClick={() => {
               setShowRoomForm(false);
               setRoom({});
             }}
-            tp="danger"
-          />
+            buttonType="danger"
+          >{t("dashboard.Cancel")}</Button>
         </div>
       </FormWrapper>
     </FormBackdrop>

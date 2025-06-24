@@ -138,12 +138,14 @@ export default function ForgotPassword() {
               className="inline-block w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-all duration-200 text-center"
             />
 
-            <button
+            <Button
+              size="sm"
               onClick={() => setEmailSent(false)}
-              className="w-full text-sm text-gray-600 hover:text-gray-800 transition-colors duration-200"
+              fullWidth
+              className="text-gray-600 hover:text-gray-800"
             >
               Didn&apos;t receive the email? Try again
-            </button>
+            </Button>
           </motion.div>
         </div>
       </motion.div>
@@ -194,12 +196,14 @@ export default function ForgotPassword() {
           transition={{ delay: 0.4 }}
         >
           <Button
-            tl={loading ? <LoadingSpinner /> : t("home.ResetPassword")}
-            handleClick={() => {}}
+            type="submit"
+            size="lg"
             disabled={loading}
-            fullWidth={true}
+            fullWidth
             className="group relative overflow-hidden"
-          />
+          >
+            {loading ? <LoadingSpinner /> : t("home.ResetPassword")}
+          </Button>
         </motion.div>
 
         {/* Back to Login Link */}

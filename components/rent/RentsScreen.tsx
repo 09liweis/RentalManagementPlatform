@@ -151,10 +151,10 @@ export default function RentsScreen({ tenantId }: { tenantId: string }) {
                 {t("dashboard.RentHistory")}
               </h2>
               <Button
-                tl={t("dashboard.AddRent")}
-                handleClick={setShowRentForm}
-                tp="primary"
-              />
+                onClick={setShowRentForm}
+              >
+                {t("dashboard.AddRent")}
+              </Button>
             </div>
 
             <LoadingSection loading={loading}>

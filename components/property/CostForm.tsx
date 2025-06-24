@@ -74,8 +74,8 @@ export default function CostForm({
           }
         />
         <div className="flex justify-between">
-          <Button tl={t(`dashboard.Add`)} handleClick={()=>{}} />
-          <Button tl={t(`dashboard.Cancel`)} handleClick={()=>{showCostForm(false)}} tp="danger" />
+          <Button type="submit">{t(`dashboard.Add`)}</Button>
+          <Button onClick={() => showCostForm(false)} buttonType="danger">{t(`dashboard.Cancel`)}</Button>
         </div>
       </FormWrapper>
     </FormBackdrop>

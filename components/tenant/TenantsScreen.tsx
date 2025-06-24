@@ -277,9 +277,10 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
           </motion.h1>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button
-              tl={t("dashboard.Add")}
-              handleClick={() => setShowTenantForm(true)}
-            />
+              onClick={() => setShowTenantForm(true)}
+            >
+              {t("dashboard.Add")}
+            </Button>
           </motion.div>
         </motion.div>
       </motion.div>

@@ -3,6 +3,7 @@
 
 import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
+import Button from "@/components/common/Button";
 
 export default function ResetPassword() {
   const router = useRouter();
@@ -98,12 +99,13 @@ export default function ResetPassword() {
             </div>
           </div>
           {message && <p className="text-center text-red-500">{message}</p>}
-          <button
+          <Button
             type="submit"
-            className="w-full bg-orange-500 text-white font-bold py-2 px-4 rounded-full hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            size="lg"
+            fullWidth
           >
             Reset Password
-          </button>
+          </Button>
         </form>
       </div>
     </div>

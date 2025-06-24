@@ -27,10 +27,9 @@ export default function TenantForm({tenant, setTenant, handleSubmit, setShowTena
         ))}
         <div className="flex justify-between">
           <Button
-            tl={`${tenant?._id ? t("dashboard.Update") : t("dashboard.Add")}`}
-            handleClick={()=>{}}
-          />
-          <Button tl={t('dashboard.Cancel')} handleClick={()=>{setShowTenantForm(false);setTenant({});}} tp="danger" />
+            type="submit"
+          >{tenant?._id ? t("dashboard.Update") : t("dashboard.Add")}</Button>
+          <Button onClick={() => {setShowTenantForm(false); setTenant({})}} buttonType="danger">{t('dashboard.Cancel')}</Button>
         </div>
       </FormWrapper>
       </FormBackdrop>

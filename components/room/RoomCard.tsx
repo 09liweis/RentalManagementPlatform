@@ -92,13 +92,11 @@ export default function RoomCard({ room, handleEditRoom }: any) {
         />
         {(isSelected || !hasSelected) && handleEditRoom &&
         <Button
-          tl={t("dashboard.Edit")}
-          tp="primary"
+          buttonType="primary"
           outline={true}
           size="sm"
-          handleClick={handleEditRoom}
-          className="hover:scale-105 transform transition-transform duration-200"
-        />}
+          onClick={handleEditRoom}
+        >{t("dashboard.Edit")}</Button>}
       </div>
       <div className="space-y-1">
         <div className="flex items-center">

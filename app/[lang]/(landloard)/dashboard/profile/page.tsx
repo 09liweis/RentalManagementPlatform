@@ -305,11 +305,11 @@ export default function ProfilePage() {
                 whileTap={{ scale: 0.98 }}
               >
                 <Button
-                  tl={loading ? <LoadingSpinner /> : "Update Profile"}
-                  handleClick={() => {}}
+                  type="submit"
                   disabled={loading}
-                  tp="primary"
-                />
+                >
+                  {loading ? <LoadingSpinner /> : "Update Profile"}
+                </Button>
               </motion.div>
             </form>
           </motion.div>
@@ -370,11 +370,11 @@ export default function ProfilePage() {
                 whileTap={{ scale: 0.98 }}
               >
                 <Button
-                  tl={loading ? <LoadingSpinner /> : "Update Password"}
-                  handleClick={() => {}}
+                  type="submit"
                   disabled={loading}
-                  tp="primary"
-                />
+                >
+                  {loading ? <LoadingSpinner /> : "Update Password"}
+                </Button>
               </motion.div>
             </form>
 

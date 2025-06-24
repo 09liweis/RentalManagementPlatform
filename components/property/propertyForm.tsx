@@ -463,22 +463,24 @@ export default function PropertyForm({
 
         <div className="flex justify-between gap-4">
           <Button
-            tl={t(curProperty._id ? "dashboard.Update" : "dashboard.Add")}
-            handleClick={() => {}}
+            type="submit"
             fullWidth={true}
-          />
+          >
+            {t(curProperty._id ? "dashboard.Update" : "dashboard.Add")}
+          </Button>
           <Button
-            tl={t("dashboard.Cancel")}
-            handleClick={() => {
+            onClick={() => {
               setCurProperty(EMPTY_PROPERTY);
               setAddress("");
               setSuggestions([]);
               setShowSuggestions(false);
               showPropertyForm(false);
             }}
-            tp="danger"
+            buttonType="danger"
             fullWidth={true}
-          />
+          >
+            {t("dashboard.Cancel")}
+          </Button>
         </div>
       </FormWrapper>
     </FormBackdrop>

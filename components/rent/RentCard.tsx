@@ -90,21 +90,23 @@ export default function RentCard({ rent, handleClick, handleDeleteRent, index = 
         transition={{ delay: 0.3, duration: 0.3 }}
       >
         <Button
-          tl={t("dashboard.Edit")}
-          handleClick={handleClick}
-          tp="secondary"
+          onClick={handleClick}
+          type="secondary"
           outline={true}
           size="sm"
           fullWidth={true}
-        />
+        >
+          {t("dashboard.Edit")}
+        </Button>
         <Button
-          tp="danger"
-          tl={t("dashboard.Delete")}
-          handleClick={handleDeleteRent}
+          buttonType="danger"
+          onClick={handleDeleteRent}
           outline={true}
           size="sm"
           fullWidth={true}
-        />
+        >
+          {t("dashboard.Delete")}
+        </Button>
       </motion.div>
     </motion.article>
   );

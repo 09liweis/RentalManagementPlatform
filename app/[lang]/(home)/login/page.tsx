@@ -61,7 +61,14 @@ function Login() {
         />
       </nav>
 
-      <Button disabled={loading} handleClick={handleLogin} tl={loading ? <LoadingSpinner /> : t('home.Login')} />
+      <Button 
+        type="submit"
+        size="lg" 
+        fullWidth 
+        disabled={loading}
+      >
+        {loading ? <LoadingSpinner /> : t('home.Login')}
+      </Button>
     </FormWrapper>
   );
 }

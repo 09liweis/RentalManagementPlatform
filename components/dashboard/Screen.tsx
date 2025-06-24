@@ -112,7 +112,7 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
         >
           <div className="flex justify-between items-center">
             <h1 className="page-title">Costs</h1>
-            <Button tl={"Add Cost"} handleClick={() => setShowCostForm(true)} />
+            <Button onClick={() => setShowCostForm(true)}>Add Cost</Button>
           </div>
           <motion.div className="space-y-4">
             {costs.map((cost) => (
