@@ -85,11 +85,8 @@ export default function RoomCard({ room, handleEditRoom }: any) {
     >
       <div className="flex justify-between items-center">
         <LinkText
-          className="text-lg font-semibold text-gray-800 hover:text-blue-600 transition-colors
-                     inline-block hover:scale-[1.02] transform duration-200"
           href={`/dashboard/rooms/${room._id}`}
-          text={room?.name || ""}
-        />
+        >{room?.name || ""}</LinkText>
         {(isSelected || !hasSelected) && handleEditRoom &&
         <Button
           buttonType="primary"

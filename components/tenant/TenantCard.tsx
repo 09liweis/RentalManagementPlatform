@@ -68,10 +68,8 @@ export default function TenantCard({
           transition={{ type: "spring", stiffness: 300 }}
         >
           <LinkText
-            className="text-lg font-medium text-gray-900 hover:text-blue-600"
-            text={tenant.name}
             href={`/dashboard/tenants/${tenant._id}`}
-          />
+          >{tenant.name}</LinkText>
         </motion.div>
       </motion.div>
 
