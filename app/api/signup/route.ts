@@ -3,6 +3,7 @@ import bcryptjs from "bcryptjs";
 import User from "@/models/user";
 import connect from "@/config/db";
 import { sendEmail } from "@/lib/email";
+import { WEBSITE_NAME } from "@/constants/text";
 
 /**
  * @swagger
