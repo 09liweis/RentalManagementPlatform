@@ -17,34 +17,13 @@ export async function POST(request: NextRequest) {
 
     const user = await User.findOne(
       { _id: verified.userId },
-      "name email phone address locale roles isAdmin",
+      "name email phone address locale roles isAdmin plan",
     );
 
     if (locale) {
       user.locale = locale;
       await user.save();
     }
-
-    return NextResponse.json({ user }, { status: 200 });
-  } catch (err) {
-    return sendResponse({ response: { err }, status: 500 });
-  }
-}
-
-export async function GET(request: NextRequest) {
-  try {
-    const verified = decodeToken(request);
-
-    if (!verified) {
-      return NextResponse.json({ err: "Not Login" }, { status: 401 });
-    }
-
-    await connect();
-
-    const user = await User.findOne(
-      { _id: verified.userId },
-      "name email phone address locale roles isVerified ct",
-    );
 
     return NextResponse.json({ user }, { status: 200 });
   } catch (err) {

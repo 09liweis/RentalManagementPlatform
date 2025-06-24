@@ -9,14 +9,17 @@ import useAppStore from "@/stores/appStore";
 import PropertyCard from "../property/PropertyCard";
 import LinkText from "../common/LinkText";
 import { motion, AnimatePresence } from "framer-motion";
+import useUserStore from "@/stores/userStore";
+import { showToast } from "../common/Toast";
 
 export default function Properties() {
   const { t } = useAppStore();
+  const { loginUser} = useUserStore();
   const { properties } = usePropertyStore();
   const [showPropertyForm, setShowPropertyForm] = useState(false);
 
   const [property, setProperty] = useState<Property>(EMPTY_PROPERTY);
-  const handlePropertyEdit = (property: any) => {
+  const handlePropertyEdit = (property: Property) => {
     setProperty(property);
     setShowPropertyForm(true);
   };
@@ -74,7 +77,13 @@ export default function Properties() {
       >
         <LinkText href="/dashboard" className="page-title">Properties</LinkText>
         <Button
-          onClick={() => setShowPropertyForm(true)}
+          onClick={() => {
+            if (loginUser?.plan === 'free' && properties.length >= 1) {
+              showToast("Free plan users can only have one property. Upgrade to add more.");
+            } else {
+              setShowPropertyForm(true);
+            }
+          }}
         >
           {t("dashboard.AddNew")}
         </Button>

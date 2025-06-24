@@ -17,6 +17,7 @@ interface LoginUser {
   locale?: string;
   address?: string;
   isAdmin?: boolean;
+  plan?: string;
   isVerified: boolean;
 }
 
