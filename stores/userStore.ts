@@ -9,9 +9,17 @@ interface User {
   password?: string;
 }
 
+interface LoginUser {
+  _id?: string;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+  isVerified: boolean;
+}
+
 interface UserState {
   loadingUser: boolean,
-  loginUser: any,
+  loginUser: LoginUser,
   login: (user: User) => any,
   fetchUser:() => void;
   logout:()=>void;
@@ -19,7 +27,7 @@ interface UserState {
 
 const useUserStore = create<UserState>((set, get) => ({
   loadingUser: true,
-  loginUser: {},
+  loginUser: {} as LoginUser,
   login: async ({email,password}) => {
     const {token,err,locale} = await fetchData({url:USER_LOGIN,method:'POST',body:{email,password}});
     if (token) {
@@ -47,7 +55,12 @@ const useUserStore = create<UserState>((set, get) => ({
   },
   logout: () => {
     localStorage.setItem('auth-token','');
-    set({ loginUser: {} })
+    set({ loginUser: {
+      name: '',
+      email: '',
+      isAdmin: false,
+      isVerified: false
+    } })
   },
 }))
 
