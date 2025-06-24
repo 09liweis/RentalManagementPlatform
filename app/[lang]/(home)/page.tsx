@@ -173,14 +173,10 @@ export default async function Home({
               <div className={`mt-10 flex gap-4 ${styles.animate} ${styles.animateDelay2}`}>
                 <LinkText 
                   href={`/signup`}
-                  text={dict.home.getStarted}
-                  className={`px-8 py-4 rounded-lg bg-white text-blue-600 font-semibold hover:bg-blue-50 transition shadow-lg ${styles.focusRing}`}
-                />
+                >{dict.home.getStarted}</LinkText>
                 <LinkText
                   href={`/login`}
-                  text={dict.home.login}
-                  className={`px-8 py-4 rounded-lg border-2 border-white text-white font-semibold hover:bg-white hover:text-blue-600 transition ${styles.focusRing}`}
-                />
+                >{dict.home.login}</LinkText>
               </div>
               <div className="mt-8 flex items-center space-x-4 text-sm">
                 <span className="flex items-center">
@@ -421,14 +417,10 @@ export default async function Home({
           <div className={`flex flex-wrap justify-center gap-4 ${styles.animate} ${styles.animateDelay1}`}>
             <LinkText
               href={`/signup`}
-              text={dict.home.signup}
-              className="px-8 py-3 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-100 transition duration-300"
-            />
+            >{dict.home.signup}</LinkText>
             <LinkText
               href={`/login`}
-              text={dict.home.login}
-              className="px-8 py-3 bg-transparent border border-white text-white font-medium rounded-lg hover:bg-white hover:bg-opacity-10 transition duration-300"
-            />
+            >{dict.home.login}</LinkText>
           </div>
         </div>
       </section>
