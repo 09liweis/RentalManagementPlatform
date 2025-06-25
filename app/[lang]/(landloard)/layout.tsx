@@ -3,6 +3,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next"
 
 import "@/app/globals.css";
 import Sidebar from "@/components/dashboard/sidebar";
@@ -62,6 +63,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100`}
       >
+        <Analytics />
         <ToastProvider>
           <div className="flex">
             <Sidebar />

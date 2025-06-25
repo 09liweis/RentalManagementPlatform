@@ -7,6 +7,7 @@
 - [x] add admin page to show all users
 - [ ] refresh user token
 - [x] add user last login time
+- [ ] redesign welcome email
 - [ ] use stripe (clair)
 - [ ] Click to generate next month rent
 - [ ] chart bar for monthly total rent

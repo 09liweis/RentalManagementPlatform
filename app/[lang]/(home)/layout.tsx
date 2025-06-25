@@ -9,6 +9,7 @@ import useUserStore from "@/stores/userStore";
 import { useEffect } from "react";
 import useAppStore from "@/stores/appStore";
 import { WEBSITE_NAME } from "@/constants/text";
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,6 +36,7 @@ export default function RootLayout({
       <title>{WEBSITE_NAME}</title>
       <meta name="description" content="Rental Management" />
       <body className={inter.className}>
+        <Analytics />
         <ToastProvider>
           <Header />
 
