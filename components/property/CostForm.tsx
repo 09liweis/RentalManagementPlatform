@@ -2,7 +2,11 @@
 import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
 import { showToast } from "@/components/common/Toast";
-import { EMPTY_PROPERTY, Property, PROPERTY_PTYPE_ARRAY } from "@/types/property";
+import {
+  EMPTY_PROPERTY,
+  Property,
+  PROPERTY_PTYPE_ARRAY,
+} from "@/types/property";
 import usePropertyStore from "@/stores/propertyStore";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
@@ -18,12 +22,9 @@ interface PropertyFormProps {
   cost?: Cost;
 }
 
-export default function CostForm({
-  showCostForm,
-  cost
-}: PropertyFormProps) {
+export default function CostForm({ showCostForm, cost }: PropertyFormProps) {
   const { fetchPropertyStats, curProperty } = usePropertyStore();
-  const {t} = useAppStore();
+  const { t } = useAppStore();
 
   const [curCost, setCurCost] = useState<Cost>();
 
@@ -39,43 +40,39 @@ export default function CostForm({
     const { msg, err } = await fetchData({ url, method, body: curCost });
     showCostForm(false);
     showToast(err || msg);
-    fetchPropertyStats({propertyId});
+    fetchPropertyStats({ propertyId });
     setCurCost(EMPTY_PROPERTY);
   };
 
   return (
     <FormBackdrop>
-      <FormWrapper
-        onSubmit={handleCostSubmit}
-      >
+      <FormWrapper onSubmit={handleCostSubmit}>
         <FormTitle title="Add New Cost" />
         <Input
           type="number"
           placeholder="Amount"
-          value={curCost?.amount || ""}
+          value={curCost?.amount?.toString() || "0"}
           onChange={(e) =>
-            setCurCost({ ...curCost, amount: e.target.value })
+            setCurCost({ ...curCost, amount: parseFloat(e.target.value) })
           }
         />
         <Input
           type="date"
           placeholder="Date"
           value={curCost?.date || ""}
-          onChange={(e) =>
-            setCurCost({ ...curCost, date: e.target.value })
-          }
+          onChange={(e) => setCurCost({ ...curCost, date: e.target.value })}
         />
         <SelectGroup
           value={curCost?.tp || ""}
           label="Property Type"
           options={COST_TP_ARRAY}
-          handleSelect={(value) =>
-            setCurCost({ ...curCost, tp: value })
-          }
+          handleSelect={(value) => setCurCost({ ...curCost, tp: value })}
         />
         <div className="flex justify-between">
           <Button type="submit">{t(`dashboard.Add`)}</Button>
-          <Button onClick={() => showCostForm(false)} buttonType="danger">{t(`dashboard.Cancel`)}</Button>
+          <Button onClick={() => showCostForm(false)} buttonType="danger">
+            {t(`dashboard.Cancel`)}
+          </Button>
         </div>
       </FormWrapper>
     </FormBackdrop>
