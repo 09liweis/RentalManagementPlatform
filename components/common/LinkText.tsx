@@ -25,7 +25,7 @@ export default function LinkText({ href, className, children, size = 'md' }: Lin
 
   return (
     <Link 
-      className={`${className || `text-gray-700 hover:text-gray-800 transition-colors duration-300 ${sizeClasses[size]} font-medium`}`} 
+      className={`${className || `text-purple-700 hover:text-purple-800 transition-colors duration-300 ${sizeClasses[size]} font-medium`}`} 
       href={`/${curLocale}${href}`}
     >
       {children}
