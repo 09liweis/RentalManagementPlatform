@@ -11,21 +11,26 @@ interface LinkTextProps {
   href: string;
   className?: string;
   children?: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
 }
 
-export default function LinkText({ href, className, children, size = 'md' }: LinkTextProps) {
-  const {curLocale} = useAppStore();
-  
+export default function LinkText({
+  href,
+  className,
+  children,
+  size = "md",
+}: LinkTextProps) {
+  const { curLocale } = useAppStore();
+
   const sizeClasses = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg'
+    sm: "text-sm",
+    md: "text-base",
+    lg: "text-lg",
   };
 
   return (
-    <Link 
-      className={`${className || `text-purple-700 hover:text-purple-800 transition-colors duration-300 ${sizeClasses[size]} font-medium`}`} 
+    <Link
+      className={`${className} text-purple-700 hover:text-purple-800 transition-colors duration-300 ${sizeClasses[size]} font-medium`}
       href={`/${curLocale}${href}`}
     >
       {children}
