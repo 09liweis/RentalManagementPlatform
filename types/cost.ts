@@ -1,6 +1,6 @@
 export interface Cost {
   _id?:string;
-  amount?:string;
+  amount?:number;
   date?:string;
   tp?:string;
   tpTxt?:string;
