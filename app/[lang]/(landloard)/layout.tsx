@@ -88,7 +88,7 @@ export default function RootLayout({
 
             {/* Main Content Area */}
             <main className={`flex-1 transition-all duration-300 ${isMobile ? 'ml-0' : 'ml-64'}`}>
-              <header className="flex items-center justify-between rounded-xl p-4 shadow-sm mb-4 bg-white/80 backdrop-blur-sm border border-gray-100">
+              <header className="flex items-center justify-between p-4 shadow-sm mb-4 bg-white/80 backdrop-blur-sm border border-gray-100">
                 <Logo />
 
                 <div className="flex items-center gap-3">
@@ -125,7 +125,7 @@ export default function RootLayout({
                   >{t("home.Logout")}</Button>
                 </div>
               </header>
-              <section className="shadow-lg min-h-screen p-6 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-100">
+              <section className="shadow-lg min-h-screen p-6 bg-white/80 backdrop-blur-sm border border-gray-100">
                 <Suspense fallback={<Loading />}>{children}</Suspense>
               </section>
             </main>
