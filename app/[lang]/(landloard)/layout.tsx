@@ -29,11 +29,29 @@ export default function RootLayout({
   const { setLocale, t, curLocale } = useAppStore();
   const { fetchUser } = useUserStore();
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     fetchUser();
     setLocale(lang);
   }, [fetchUser, setLocale, lang]);
+
+  // Mobile detection logic
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+    };
+
+    // Initial check
+    checkMobile();
+
+    // Add event listener
+    window.addEventListener('resize', checkMobile);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Handle keyboard shortcut for search
   useEffect(() => {
@@ -65,11 +83,11 @@ export default function RootLayout({
       >
         <Analytics />
         <ToastProvider>
-          <div className="flex gap-3">
-            <Sidebar />
+          <div className="flex">
+            <Sidebar isMobile={isMobile} />
 
             {/* Main Content Area */}
-            <main className="flex-1">
+            <main className={`flex-1 transition-all duration-300 ${isMobile ? 'ml-0' : 'ml-64'}`}>
               <header className="flex items-center justify-between rounded-xl p-4 shadow-sm mb-4 bg-white/80 backdrop-blur-sm border border-gray-100">
                 <Logo />
 

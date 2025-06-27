@@ -186,32 +186,12 @@ const textVariants = {
   },
 };
 
-export default function Sidebar() {
+export default function Sidebar({ isMobile }: { isMobile: boolean }) {
   const curPathname = usePathname();
   const { t, curLocale } = useAppStore();
   const { loginUser } = useUserStore();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      const mobile = window.innerWidth <= 768;
-      setIsMobile(mobile);
-      if (mobile) {
-        setIsCollapsed(false);
-      }
-    };
-
-    // Initial check
-    checkMobile();
-
-    // Add event listener
-    window.addEventListener('resize', checkMobile);
-
-    // Cleanup
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const closeMobileSidebar = () => setIsMobileOpen(false);
 
@@ -247,7 +227,7 @@ export default function Sidebar() {
         className={`h-screen bg-white/95 backdrop-blur-md shadow-xl border-r border-gray-100 ${
           isMobile
             ? "fixed top-0 left-0 z-40"
-            : "relative"
+            : "fixed top-0 left-0 z-40"
         }`}
         variants={sidebarVariants}
         animate={
