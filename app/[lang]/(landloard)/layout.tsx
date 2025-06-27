@@ -78,6 +78,8 @@ export default function RootLayout({
   return (
     <html lang={lang}>
       <title>Dashboard</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="description" content="Dashboard" />
       <body
         className={`${inter.className} min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100`}
       >

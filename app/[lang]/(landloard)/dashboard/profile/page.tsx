@@ -158,7 +158,7 @@ export default function ProfilePage() {
 
   return (
     <motion.div
-      className="max-w-4xl mx-auto"
+      className=""
       variants={containerVariants}
       initial="hidden"
       animate="visible"
