@@ -129,6 +129,24 @@ const sidebarVariants = {
       ease: "easeInOut",
     },
   },
+  mobileOpen: {
+    width: "16rem",
+    x: 0,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+    },
+  },
+  mobileClosed: {
+    width: "16rem",
+    x: "-100%",
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+    },
+  },
 };
 
 const menuItemVariants = {
@@ -181,7 +199,7 @@ export default function Sidebar() {
       const mobile = window.innerWidth <= 768;
       setIsMobile(mobile);
       if (mobile) {
-        setIsCollapsed(true);
+        setIsCollapsed(false);
       }
     };
 
@@ -214,30 +232,35 @@ export default function Sidebar() {
   return (
     <>
       {/* Mobile overlay */}
-      {isMobile && isMobileOpen && (
+      {isMobile && (
         <motion.div
           className="fixed inset-0 bg-black/50 z-30"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          animate={{ opacity: isMobileOpen ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+          style={{ pointerEvents: isMobileOpen ? "auto" : "none" }}
           onClick={closeMobileSidebar}
         />
       )}
 
       <motion.aside
-        className="h-screen bg-white/95 backdrop-blur-md shadow-xl border-r border-gray-100"
-      variants={sidebarVariants}
-      animate={
-        isMobile
-          ? isMobileOpen
-            ? "mobileOpen"
-            : "closed"
-          : isCollapsed
-          ? "closed"
-          : "open"
-      }
-      initial={isMobile ? "closed" : "open"}
-    >
+        className={`h-screen bg-white/95 backdrop-blur-md shadow-xl border-r border-gray-100 ${
+          isMobile
+            ? "fixed top-0 left-0 z-40"
+            : "relative"
+        }`}
+        variants={sidebarVariants}
+        animate={
+          isMobile
+            ? isMobileOpen
+              ? "mobileOpen"
+              : "mobileClosed"
+            : isCollapsed
+            ? "closed"
+            : "open"
+        }
+        initial={isMobile ? "mobileClosed" : "open"}
+      >
       {/* Header */}
       <div className="p-6 border-b border-gray-100">
         <div className="flex items-center justify-between">
@@ -267,6 +290,7 @@ export default function Sidebar() {
             </div>
           </motion.div>
 
+          {!isMobile && 
           <motion.button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
@@ -289,6 +313,7 @@ export default function Sidebar() {
               />
             </motion.svg>
           </motion.button>
+          }
         </div>
       </div>
 
