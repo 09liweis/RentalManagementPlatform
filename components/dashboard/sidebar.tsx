@@ -273,7 +273,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }) {
           {!isMobile && 
           <motion.button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+            className="p-2 hidden rounded-lg hover:bg-gray-100 transition-colors duration-200"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
