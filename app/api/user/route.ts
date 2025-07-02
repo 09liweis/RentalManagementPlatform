@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/user";
-import { decodeToken } from "@/utils/jwt";
+import { decodeToken, generateToken } from "@/utils/jwt";
 import connect from "@/config/db";
 import { sendResponse } from "@/utils/http";
 
@@ -25,7 +25,9 @@ export async function POST(request: NextRequest) {
       await user.save();
     }
 
-    return NextResponse.json({ user }, { status: 200 });
+    const refreshToken = generateToken(verified.userId);
+
+    return NextResponse.json({ user, refreshToken }, { status: 200 });
   } catch (err) {
     return sendResponse({ response: { err }, status: 500 });
   }
