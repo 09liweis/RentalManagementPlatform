@@ -3,6 +3,7 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "@/models/user";
 import connect from "@/config/db";
+import { generateToken } from "@/utils/jwt";
 
 /**
  * @swagger
@@ -50,18 +51,9 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const tokenData = {
-      userId: existingUser._id,
-    };
-    const tokenSecret = process.env.TOKEN_SECRET!;
-    if (!tokenSecret) {
-      return NextResponse.json({ err: "No token secret" }, { status: 500 });
-    }
-    const token = jwt.sign(tokenData, tokenSecret, {
-      expiresIn: "1d",
-    });
-    //TODO: set secret on env, set expired
     await User.findByIdAndUpdate(existingUser._id, { lts: new Date() });
+
+    const token = generateToken(existingUser._id);
 
     const response = NextResponse.json({
       message: "Login successful",
