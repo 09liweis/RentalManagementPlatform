@@ -77,7 +77,8 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
     setShowTenantForm(true);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
     const method = tenant?._id ? "PUT" : "POST";
     const url = tenant?._id
       ? `/api/tenants/${tenant?._id}`
@@ -276,9 +277,7 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
             {t("home.Tenants")}
           </motion.h1>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button
-              onClick={() => setShowTenantForm(true)}
-            >
+            <Button onClick={() => setShowTenantForm(true)}>
               {t("dashboard.Add")}
             </Button>
           </motion.div>
