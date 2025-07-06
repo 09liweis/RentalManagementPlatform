@@ -7,7 +7,12 @@ import FormWrapper from "../common/form/FormWrapper";
 import Input from "../common/Input";
 import SelectGroup from "../common/SelectGroup";
 
-export default function RoomForm({room,setRoom,handleRoomSubmit,setShowRoomForm}:any) {
+export default function RoomForm({
+  room,
+  setRoom,
+  handleRoomSubmit,
+  setShowRoomForm,
+}: any) {
   const { t } = useAppStore();
   return (
     <FormBackdrop>
@@ -25,18 +30,20 @@ export default function RoomForm({room,setRoom,handleRoomSubmit,setShowRoomForm}
           handleSelect={(value) => setRoom({ ...room, tp: value })}
         />
         <div className="flex justify-between">
-          <Button
-            onClick={() => {}}
-          >{room?._id ? t("dashboard.Update") : t("dashboard.Add")}</Button>
+          <Button type="submit" onClick={() => {}}>
+            {room?._id ? t("dashboard.Update") : t("dashboard.Add")}
+          </Button>
           <Button
             onClick={() => {
               setShowRoomForm(false);
               setRoom({});
             }}
             buttonType="danger"
-          >{t("dashboard.Cancel")}</Button>
+          >
+            {t("dashboard.Cancel")}
+          </Button>
         </div>
       </FormWrapper>
     </FormBackdrop>
-  )
+  );
 }

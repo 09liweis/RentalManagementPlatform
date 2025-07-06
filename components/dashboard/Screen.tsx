@@ -18,16 +18,16 @@ import RoomForm from "../room/RoomForm";
 interface ScreenProps {
   propertyId?: string;
   roomId?: string;
-  tenantId?: string
+  tenantId?: string;
 }
 const containerVariants = {
   initial: { opacity: 0 },
   animate: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
-    }
-  }
+      staggerChildren: 0.1,
+    },
+  },
 };
 
 const itemVariants = {
@@ -37,9 +37,9 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.5,
-      ease: "easeOut"
-    }
-  }
+      ease: "easeOut",
+    },
+  },
 };
 
 const formVariants = {
@@ -49,21 +49,22 @@ const formVariants = {
     scale: 1,
     transition: {
       duration: 0.3,
-      ease: "easeOut"
-    }
+      ease: "easeOut",
+    },
   },
   exit: {
     opacity: 0,
     scale: 0.95,
     transition: {
-      duration: 0.2
-    }
-  }
+      duration: 0.2,
+    },
+  },
 };
 
 export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
   const { t } = useAppStore();
-  const { costs, rooms, curProperty, curRoom, curTenant, fetchPropertyStats } = usePropertyStore();
+  const { costs, rooms, curProperty, curRoom, curTenant, fetchPropertyStats } =
+    usePropertyStore();
 
   const [loading, setLoading] = useState(false);
 
@@ -71,7 +72,8 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
 
   const [room, setRoom] = useState<Room>({ name: "" });
   const [showRoomForm, setShowRoomForm] = useState(false);
-  const handleRoomSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleRoomSubmit = async (e: any) => {
+    console.log(e);
     e.preventDefault();
     const method = room?._id ? "PUT" : "POST";
     const url = room?._id
@@ -99,7 +101,11 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
       className="space-y-8"
     >
       <motion.div variants={itemVariants}>
-        <RentCards propertyId={propertyId} roomId={roomId} tenantId={tenantId} />
+        <RentCards
+          propertyId={propertyId}
+          roomId={roomId}
+          tenantId={tenantId}
+        />
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -108,7 +114,7 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
 
       {curProperty?._id && (
         <motion.div variants={itemVariants}>
-          <CostList 
+          <CostList
             costs={costs}
             onAddCost={() => setShowCostForm(true)}
             t={t}
@@ -116,24 +122,26 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
         </motion.div>
       )}
 
-        {showCostForm && (
-            <CostForm showCostForm={setShowCostForm} />
-        )}
+      {showCostForm && <CostForm showCostForm={setShowCostForm} />}
 
       {curProperty?._id && (
         <motion.div variants={itemVariants}>
-          <RoomList rooms={rooms} setRoom={setRoom} setShowRoomForm={setShowRoomForm} />
+          <RoomList
+            rooms={rooms}
+            setRoom={setRoom}
+            setShowRoomForm={setShowRoomForm}
+          />
         </motion.div>
       )}
 
-        {showRoomForm && (
-          <RoomForm 
-            room={room} 
-            setRoom={setRoom} 
-            handleRoomSubmit={handleRoomSubmit} 
-            setShowRoomForm={setShowRoomForm} 
-          />
-        )}
+      {showRoomForm && (
+        <RoomForm
+          room={room}
+          setRoom={setRoom}
+          handleRoomSubmit={handleRoomSubmit}
+          setShowRoomForm={setShowRoomForm}
+        />
+      )}
     </motion.div>
   );
 }
