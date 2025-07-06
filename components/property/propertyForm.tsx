@@ -28,7 +28,7 @@ export default function PropertyForm({
   property,
 }: PropertyFormProps) {
   const { t } = useAppStore();
-  const { fetchProperties } = usePropertyStore();
+  const { fetchPropertyStats } = usePropertyStore();
 
   const [curProperty, setCurProperty] = useState<Property>(property);
   const [address, setAddress] = useState<string>("");
@@ -58,7 +58,7 @@ export default function PropertyForm({
     const { msg, err } = await fetchData({ url, method, body: curProperty });
     showPropertyForm(false);
     showToast(err || msg);
-    fetchProperties();
+    fetchPropertyStats({ property_id: curProperty._id });
     setCurProperty(EMPTY_PROPERTY);
   };
 
@@ -462,10 +462,7 @@ export default function PropertyForm({
         />
 
         <div className="flex justify-between gap-4">
-          <Button
-            type="submit"
-            fullWidth={true}
-          >
+          <Button type="submit" fullWidth={true}>
             {t(curProperty._id ? "dashboard.Update" : "dashboard.Add")}
           </Button>
           <Button

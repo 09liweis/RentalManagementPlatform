@@ -73,7 +73,6 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
   const [room, setRoom] = useState<Room>({ name: "" });
   const [showRoomForm, setShowRoomForm] = useState(false);
   const handleRoomSubmit = async (e: any) => {
-    console.log(e);
     e.preventDefault();
     const method = room?._id ? "PUT" : "POST";
     const url = room?._id
