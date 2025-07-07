@@ -3,7 +3,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Inter } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 
 import "@/app/globals.css";
 import Sidebar from "@/components/dashboard/sidebar";
@@ -16,6 +16,7 @@ import Logo from "@/components/common/Logo";
 import useUserStore from "@/stores/userStore";
 import useAppStore from "@/stores/appStore";
 import SearchModal from "@/components/common/SearchModal";
+import { getPageTitle } from "@/constants/text";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,10 +48,10 @@ export default function RootLayout({
     checkMobile();
 
     // Add event listener
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
 
     // Cleanup
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Handle keyboard shortcut for search
@@ -77,7 +78,7 @@ export default function RootLayout({
 
   return (
     <html lang={lang}>
-      <title>Dashboard</title>
+      <title>{getPageTitle('Dashboard')}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="description" content="Dashboard" />
       <body
@@ -89,7 +90,9 @@ export default function RootLayout({
             <Sidebar isMobile={isMobile} />
 
             {/* Main Content Area */}
-            <main className={`flex-1 transition-all duration-300 ${isMobile ? 'ml-0' : 'ml-64'}`}>
+            <main
+              className={`flex-1 transition-all duration-300 ${isMobile ? "ml-0" : "ml-64"}`}
+            >
               <header className="flex items-center justify-between p-4 shadow-sm mb-4 bg-white/80 backdrop-blur-sm border border-gray-100">
                 <Logo />
 
@@ -124,7 +127,9 @@ export default function RootLayout({
                     buttonType="danger"
                     outline={true}
                     onClick={handleLogout}
-                  >{t("home.Logout")}</Button>
+                  >
+                    {t("home.Logout")}
+                  </Button>
                 </div>
               </header>
               <section className="shadow-lg min-h-screen p-6 bg-white/80 backdrop-blur-sm border border-gray-100">
