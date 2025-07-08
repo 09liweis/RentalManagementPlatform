@@ -94,8 +94,8 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
       showToast(msg);
       fetchRoomTenants();
       setTenant({});
+      setShowTenantForm(false);
     }
-    setShowTenantForm(false);
   };
 
   const setCurrentTenant = async (tenant: Tenant) => {

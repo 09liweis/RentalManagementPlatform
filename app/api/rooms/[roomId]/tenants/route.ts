@@ -50,6 +50,7 @@ export async function POST(request: NextRequest, { params }: ParamsProps) {
   try {
     await connect();
     const { name, deposit, startDate, endDate } = await request.json();
+    if (!name) return NextResponse.json({ err: "Name is required" });
     const newTenant = new Tenant({
       name,
       deposit,
