@@ -211,6 +211,7 @@ export default function PropertyForm({
 
         <Input
           type="text"
+          required={true}
           placeholder={t("dashboard.Name")}
           value={curProperty.name || ""}
           onChange={(e) =>

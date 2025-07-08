@@ -50,6 +50,7 @@ export default function CostForm({ showCostForm, cost }: PropertyFormProps) {
         <FormTitle title="Add New Cost" />
         <Input
           type="number"
+          required={true}
           placeholder="Amount"
           value={curCost?.amount?.toString() || "0"}
           onChange={(e) =>

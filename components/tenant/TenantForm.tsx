@@ -5,19 +5,20 @@ import Button from "@/components/common/Button";
 import useAppStore from "@/stores/appStore";
 
 const tenantFields = [
-  { field: "name", inputType: "text", placeholder: "dashboard.Name" },
+  { field: "name", required:true, inputType: "text", placeholder: "dashboard.Name" },
   { field: "deposit", inputType: "number", placeholder: "dashboard.Deposit" },
   { field: "startDate", inputType: "date", placeholder: "dashboard.StartDate" },
   { field: "endDate", inputType: "date", placeholder: "dashboard.EndDate" },
 ];
 
-export default function TenantForm({tenant, setTenant, handleSubmit, setShowTenantForm}:any) {
+export default function TenantForm({tenant, setTenant, required=false, handleSubmit, setShowTenantForm}:any) {
   const {t} = useAppStore();
   return (
     <FormBackdrop>
       <FormWrapper onSubmit={handleSubmit}>
         {tenantFields.map(({ field, inputType, placeholder }) => (
           <Input
+            required={required}
             key={field}
             type={inputType}
             placeholder={t(placeholder)}

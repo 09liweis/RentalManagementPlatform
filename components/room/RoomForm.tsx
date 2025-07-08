@@ -19,6 +19,7 @@ export default function RoomForm({
       <FormWrapper onSubmit={handleRoomSubmit}>
         <Input
           type="text"
+          required={true}
           placeholder={t("dashboard.Name")}
           value={room["name"] || ""}
           onChange={(e) => setRoom({ ...room, name: e.target.value })}
