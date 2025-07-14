@@ -17,6 +17,7 @@ import FormBackdrop from "../common/form/FormBackdrop";
 import FormTitle from "../common/form/FormTitle";
 import useAppStore from "@/stores/appStore";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface PropertyFormProps {
   showPropertyForm: Function;
@@ -27,6 +28,7 @@ export default function PropertyForm({
   showPropertyForm,
   property,
 }: PropertyFormProps) {
+  const router = useRouter();
   const { t } = useAppStore();
   const { fetchPropertyStats } = usePropertyStore();
 
@@ -55,11 +57,14 @@ export default function PropertyForm({
     const url = curProperty._id
       ? `/api/properties/${curProperty._id}`
       : `/api/properties`;
-    const { msg, err } = await fetchData({ url, method, body: curProperty });
+    const { msg, property, err } = await fetchData({ url, method, body: curProperty });
     showPropertyForm(false);
     showToast(err || msg);
     fetchPropertyStats({ property_id: curProperty._id });
     setCurProperty(EMPTY_PROPERTY);
+    if (method === "POST") {
+      router.push(`/dashboard/properties/${property._id}`)
+    }
   };
 
   const handleAddressChange = async (

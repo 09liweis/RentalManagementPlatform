@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
 
     const newProperty = new Property({ name, user: verified.userId });
     await newProperty.save();
-    return NextResponse.json({ msg: "added" }, { status: 200 });
+    return NextResponse.json({ msg: "added", property: newProperty }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
   }
