@@ -2,6 +2,7 @@ import useAppStore from "@/stores/appStore";
 import LinkText from "../common/LinkText";
 import usePropertyStore from "@/stores/propertyStore";
 import { motion } from "framer-motion";
+import { getDuration } from "@/utils/tenant";
 
 // 卡片动画变体
 const cardVariants = {
@@ -114,7 +115,7 @@ export default function TenantCard({
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.4 }}
               />
-              <span>{tenant.startDate}</span>
+              {tenant.startDate}
             </motion.div>
             <motion.div
               className="flex items-center gap-2"
@@ -127,8 +128,17 @@ export default function TenantCard({
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.5 }}
               />
-              <span>{tenant.endDate || t("dashboard.Ongoing")}</span>
+              {tenant.endDate || t("dashboard.Ongoing")}
             </motion.div>
+            {tenant.endDate &&
+            <motion.div
+              className=""
+              whileHover={{ x: 8 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              {getDuration(tenant.startDate, tenant.endDate).formatted || ""}
+            </motion.div>
+            }
           </div>
         </motion.div>
 
