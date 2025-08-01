@@ -5,7 +5,7 @@
 - [x] update tenant card when select tenant
 - [x] free user limit to 1 property, limit to 5 rooms
 - [x] add admin page to show all users
-- [ ] calculate tenant duration
+- [x] calculate tenant duration
 - [ ] refresh user token
 - [x] add user last login time
 - [ ] redesign welcome email
