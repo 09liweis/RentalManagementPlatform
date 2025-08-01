@@ -7,6 +7,7 @@ import useAppStore from "@/stores/appStore";
 const tenantFields = [
   { field: "name", required:true, inputType: "text", placeholder: "dashboard.Name" },
   { field: "deposit", inputType: "number", placeholder: "dashboard.Deposit" },
+  { field: "rent", inputType: "number", placeholder: "dashboard.Rent" },
   { field: "startDate", inputType: "date", placeholder: "dashboard.StartDate" },
   { field: "endDate", inputType: "date", placeholder: "dashboard.EndDate" },
 ];

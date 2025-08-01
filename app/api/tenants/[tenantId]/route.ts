@@ -33,7 +33,7 @@ export async function PUT(request: NextRequest, { params }: ParamsProps) {
   try {
     await connect();
 
-    const { name, startDate, endDate, deposit, isCurrent } = await request.json();
+    const { name, startDate, endDate, deposit, isCurrent, rent } = await request.json();
     const tenant = await Tenant.findOne({ _id: tenantId });
 
     await Tenant.updateOne({isCurrent:true, room: tenant.room}, {$set:{isCurrent: false}});
@@ -44,6 +44,7 @@ export async function PUT(request: NextRequest, { params }: ParamsProps) {
     tenant.startDate = startDate;
     tenant.endDate = endDate;
     tenant.isCurrent = isCurrent;
+    tenant.rent = rent;
     await tenant.save();
     return NextResponse.json({ msg: "updated" }, { status: 200 });
   } catch (err) {
