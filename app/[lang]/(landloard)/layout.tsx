@@ -14,6 +14,7 @@ import useUserStore from "@/stores/userStore";
 import useAppStore from "@/stores/appStore";
 import SearchModal from "@/components/common/SearchModal";
 import { getPageTitle } from "@/constants/text";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -67,13 +68,14 @@ export default function RootLayout({
 
   return (
     <html lang={lang}>
-      <title>{getPageTitle('Dashboard')}</title>
+      <title>{getPageTitle("Dashboard")}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="description" content="Dashboard" />
       <body
         className={`${inter.className} min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100`}
       >
         <Analytics />
+        <SpeedInsights />
         <ToastProvider>
           <div className="flex">
             <Sidebar isMobile={isMobile} />
@@ -83,11 +85,10 @@ export default function RootLayout({
               className={`flex-1 transition-all duration-300 ${isMobile ? "ml-0" : "ml-64"}`}
             >
               <DashboardHeader setIsSearchModalOpen={setIsSearchModalOpen} />
-              
+
               <section className="shadow-lg min-h-screen p-6 bg-white/80 backdrop-blur-sm border border-gray-100">
                 <Suspense fallback={<Loading />}>{children}</Suspense>
               </section>
-              
             </main>
           </div>
 

@@ -9,7 +9,8 @@ import useUserStore from "@/stores/userStore";
 import { useEffect } from "react";
 import useAppStore from "@/stores/appStore";
 import { WEBSITE_NAME } from "@/constants/text";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,27 +21,30 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
-  params:{lang}
+  params: { lang },
 }: Readonly<{
   children: React.ReactNode;
-  params:any
+  params: any;
 }>) {
-  const {fetchUser} = useUserStore();
-  const {setLocale} = useAppStore();
-  useEffect(()=>{
+  const { fetchUser } = useUserStore();
+  const { setLocale } = useAppStore();
+  useEffect(() => {
     fetchUser();
     setLocale(lang);
-  },[fetchUser, lang, setLocale]);
+  }, [fetchUser, lang, setLocale]);
   return (
     <html lang={lang}>
       <title>{WEBSITE_NAME}</title>
       <meta name="description" content="Rental Management" />
       <body className={inter.className}>
         <Analytics />
+        <SpeedInsights />
         <ToastProvider>
           <Header />
 
-          <main className="min-h-screen flex justify-center items-center">{children}</main>
+          <main className="min-h-screen flex justify-center items-center">
+            {children}
+          </main>
           {/* <Footer lang={lang} /> */}
         </ToastProvider>
       </body>
