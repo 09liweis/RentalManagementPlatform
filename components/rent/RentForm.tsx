@@ -1,7 +1,4 @@
 "use client";
-import { fetchData } from "@/utils/http";
-import { useEffect, useState } from "react";
-import { showToast } from "@/components/common/Toast";
 import { RENT_STATUS_ARRAY } from "@/types/rent";
 import usePropertyStore from "@/stores/propertyStore";
 import Button from "@/components/common/Button";
@@ -12,32 +9,34 @@ import FormWrapper from "@/components/common/form/FormWrapper";
 import FormTitle from "@/components/common/form/FormTitle";
 import useAppStore from "@/stores/appStore";
 
-const RENT_FIELDS = [
-  {
-    placeholder: "Amount",
-    name: "amount",
-    required: true,
-    inputType: "number",
-  },
-  { placeholder: "Date", name: "startDate", inputType: "date" },
-];
-
 export default function RentForm() {
   const { t } = useAppStore();
   const { curRent, setCurRent, curTenant, handleRentSubmit, setShowRentForm } =
     usePropertyStore();
+
+  const RENT_FIELDS = [
+    {
+      placeholder: "Amount",
+      name: "amount",
+      required: true,
+      inputType: "number",
+      value: curTenant.rent || curTenant.deposit || 0
+    },
+    { placeholder: "Date", name: "startDate", inputType: "date" },
+  ];
+  console.log(RENT_FIELDS);
 
   return (
     <FormBackdrop>
       <FormWrapper onSubmit={handleRentSubmit}>
         <FormTitle title="Add New Rent" />
         {RENT_FIELDS.map(
-          ({ placeholder, required = false, inputType, name }) => (
+          ({ placeholder, required = false, inputType, name, value }) => (
             <Input
               key={name}
               required={required}
               placeholder={placeholder}
-              value={curRent[name] || ""}
+              value={curRent[name] || value}
               type={inputType}
               onChange={(e) =>
                 setCurRent({ ...curRent, [name]: e.target.value })

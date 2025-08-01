@@ -131,15 +131,15 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
     set({ costs });
   },
 
-  curRent: { status: "1" },
+  curRent: { status: "1", amount: get()?.curTenant.rent || get()?.curTenant.deposit },
   setCurRent: (rent: Rent) => {
     set({ curRent: rent });
   },
   showRentForm: false,
   setShowRentForm: () => {
-    const curShowRentForm = get().showRentForm;
+    const curShowRentForm = get()?.showRentForm;
     if (curShowRentForm) {
-      set({ curRent: { status: "1" } });
+      set({ curRent: { status: "1", amount: get()?.curTenant.rent || get()?.curTenant.deposit } });
     }
     set({ showRentForm: !curShowRentForm });
   },
