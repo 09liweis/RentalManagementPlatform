@@ -77,7 +77,9 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
     setShowTenantForm(true);
   };
 
+  const [upsertTenantLoading, setUpsertTenantLoading] = useState(false);
   const handleSubmit = async (e: any) => {
+    setUpsertTenantLoading(true);
     e.preventDefault();
     const method = tenant?._id ? "PUT" : "POST";
     const url = tenant?._id
@@ -88,6 +90,7 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
       method,
       body: tenant,
     });
+    setUpsertTenantLoading(false);
     if (err) {
       showToast(err);
     } else {
@@ -286,6 +289,7 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
 
       {showTenantForm && (
         <TenantForm
+          loading={upsertTenantLoading}
           handleSubmit={handleSubmit}
           tenant={tenant}
           setShowTenantForm={setShowTenantForm}

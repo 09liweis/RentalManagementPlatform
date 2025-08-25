@@ -5,15 +5,27 @@ import Button from "@/components/common/Button";
 import useAppStore from "@/stores/appStore";
 
 const tenantFields = [
-  { field: "name", required:true, inputType: "text", placeholder: "dashboard.Name" },
+  {
+    field: "name",
+    required: true,
+    inputType: "text",
+    placeholder: "dashboard.Name",
+  },
   { field: "deposit", inputType: "number", placeholder: "dashboard.Deposit" },
   { field: "rent", inputType: "number", placeholder: "dashboard.Rent" },
   { field: "startDate", inputType: "date", placeholder: "dashboard.StartDate" },
   { field: "endDate", inputType: "date", placeholder: "dashboard.EndDate" },
 ];
 
-export default function TenantForm({tenant, setTenant, required=false, handleSubmit, setShowTenantForm}:any) {
-  const {t} = useAppStore();
+export default function TenantForm({
+  tenant,
+  setTenant,
+  loading,
+  required = false,
+  handleSubmit,
+  setShowTenantForm,
+}: any) {
+  const { t } = useAppStore();
   return (
     <FormBackdrop>
       <FormWrapper onSubmit={handleSubmit}>
@@ -28,12 +40,21 @@ export default function TenantForm({tenant, setTenant, required=false, handleSub
           />
         ))}
         <div className="flex justify-between">
+          <Button type="submit">
+            {loading ? "Loading..." : ""}
+            {tenant?._id ? t("dashboard.Update") : t("dashboard.Add")}
+          </Button>
           <Button
-            type="submit"
-          >{tenant?._id ? t("dashboard.Update") : t("dashboard.Add")}</Button>
-          <Button onClick={() => {setShowTenantForm(false); setTenant({})}} buttonType="danger">{t('dashboard.Cancel')}</Button>
+            onClick={() => {
+              setShowTenantForm(false);
+              setTenant({});
+            }}
+            buttonType="danger"
+          >
+            {t("dashboard.Cancel")}
+          </Button>
         </div>
       </FormWrapper>
-      </FormBackdrop>
-  )
+    </FormBackdrop>
+  );
 }
