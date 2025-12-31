@@ -24,7 +24,7 @@
     "mongodb": "^6.10.0",
     "mongoose": "^8.7.3",
     "negotiator": "^0.6.3",
-    "next": "^14.2.16",
+    "next": "14.2.35",
     "next-swagger-doc": "^0.4.0",
     "postmark": "^4.0.5",
     "react": "^18",
