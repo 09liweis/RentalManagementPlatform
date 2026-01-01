@@ -26,7 +26,6 @@
     "negotiator": "^0.6.3",
     "next": "14.2.35",
     "next-swagger-doc": "^0.4.0",
-    "postmark": "^4.0.5",
     "react": "^18",
     "react-dom": "^18",
     "react-map-gl": "^7.1.7",
