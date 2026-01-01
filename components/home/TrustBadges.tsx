@@ -1,4 +1,4 @@
-import styles from "../app/[lang]/(home)/page.module.css";
+import styles from "../../app/[lang]/(home)/page.module.css";
 
 interface TrustBadgesProps {
   lang: string;

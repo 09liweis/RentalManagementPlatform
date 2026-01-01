@@ -1,6 +1,6 @@
 import LinkText from "@/components/common/LinkText";
 import Image from "next/image";
-import styles from "../app/[lang]/(home)/page.module.css";
+import styles from "../../app/[lang]/(home)/page.module.css";
 
 interface HeroSectionProps {
   dict: {
