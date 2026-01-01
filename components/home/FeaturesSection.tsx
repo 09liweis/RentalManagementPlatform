@@ -1,5 +1,3 @@
-import styles from "../../app/[lang]/(home)/page.module.css";
-
 interface FeaturesSectionProps {
   dict: {
     home: {

@@ -1,6 +1,5 @@
 import LinkText from "@/components/common/LinkText";
 import Image from "next/image";
-import styles from "../../app/[lang]/(home)/page.module.css";
 
 interface HeroSectionProps {
   dict: {
@@ -16,26 +15,18 @@ interface HeroSectionProps {
 
 export default function HeroSection({ dict, lang }: HeroSectionProps) {
   return (
-    <section
-      className={`relative bg-gradient-to-r from-purple-600 to-purple-800 text-white py-24 ${styles.heroBackground}`}
-    >
+    <section className="relative bg-gradient-to-r from-purple-600 to-purple-800 text-white py-24">
       <div className="absolute inset-0 bg-pattern opacity-10"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className={`text-left ${styles.heroContent}`}>
-            <h1
-              className={`text-4xl font-extrabold sm:text-5xl md:text-6xl leading-tight ${styles.heroTitle} ${styles.animate}`}
-            >
+          <div className="text-left">
+            <h1 className="text-4xl font-extrabold sm:text-5xl md:text-6xl leading-tight">
               {dict.home.heroTitle}
             </h1>
-            <p
-              className={`mt-6 text-xl text-blue-100 ${styles.heroSubtitle} ${styles.animate} ${styles.animateDelay1}`}
-            >
+            <p className="mt-6 text-xl text-blue-100">
               {dict.home.heroSubtitle}
             </p>
-            <div
-              className={`flex flex-wrap mt-4 gap-6 ${styles.animate} ${styles.animateDelay1}`}
-            >
+            <div className="flex flex-wrap mt-4 gap-6">
               <LinkText
                 href={`/signup`}
                 className="bg-white text-purple-700 hover:bg-purple-50 px-8 py-3 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"

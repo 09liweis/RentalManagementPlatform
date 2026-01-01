@@ -1,5 +1,3 @@
-import styles from "../../app/[lang]/(home)/page.module.css";
-
 interface HowItWorksProps {
   dict: {
     home: {
@@ -20,7 +18,7 @@ export default function HowItWorks({ dict }: HowItWorksProps) {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`text-center ${styles.animate}`}>
+        <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             {dict.home.howItWorksTitle}
           </h2>
@@ -29,9 +27,7 @@ export default function HowItWorks({ dict }: HowItWorksProps) {
           </p>
         </div>
 
-        <div
-          className={`mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 ${styles.howItWorksGrid}`}
-        >
+        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div className="relative">
             <div className="absolute top-0 left-0 -mt-2 -ml-2 w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl font-bold">
               1

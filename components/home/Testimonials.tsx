@@ -1,5 +1,3 @@
-import styles from "../../app/[lang]/(home)/page.module.css";
-
 interface TestimonialsProps {
   dict: {
     home: {
@@ -16,7 +14,7 @@ export default function Testimonials({ dict }: TestimonialsProps) {
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`text-center ${styles.animate}`}>
+        <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             {dict.home.testimonialsTitle}
           </h2>
@@ -25,12 +23,8 @@ export default function Testimonials({ dict }: TestimonialsProps) {
           </p>
         </div>
 
-        <div
-          className={`mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 ${styles.testimonialGrid}`}
-        >
-          <div
-            className={`bg-white p-8 rounded-xl shadow-lg border border-gray-100 ${styles.testimonialCard} ${styles.animate} ${styles.animateDelay1}`}
-          >
+        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
             <div className="flex items-center mb-6">
               <div className="w-12 h-12 bg-blue-100 rounded-full mr-4"></div>
               <div>
@@ -43,9 +37,7 @@ export default function Testimonials({ dict }: TestimonialsProps) {
               &quot;{dict.home.testimonial1}&quot;
             </p>
           </div>
-          <div
-            className={`bg-white p-8 rounded-xl shadow-lg border border-gray-100 ${styles.testimonialCard} ${styles.animate} ${styles.animateDelay2}`}
-          >
+          <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
             <div className="flex items-center mb-6">
               <div className="w-12 h-12 bg-indigo-100 rounded-full mr-4"></div>
               <div>

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { getDictionary } from "../dictionaries";
 import HeroSection from "@/components/home/HeroSection";
 import TrustBadges from "@/components/home/TrustBadges";

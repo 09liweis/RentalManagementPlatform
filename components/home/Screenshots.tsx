@@ -1,5 +1,3 @@
-import styles from "../../app/[lang]/(home)/page.module.css";
-
 interface ScreenshotsProps {
   dict: {
     home: {
@@ -214,7 +212,7 @@ export default function Screenshots({ dict, lang }: ScreenshotsProps) {
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`text-center ${styles.animate}`}>
+        <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             {dict.home.screenshotsTitle}
           </h2>
@@ -225,28 +223,20 @@ export default function Screenshots({ dict, lang }: ScreenshotsProps) {
           </p>
         </div>
 
-        <div
-          className={`mt-16 grid grid-cols-1 gap-8 md:grid-cols-3 ${styles.screenshotGrid}`}
-        >
-          <div
-            className={`${styles.screenshotCard} ${styles.animate} ${styles.animateDelay1} p-4 border-2 border-purple-100 rounded-xl shadow-lg hover:shadow-xl hover:border-purple-300 transition-all duration-300 hover:scale-[1.02]`}
-          >
+        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="p-4 border-2 border-purple-100 rounded-xl shadow-lg hover:shadow-xl hover:border-purple-300 transition-all duration-300 hover:scale-[1.02]">
             <h3 className="text-xl font-bold text-center mb-4 text-purple-800">
               {dict.home.landlordScreenshot}
             </h3>
             <LandlordDashboardScreenshot lang={lang} />
           </div>
-          <div
-            className={`${styles.screenshotCard} ${styles.animate} ${styles.animateDelay2} p-4 border-2 border-purple-100 rounded-xl shadow-lg hover:shadow-xl hover:border-purple-300 transition-all duration-300 hover:scale-[1.02]`}
-          >
+          <div className="p-4 border-2 border-purple-100 rounded-xl shadow-lg hover:shadow-xl hover:border-purple-300 transition-all duration-300 hover:scale-[1.02]">
             <h3 className="text-xl font-bold text-center mb-4 text-purple-800">
               {dict.home.tenantScreenshot}
             </h3>
             <TenantManagementScreenshot lang={lang} />
           </div>
-          <div
-            className={`${styles.screenshotCard} ${styles.animate} ${styles.animateDelay3} p-4 border-2 border-purple-100 rounded-xl shadow-lg hover:shadow-xl hover:border-purple-300 transition-all duration-300 hover:scale-[1.02]`}
-          >
+          <div className="p-4 border-2 border-purple-100 rounded-xl shadow-lg hover:shadow-xl hover:border-purple-300 transition-all duration-300 hover:scale-[1.02]">
             <h3 className="text-xl font-bold text-center mb-4 text-purple-800">
               {dict.home.rentScreenshot}
             </h3>
