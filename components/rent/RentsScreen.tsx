@@ -143,9 +143,14 @@ export default function RentsScreen({ tenantId }: { tenantId: string }) {
         <motion.div className="lg:col-span-2" variants={itemVariants}>
           <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold text-gray-900">
-                {t("dashboard.RentHistory")}
-              </h2>
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900">
+                  {t("dashboard.RentHistory")}
+                </h2>
+                <p className="text-2xl text-green-600 mt-1">
+                  ${rents.reduce((sum, rent) => sum + (typeof rent?.amount === 'number' ? rent.amount : 0), 0)}
+                </p>
+              </div>
               <Button
                 onClick={setShowRentForm}
               >
