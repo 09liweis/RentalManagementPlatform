@@ -7,6 +7,8 @@ import Rent from "@/models/rent";
 import { RENT_STATUS } from "@/types/rent";
 import connect from "@/config/db";
 import { getStats } from "@/services/stats";
+import { ROOM_TP_MAP } from "@/types/room";
+import { PROPERTY_PTYPE_MAP } from "@/types/property";
 
 interface ParamsProps {
   params: Promise<{
@@ -41,14 +43,20 @@ export async function GET(request: NextRequest, props: ParamsProps) {
     });
 
     const tenant = await Tenant.findOne({ _id: tenantId });
-    const room = await Room.findOne({ _id: tenant.room });
-    const property = await Property.findOne({ _id: room.property });
+    let room = await Room.findOne({ _id: tenant.room });
+    room = room.toObject();
+    room.tpTxt = ROOM_TP_MAP[room.tp];
+
+    let property = await Property.findOne({ _id: room.property });
+    property = property.toObject();
+    property.ptypeTxt = PROPERTY_PTYPE_MAP[property.ptype] || property.ptype;
+
     return NextResponse.json(
       {rents, curTenant:tenant, curRoom: room, curProperty: property},
       { status: 200 },
     );
-  } catch (err) {
-    return NextResponse.json({ err }, { status: 500 });
+  } catch (err:any) {
+    return NextResponse.json({ err:err.toString() }, { status: 500 });
   }
 }
 
