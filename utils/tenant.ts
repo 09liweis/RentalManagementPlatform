@@ -6,11 +6,21 @@ interface DurationResult {
 
 export function getDuration(
   startDate: string,
-  endDate: string,
+  endDate: string | null | undefined,
 ): DurationResult {
-  // Parse the date strings (yyyy-mm-dd format)
+  // Parse the start date (yyyy-mm-dd format)
   const start = new Date(startDate);
-  const end = new Date(endDate);
+
+  // Handle null/empty endDate by using current date
+  const end = endDate ? new Date(endDate) : new Date();
+
+  // Format current date as yyyy-mm-dd if endDate was null/empty
+  if (!endDate) {
+    const year = end.getFullYear();
+    const month = String(end.getMonth() + 1).padStart(2, '0');
+    const day = String(end.getDate()).padStart(2, '0');
+    endDate = `${year}-${month}-${day}`; // Optional: store formatted date
+  }
 
   // Validate dates
   if (isNaN(start.getTime()) || isNaN(end.getTime())) {
@@ -22,21 +32,18 @@ export function getDuration(
     throw new Error("Start date must be before end date.");
   }
 
-  // Calculate differences
+  // Calculate differences (rest of the logic remains the same)
   const diffMs = end.getTime() - start.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  // Calculate years and months more accurately
   let years = end.getFullYear() - start.getFullYear();
   let months = end.getMonth() - start.getMonth();
 
-  // Adjust for negative months
   if (months < 0) {
     years--;
     months += 12;
   }
 
-  // Adjust for day differences
   if (end.getDate() < start.getDate()) {
     months--;
     if (months < 0) {
@@ -47,7 +54,6 @@ export function getDuration(
 
   const totalMonths = years * 12 + months;
 
-  // Determine the most appropriate unit to return
   if (years >= 2) {
     return {
       value: years,

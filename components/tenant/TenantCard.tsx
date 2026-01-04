@@ -130,7 +130,6 @@ export default function TenantCard({
               />
               {tenant.endDate || t("dashboard.Ongoing")}
             </motion.div>
-            {tenant.endDate &&
             <motion.div
               className=""
               whileHover={{ x: 8 }}
@@ -138,7 +137,6 @@ export default function TenantCard({
             >
               {getDuration(tenant.startDate, tenant.endDate).formatted || ""}
             </motion.div>
-            }
           </div>
         </motion.div>
 
