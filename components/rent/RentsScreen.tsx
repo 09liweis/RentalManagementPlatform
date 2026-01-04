@@ -11,6 +11,7 @@ import RentCard from "@/components/rent/RentCard";
 import { motion } from "framer-motion";
 import TenantCard from "../tenant/TenantCard";
 import RoomCard from "../room/RoomCard";
+import PropertyCard from "../property/PropertyCard";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -82,19 +83,7 @@ export default function RentsScreen({ tenantId }: { tenantId: string }) {
         {/* Left Column - Details */}
         <motion.div className="lg:col-span-1 space-y-6" variants={itemVariants}>
           {/* Property Card */}
-          <motion.div
-            className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow duration-300"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-4">
-              {t("dashboard.Property")}
-            </h3>
-            <h4 className="text-lg font-semibold text-gray-900 mb-2">
-              {curProperty?.name}
-            </h4>
-            <p className="text-sm text-gray-600">{curProperty?.address}</p>
-          </motion.div>
+          <PropertyCard p={curProperty} />
 
           {/* Room Card */}
           <RoomCard room={curRoom} />
