@@ -24,7 +24,11 @@ export function getDuration(
 
   // Validate dates
   if (isNaN(start.getTime()) || isNaN(end.getTime())) {
-    throw new Error("Invalid date format. Please use yyyy-mm-dd format.");
+    return {
+      value: 0,
+      unit: "days",
+      formatted: ''
+    };
   }
 
   // Ensure start date is before end date
