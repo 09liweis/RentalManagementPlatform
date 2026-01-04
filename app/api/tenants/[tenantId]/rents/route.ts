@@ -9,12 +9,13 @@ import connect from "@/config/db";
 import { getStats } from "@/services/stats";
 
 interface ParamsProps {
-  params: {
+  params: Promise<{
     tenantId: string;
-  };
+  }>;
 }
 
-export async function GET(request: NextRequest, { params }: ParamsProps) {
+export async function GET(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { tenantId } = params;
 
   const verified = decodeToken(request);
@@ -51,7 +52,8 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   }
 }
 
-export async function POST(request: NextRequest, { params }: ParamsProps) {
+export async function POST(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { tenantId } = params;
 
   const verified = decodeToken(request);

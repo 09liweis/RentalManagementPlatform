@@ -6,7 +6,7 @@ import ToastProvider from "@/components/common/ToastProvider";
 import Header from "@/components/common/Header";
 import Footer from "@/components/Footer";
 import useUserStore from "@/stores/userStore";
-import { useEffect } from "react";
+import { useEffect, use } from "react";
 import useAppStore from "@/stores/appStore";
 import { WEBSITE_NAME } from "@/constants/text";
 import { Analytics } from "@vercel/analytics/next";
@@ -19,13 +19,22 @@ const inter = Inter({ subsets: ["latin"] });
 //   description: "Will add later",
 // };
 
-export default function RootLayout({
-  children,
-  params: { lang },
-}: Readonly<{
-  children: React.ReactNode;
-  params: any;
-}>) {
+export default function RootLayout(
+  props: Readonly<{
+    children: React.ReactNode;
+    params: Promise<{ lang: string }>;
+  }>
+) {
+  const params = use(props.params);
+
+  const {
+    lang
+  } = params;
+
+  const {
+    children
+  } = props;
+
   const { fetchUser } = useUserStore();
   const { setLocale } = useAppStore();
   useEffect(() => {

@@ -4,12 +4,13 @@ import Room from "@/models/room";
 import connect from "@/config/db";
 
 interface ParamsProps {
-  params: {
+  params: Promise<{
     roomId: string;
-  };
+  }>;
 }
 
-export async function GET(request: NextRequest, { params }: ParamsProps) {
+export async function GET(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { roomId } = params;
   const verified = decodeToken(request);
   if (!verified) {
@@ -24,7 +25,8 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   }
 }
 
-export async function PUT(request: NextRequest, { params }: ParamsProps) {
+export async function PUT(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { roomId } = params;
   const verified = decodeToken(request);
   if (!verified) {

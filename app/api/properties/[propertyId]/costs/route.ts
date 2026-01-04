@@ -5,12 +5,13 @@ import { decodeToken } from "@/utils/jwt";
 import Cost from "@/models/cost";
 
 interface ParamsProps {
-  params: {
+  params: Promise<{
     propertyId: string;
-  };
+  }>;
 }
 
-export async function GET(request: NextRequest, { params }: ParamsProps) {
+export async function GET(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { propertyId } = params;
   const verified = decodeToken(request);
   if (!verified) {
@@ -28,15 +29,16 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   }
 }
 
-export async function POST(request: NextRequest, {params}:ParamsProps) {
-  
+export async function POST(request: NextRequest, props:ParamsProps) {
+  const params = await props.params;
+
   const { date, amount, tp } = await request.json();
 
   const verified = decodeToken(request);
   if (!verified) {
     return NextResponse.json({ err: "Not Login" }, { status: 401 });
   }
-  
+
   try {
     await connect();
     const newCost = new Cost({ amount, tp,  date, property: params.propertyId, user:verified.userId });
@@ -46,10 +48,10 @@ export async function POST(request: NextRequest, {params}:ParamsProps) {
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
   }
-
 }
 
-export async function PUT(request: NextRequest, { params }: ParamsProps) {
+export async function PUT(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { propertyId } = params;
   const verified = decodeToken(request);
   if (!verified) {

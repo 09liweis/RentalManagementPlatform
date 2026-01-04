@@ -5,12 +5,13 @@ import { decodeToken } from "@/utils/jwt";
 import connect from "@/config/db";
 
 interface ParamsProps {
-  params: {
+  params: Promise<{
     propertyId: string;
-  };
+  }>;
 }
 
-export async function GET(request: NextRequest, { params }: ParamsProps) {
+export async function GET(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   try {
     const { propertyId } = params;
     
@@ -30,7 +31,8 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   }
 }
 
-export async function POST(request: NextRequest, { params }: ParamsProps) {
+export async function POST(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { propertyId } = params;
 
   const verified = decodeToken(request);

@@ -7,12 +7,13 @@ import Room from "@/models/room";
 import Property from "@/models/property";
 
 interface ParamsProps {
-  params: {
+  params: Promise<{
     roomId: string;
-  };
+  }>;
 }
 
-export async function GET(request: NextRequest, { params }: ParamsProps) {
+export async function GET(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { roomId } = params;
 
   const verified = decodeToken(request);
@@ -39,7 +40,8 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   }
 }
 
-export async function POST(request: NextRequest, { params }: ParamsProps) {
+export async function POST(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { roomId } = params;
 
   const verified = decodeToken(request);

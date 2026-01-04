@@ -7,14 +7,15 @@ import Rent from "@/models/rent";
 import connect from "@/config/db";
 
 interface ParamsProps {
-  params: {
+  params: Promise<{
     rentId: string;
-  };
+  }>;
 }
 
-export async function PUT(request: NextRequest, { params }: ParamsProps) {
+export async function PUT(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const {rentId} = params;
-  
+
   const verified = decodeToken(request);
   if (!verified) {
     return NextResponse.json({ err: "Not Login" }, { status: 401 });
@@ -43,7 +44,8 @@ export async function PUT(request: NextRequest, { params }: ParamsProps) {
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: ParamsProps) {
+export async function DELETE(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const {rentId} = params;
 
   const verified = decodeToken(request);

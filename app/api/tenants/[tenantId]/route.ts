@@ -7,22 +7,23 @@ import Rent from "@/models/rent";
 import connect from "@/config/db";
 
 interface ParamsProps {
-  params: {
+  params: Promise<{
     tenantId: string;
-  };
+  }>;
 }
 
-export async function GET(request: NextRequest, { params }: ParamsProps) {
+export async function GET(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { tenantId } = params;
 
   const verified = decodeToken(request);
   if (!verified) {
     return NextResponse.json({ err: "Not Login" }, { status: 401 });
   }
-
 }
 
-export async function PUT(request: NextRequest, { params }: ParamsProps) {
+export async function PUT(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { tenantId } = params;
 
   const verified = decodeToken(request);

@@ -6,12 +6,13 @@ import Property from "@/models/property";
 import {getStats} from "@/services/stats";
 
 interface ParamsProps {
-  params: {
+  params: Promise<{
     propertyId: string;
-  };
+  }>;
 }
 
-export async function GET(request: NextRequest, { params }: ParamsProps) {
+export async function GET(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { propertyId } = params;
   const verified = decodeToken(request);
   if (!verified) {
@@ -28,7 +29,8 @@ export async function GET(request: NextRequest, { params }: ParamsProps) {
   }
 }
 
-export async function PUT(request: NextRequest, { params }: ParamsProps) {
+export async function PUT(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
   const { propertyId } = params;
   const verified = decodeToken(request);
   if (!verified) {

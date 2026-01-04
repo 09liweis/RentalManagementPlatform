@@ -1,10 +1,11 @@
 import Screen from "@/components/dashboard/Screen";
 
-export default function PropertyPage({
-  params,
-}: {
-  params: { propertyId: string };
-}) {
+export default async function PropertyPage(
+  props: {
+    params: Promise<{ propertyId: string }>;
+  }
+) {
+  const params = await props.params;
   const {propertyId} = params;
   return <Screen propertyId={propertyId} />
 }
