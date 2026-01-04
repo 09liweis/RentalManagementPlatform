@@ -9,7 +9,7 @@ import { i18n } from '@/i18n-config';
 let headers = { 'accept-language': 'en;q=0.5' }
 let languages = new Negotiator({ headers }).languages()
  
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Check if there is any supported locale in the pathname
   const { pathname } = request.nextUrl
   
