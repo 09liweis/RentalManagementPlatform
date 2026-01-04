@@ -21,7 +21,7 @@ export default function PropertyCard({
 
   return (
     <article
-      className={`bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 
+      className={`bg-white rounded shadow-sm hover:shadow-md transition-all duration-300 
                   transform hover:-translate-y-1 border p-3
                   ${
                     isSelected
