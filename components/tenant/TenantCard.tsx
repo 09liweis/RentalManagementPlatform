@@ -37,7 +37,7 @@ export default function TenantCard({
   const hasCurTenant = curTenant?._id;
   return (
     <motion.article
-      className={`bg-white rounded-xl shadow hover:shadow-md p-3 border ${isCurrent ? "border-blue-500" : "border-gray-200"} group`}
+      className={`bg-white rounded shadow hover:shadow-md p-3 border ${isCurrent ? "border-blue-500" : "border-gray-200"} group`}
       variants={cardVariants}
       custom={index}
       initial="hidden"
@@ -46,7 +46,7 @@ export default function TenantCard({
       layout
     >
       <motion.div
-        className="flex items-center gap-4"
+        className="flex items-center gap-2"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.1 }}
