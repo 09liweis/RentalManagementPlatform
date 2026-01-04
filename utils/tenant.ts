@@ -33,7 +33,12 @@ export function getDuration(
 
   // Ensure start date is before end date
   if (start > end) {
-    throw new Error("Start date must be before end date.");
+    console.log("Tenant didnt start yet");
+    return {
+      value: 0,
+      unit: "days",
+      formatted: ''
+    };
   }
 
   // Calculate differences (rest of the logic remains the same)
