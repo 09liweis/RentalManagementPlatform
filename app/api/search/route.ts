@@ -7,54 +7,6 @@ import Tenant from "@/models/tenant";
 import { PROPERTY_PTYPE_MAP } from "@/types/property";
 import { ROOM_TP_MAP } from "@/types/room";
 
-/**
- * @swagger
- * /api/search:
- *   get:
- *     description: Search across properties, rooms, and tenants
- *     tags: [Search]
- *     parameters:
- *       - in: query
- *         name: q
- *         schema:
- *           type: string
- *         required: true
- *         description: Search query string
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *           default: 20
- *         description: Maximum number of results to return
- *     responses:
- *       200:
- *         description: Search results
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 results:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       id:
- *                         type: string
- *                       title:
- *                         type: string
- *                       subtitle:
- *                         type: string
- *                       type:
- *                         type: string
- *                         enum: [property, room, tenant]
- *                       href:
- *                         type: string
- *       400:
- *         description: Invalid search query
- *       401:
- *         description: Not authenticated
- */
 export async function GET(request: NextRequest) {
   try {
     const verified = decodeToken(request);

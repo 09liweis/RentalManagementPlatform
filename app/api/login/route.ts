@@ -5,19 +5,6 @@ import User from "@/models/user";
 import connect from "@/config/db";
 import { generateToken } from "@/utils/jwt";
 
-/**
- * @swagger
- * /api/login:
- *   post:
- *     description: Landlord Login
- *     responses:
- *       200:
- *         description: Login successfully!
- *       400:
- *         description: User not found, please sign up
- *       401:
- *         description: Invalid password
- */
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();

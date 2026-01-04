@@ -5,17 +5,6 @@ import connect from "@/config/db";
 import { sendEmail } from "@/lib/email";
 import { WEBSITE_NAME } from "@/constants/text";
 
-/**
- * @swagger
- * /api/signup:
- *   post:
- *     description: Sign up landlord
- *     responses:
- *       200:
- *         description: Sign up successfully!
- *       400:
- *         description: Email Already Registered
- */
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();

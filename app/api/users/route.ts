@@ -3,48 +3,6 @@ import User from "@/models/user";
 import { decodeToken } from "@/utils/jwt";
 import connect from "@/config/db";
 
-/**
- * @swagger
- * /api/users:
- *   get:
- *     description: Get all users (Admin only)
- *     tags: [Admin]
- *     responses:
- *       200:
- *         description: List of all users
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 users:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       _id:
- *                         type: string
- *                       name:
- *                         type: string
- *                       email:
- *                         type: string
- *                       phone:
- *                         type: string
- *                       address:
- *                         type: string
- *                       locale:
- *                         type: string
- *                       isVerified:
- *                         type: boolean
- *                       isAdmin:
- *                         type: boolean
- *                       ct:
- *                         type: string
- *       401:
- *         description: Not authorized
- *       403:
- *         description: Admin access required
- */
 export async function GET(request: NextRequest) {
   try {
     const verified = decodeToken(request);
@@ -158,33 +116,6 @@ export async function GET(request: NextRequest) {
   }
 }
 
-/**
- * @swagger
- * /api/users:
- *   put:
- *     description: Update user (Admin only)
- *     tags: [Admin]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
- *               isAdmin:
- *                 type: boolean
- *               isVerified:
- *                 type: boolean
- *     responses:
- *       200:
- *         description: User updated successfully
- *       401:
- *         description: Not authorized
- *       403:
- *         description: Admin access required
- */
 export async function PUT(request: NextRequest) {
   try {
     const verified = decodeToken(request);
@@ -247,29 +178,6 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-/**
- * @swagger
- * /api/users:
- *   delete:
- *     description: Delete user (Admin only)
- *     tags: [Admin]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
- *     responses:
- *       200:
- *         description: User deleted successfully
- *       401:
- *         description: Not authorized
- *       403:
- *         description: Admin access required
- */
 export async function DELETE(request: NextRequest) {
   try {
     const verified = decodeToken(request);
