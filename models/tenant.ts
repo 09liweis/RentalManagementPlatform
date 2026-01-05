@@ -4,6 +4,9 @@ const tenantSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
+  property: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
   landlord: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
