@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 const rentSchema = new mongoose.Schema({
+  property: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
   room: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
