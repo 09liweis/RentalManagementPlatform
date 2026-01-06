@@ -68,6 +68,7 @@ export async function DELETE(request: NextRequest, props: ParamsProps) {
     }
 
     await Rent.deleteOne({ _id: rentId });
+    await updateTenantRents(foundRent.tenant.toString());
     return NextResponse.json({ msg: "deleted" }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });

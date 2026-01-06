@@ -9,6 +9,7 @@ import connect from "@/config/db";
 import { getStats } from "@/services/stats";
 import { ROOM_TP_MAP } from "@/types/room";
 import { PROPERTY_PTYPE_MAP } from "@/types/property";
+import { updateTenantRents } from "@/services/rents";
 
 interface ParamsProps {
   params: Promise<{
@@ -81,6 +82,7 @@ export async function POST(request: NextRequest, props: ParamsProps) {
       room: tenant.room,
     });
     await newRent.save();
+    await updateTenantRents(tenantId);
     return NextResponse.json({ msg: "added" }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err }, { status: 500 });
