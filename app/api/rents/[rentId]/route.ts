@@ -37,6 +37,18 @@ export async function PUT(request: NextRequest, props: ParamsProps) {
     foundRent.amount = amount;
     foundRent.startDate = startDate;
     await foundRent.save();
+
+    const foundTenant = await Tenant.findOne({ _id: foundRent.tenant });
+    if(foundTenant){
+      const totalRents = await Rent.find({ tenant: foundTenant._id, status: 2 }); // 2 means 'paid'
+      let totalPaid = 0;
+      totalRents.forEach(rent => {
+        console.log(rent.amount);
+        totalPaid += rent.amount || 0;
+      });
+      foundTenant.totalPaid = totalPaid;
+      await foundTenant.save();
+    }
     
     return NextResponse.json({ msg: "updated" }, { status: 200 });
   } catch (err) {
