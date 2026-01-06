@@ -5,6 +5,7 @@ import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
 import connect from "@/config/db";
+import { updateTenantRents } from "@/services/rents";
 
 interface ParamsProps {
   params: Promise<{
@@ -38,17 +39,7 @@ export async function PUT(request: NextRequest, props: ParamsProps) {
     foundRent.startDate = startDate;
     await foundRent.save();
 
-    const foundTenant = await Tenant.findOne({ _id: foundRent.tenant });
-    if(foundTenant){
-      const totalRents = await Rent.find({ tenant: foundTenant._id, status: 2 }); // 2 means 'paid'
-      let totalPaid = 0;
-      totalRents.forEach(rent => {
-        console.log(rent.amount);
-        totalPaid += rent.amount || 0;
-      });
-      foundTenant.totalPaid = totalPaid;
-      await foundTenant.save();
-    }
+    await updateTenantRents(foundRent.tenant.toString());
     
     return NextResponse.json({ msg: "updated" }, { status: 200 });
   } catch (err) {
