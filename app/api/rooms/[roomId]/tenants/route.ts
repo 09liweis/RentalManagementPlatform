@@ -53,6 +53,9 @@ export async function POST(request: NextRequest, props: ParamsProps) {
     await connect();
     const { name, deposit, startDate, endDate } = await request.json();
     if (!name) return NextResponse.json({ err: "Name is required" });
+
+    const room = await Room.findOne({_id:roomId});
+
     const newTenant = new Tenant({
       name,
       deposit,
@@ -60,6 +63,7 @@ export async function POST(request: NextRequest, props: ParamsProps) {
       endDate,
       room: roomId,
       landlord: verified.userId,
+      property: room.property
     });
     await newTenant.save();
     return NextResponse.json({ msg: "added" }, { status: 200 });
