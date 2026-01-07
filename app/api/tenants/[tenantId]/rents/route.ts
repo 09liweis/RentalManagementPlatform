@@ -80,6 +80,7 @@ export async function POST(request: NextRequest, props: ParamsProps) {
       status,
       tenant: tenantId,
       room: tenant.room,
+      property: tenant.property,
     });
     await newRent.save();
     await updateTenantRents(tenantId);
