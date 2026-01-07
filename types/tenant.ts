@@ -4,5 +4,6 @@ export interface Tenant {
     deposit?: string;
     startDate?: string;
     endDate?: string;
+    totalRent?: number;
     isCurrent?: boolean;
   }

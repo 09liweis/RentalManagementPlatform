@@ -99,6 +99,24 @@ export default function TenantCard({
         </motion.div>
 
         <motion.div
+          className="flex items-center justify-between p-2.5 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg border border-emerald-100"
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <span className="text-sm font-medium text-emerald-700">
+            Total Rent
+          </span>
+          <motion.span
+            className="text-xl font-bold text-emerald-600"
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.35 }}
+          >
+            ${tenant.totalRent || 0}
+          </motion.span>
+        </motion.div>
+
+        <motion.div
           className="text-sm text-gray-600 bg-gray-50 rounded-lg p-2.5"
           whileHover={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300 }}
