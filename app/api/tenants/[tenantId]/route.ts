@@ -52,3 +52,27 @@ export async function PUT(request: NextRequest, props: ParamsProps) {
     return NextResponse.json({ err }, { status: 500 });
   }
 }
+
+export async function DELETE(request: NextRequest, props: ParamsProps) {
+  const params = await props.params;
+  const { tenantId } = params;
+
+  const verified = decodeToken(request);
+  if (!verified) {
+    return NextResponse.json({ err: "Not Login" }, { status: 401 });
+  }
+
+  try {
+    await connect();
+
+    // Delete all rents associated with this tenant
+    await Rent.deleteMany({ tenant: tenantId });
+
+    // Delete the tenant
+    await Tenant.deleteOne({ _id: tenantId });
+
+    return NextResponse.json({ msg: "Tenant and associated rents deleted successfully" }, { status: 200 });
+  } catch (err) {
+    return NextResponse.json({ err }, { status: 500 });
+  }
+}
