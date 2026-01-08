@@ -8,6 +8,7 @@ interface TenantListProps {
   loading: boolean;
   tenants: Tenant[];
   onEditClick?: (tenant: any) => void;
+  onDeleteClick?: (tenant: any) => void;
   setCurrentTenant?: (tenant: Tenant) => void;
   setShowTenantForm?: (show: boolean) => void;
 }
@@ -62,11 +63,12 @@ const buttonVariants = {
   },
 };
 
-export default function TenantList({ 
-  tenants, 
-  onEditClick, 
+export default function TenantList({
+  tenants,
+  onEditClick,
+  onDeleteClick,
   setCurrentTenant,
-  setShowTenantForm 
+  setShowTenantForm
 }: TenantListProps) {
   const { t } = useAppStore();
 
@@ -88,10 +90,11 @@ export default function TenantList({
           animate="visible"
         >
           {tenants.map((tenant, index) => (
-            <TenantCard 
-              key={tenant._id} 
-              tenant={tenant} 
-              onEditClick={onEditClick} 
+            <TenantCard
+              key={tenant._id}
+              tenant={tenant}
+              onEditClick={onEditClick}
+              onDeleteClick={onDeleteClick}
               setCurrentTenant={setCurrentTenant}
               index={index}
             />
