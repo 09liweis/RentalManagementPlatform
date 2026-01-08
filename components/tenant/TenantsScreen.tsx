@@ -111,6 +111,22 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
     fetchRoomTenants();
   };
 
+  const handleDeleteTenant = async (tenant: any) => {
+    if (!confirm(`Are you sure you want to delete tenant ${tenant.name}? This will also delete all associated rent records.`)) {
+      return;
+    }
+    const { err, msg } = await fetchData({
+      url: `/api/tenants/${tenant._id}`,
+      method: "DELETE",
+    });
+    if (err) {
+      showToast(err);
+    } else {
+      showToast(msg);
+      fetchRoomTenants();
+    }
+  };
+
   // useEffect(() => {
   //   fetchRoomTenants();
   // }, []);
@@ -307,6 +323,7 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
           loading={loading}
           tenants={tenants}
           onEditClick={handleTenantClick}
+          onDeleteClick={handleDeleteTenant}
           setCurrentTenant={setCurrentTenant}
         />
       </motion.div>
