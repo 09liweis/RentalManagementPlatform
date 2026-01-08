@@ -30,6 +30,7 @@ export default function TenantCard({
   onEditClick,
   setCurrentTenant,
   index = 0,
+  onDeleteClick,
 }: any) {
   const { t } = useAppStore();
   const { curTenant } = usePropertyStore();
@@ -158,17 +159,30 @@ export default function TenantCard({
           </div>
         </motion.div>
 
-        {onEditClick && (
-          <motion.button
-            onClick={() => onEditClick(tenant)}
-            className="w-full text-sm text-gray-700 hover:text-blue-600 flex items-center justify-center py-2 border rounded-lg hover:border-blue-300 hover:bg-blue-50"
-            whileHover={{ scale: 1.02, backgroundColor: "rgb(239 246 255)" }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            {t("dashboard.Edit")}
-          </motion.button>
-        )}
+        <div className="flex gap-2">
+          {onEditClick && (
+            <motion.button
+              onClick={() => onEditClick(tenant)}
+              className="flex-1 text-sm text-gray-700 hover:text-blue-600 flex items-center justify-center py-2 border rounded-lg hover:border-blue-300 hover:bg-blue-50"
+              whileHover={{ scale: 1.02, backgroundColor: "rgb(239 246 255)" }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              {t("dashboard.Edit")}
+            </motion.button>
+          )}
+          {onDeleteClick && (
+            <motion.button
+              onClick={() => onDeleteClick(tenant)}
+              className="flex-1 text-sm text-red-600 hover:text-red-700 flex items-center justify-center py-2 border border-red-200 rounded-lg hover:border-red-300 hover:bg-red-50"
+              whileHover={{ scale: 1.02, backgroundColor: "rgb(254 242 242)" }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              {t("dashboard.Delete")}
+            </motion.button>
+          )}
+        </div>
       </motion.div>
     </motion.article>
   );
