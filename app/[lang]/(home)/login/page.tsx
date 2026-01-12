@@ -12,12 +12,15 @@ import FormWrapper from "@/components/common/form/FormWrapper";
 
 function Login() {
   const {t, curLocale} = useAppStore();
-  const { login, loginUser } = useUserStore();
+  const { login, loginUser, fetchUser } = useUserStore();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginCode, setLoginCode] = useState("");
+  const [showCodeLogin, setShowCodeLogin] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [codeLoading, setCodeLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,6 +62,68 @@ function Login() {
       }
     } catch (error) {
       console.error('Facebook login error:', error);
+    }
+  };
+
+  const handleSendCode = async () => {
+    if (!email.trim()) {
+      alert('Please enter your email address');
+      return;
+    }
+
+    setCodeLoading(true);
+    try {
+      const response = await fetch('/api/auth/code/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.message || data.msg) {
+        alert(data.message || data.msg);
+        setShowCodeLogin(true);
+      } else if (data.error) {
+        alert(data.error);
+      }
+    } catch (error) {
+      console.error('Error sending login code:', error);
+      alert('Failed to send login code. Please try again.');
+    } finally {
+      setCodeLoading(false);
+    }
+  };
+
+  const handleVerifyCode = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/auth/code/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, code: loginCode }),
+      });
+
+      const data = await response.json();
+
+      if (data.success && data.token) {
+        localStorage.setItem('auth-token', data.token);
+        if (data.user?.locale) {
+          localStorage.setItem('locale', data.user.locale);
+        }
+
+        fetchUser();
+        router.push(`/${data.user?.locale || curLocale}/dashboard`);
+      } else if (data.error) {
+        alert(data.error);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error verifying code:', error);
+      alert('Failed to verify code. Please try again.');
+      setLoading(false);
     }
   };
 
@@ -145,6 +210,77 @@ function Login() {
       >
         {loading ? <LoadingSpinner /> : t('home.Login')}
       </Button>
+
+      {/* Or login with code */}
+      <div className="text-center mt-4">
+        <button
+          type="button"
+          onClick={() => setShowCodeLogin(!showCodeLogin)}
+          className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+        >
+          {showCodeLogin ? '← Back to password login' : 'Login with code instead'}
+        </button>
+      </div>
+
+      {/* Code Login Section */}
+      {showCodeLogin && (
+        <div className="mt-4 pt-4 border-t border-gray-200">
+          <div className="space-y-3">
+            {!loginCode ? (
+              <>
+                <Input
+                  type="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={t('home.Email')}
+                  value={email}
+                />
+                <Button
+                  type="button"
+                  onClick={handleSendCode}
+                  size="lg"
+                  fullWidth
+                  disabled={codeLoading}
+                >
+                  {codeLoading ? <LoadingSpinner /> : 'Send Login Code'}
+                </Button>
+              </>
+            ) : (
+              <FormWrapper onSubmit={handleVerifyCode}>
+                <p className="text-sm text-gray-600 text-center mb-4">
+                  Enter the 6-digit code sent to {email}
+                </p>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Enter 6-digit code</label>
+                  <input
+                    type="text"
+                    maxLength={6}
+                    onChange={(e) => setLoginCode(e.target.value)}
+                    placeholder="Enter 6-digit code"
+                    value={loginCode}
+                    autoFocus
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-400 text-gray-900 transition-all duration-300 text-center text-2xl tracking-widest"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  size="lg"
+                  fullWidth
+                  disabled={loading}
+                >
+                  {loading ? <LoadingSpinner /> : 'Verify & Login'}
+                </Button>
+                <button
+                  type="button"
+                  onClick={() => setLoginCode('')}
+                  className="w-full text-sm text-gray-600 hover:text-blue-600 text-center mt-2"
+                >
+                  Resend Code
+                </button>
+              </FormWrapper>
+            )}
+          </div>
+        </div>
+      )}
     </FormWrapper>
   );
 }

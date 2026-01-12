@@ -13,7 +13,6 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "Please provide a password"],
   },
   phone: {
     type: String,
@@ -34,6 +33,8 @@ const userSchema = new mongoose.Schema({
   forgotPasswardTokenExpiry: Date,
   verifyToken: String,
   verifyTokenExpiry: Date,
+  loginCode: String,
+  loginCodeExpiry: Date,
   // 0 for valid, 1 for delete
   isDelete: {
     type: Number,
