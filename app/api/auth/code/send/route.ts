@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/user";
 import connect from "@/config/db";
 import { sendEmail } from "@/lib/email";
-import crypto from "crypto";
 
 // Function to generate a 6-digit numeric code
 function generateLoginCode(): string {
@@ -36,7 +35,7 @@ export async function POST(request: NextRequest) {
 
     // Generate 6-digit login code
     const loginCode = generateLoginCode();
-    const loginCodeExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+    const loginCodeExpiry = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
 
     // Save login code to user document
     user.loginCode = loginCode;
@@ -52,7 +51,7 @@ export async function POST(request: NextRequest) {
           <div style="background-color: #ffffff; padding: 32px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); text-align: center;">
             <h2 style="color: #2d3748; margin-bottom: 24px;">Your Login Code</h2>
             <p style="color: #4a5568; margin-bottom: 24px;">
-              Use the following code to sign in to your account. This code will expire in 15 minutes.
+              Use the following code to sign in to your account. This code will expire in 5 minutes.
             </p>
             <div style="background-color: #f7fafc; padding: 24px; border-radius: 8px; margin: 24px 0;">
               <span style="font-size: 32px; font-weight: bold; color: #3182ce; letter-spacing: 8px;">
@@ -73,7 +72,7 @@ export async function POST(request: NextRequest) {
     try {
       await sendEmail(emailContent);
       return NextResponse.json(
-        { message: "Login code sent to your email" },
+        { message: "Login code sent to your email. The code will expire in 5 minutes." },
         { status: 200 }
       );
     } catch (emailError: any) {

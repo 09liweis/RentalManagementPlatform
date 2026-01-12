@@ -218,7 +218,7 @@ function Login() {
       )}
 
       {/* Toggle between login methods */}
-      <div className="text-center mt-4">
+      <div className="text-center">
         <button
           type="button"
           onClick={() => {
