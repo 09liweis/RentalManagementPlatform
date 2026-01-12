@@ -22,6 +22,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [codeLoading, setCodeLoading] = useState(false);
   const [codeSent, setCodeSent] = useState(false);
+  const [codeMessage, setCodeMessage] = useState("");
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -73,6 +74,7 @@ function Login() {
     }
 
     setCodeLoading(true);
+    setCodeMessage("");
     try {
       const response = await fetch('/api/auth/code/send', {
         method: 'POST',
@@ -83,7 +85,7 @@ function Login() {
       const data = await response.json();
 
       if (data.message || data.msg) {
-        alert(data.message || data.msg);
+        setCodeMessage(data.message || data.msg);
         setShowCodeLogin(true);
         setCodeSent(true);
       } else if (data.error) {
@@ -256,6 +258,11 @@ function Login() {
             </>
           ) : (
             <>
+              {codeMessage && (
+                <p className="text-sm text-green-600 text-center font-medium">
+                  ✓ {codeMessage}
+                </p>
+              )}
               <p className="text-sm text-gray-600 text-center">
                 Enter the 6-digit code sent to {email}
               </p>
@@ -284,6 +291,7 @@ function Login() {
                 onClick={() => {
                   setCodeSent(false);
                   setLoginCode('');
+                  setCodeMessage('');
                 }}
                 className="w-full text-sm text-gray-600 hover:text-blue-600 text-center mt-2"
               >
