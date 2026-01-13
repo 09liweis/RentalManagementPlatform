@@ -113,7 +113,7 @@ function Login() {
       {!showCodeLogin && (
         <>
           <GoogleLoginButton />
-          <FacebookLoginButton />
+          {/* <FacebookLoginButton /> */}
           <Divider text="or continue with email" />
           <PasswordLoginForm
             email={email}
