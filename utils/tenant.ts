@@ -4,6 +4,41 @@ interface DurationResult {
   formatted: string;
 }
 
+interface CalculateDaysParams {
+  startDate: string;
+  endDate?: string | null | undefined;
+}
+
+export function calculateDays(params: CalculateDaysParams): number {
+  const { startDate, endDate } = params;
+
+  const start = new Date(startDate);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  let end: Date;
+
+  // Calculate end date
+  if (endDate) {
+    end = new Date(endDate);
+    end.setHours(0, 0, 0, 0);
+  } else {
+    // If no end date and start date is not in the future, use today as end date
+    if (start <= today) {
+      end = today;
+    } else {
+      // Start date is in the future, use start date as end date
+      end = start;
+    }
+  }
+
+  // Calculate days between start and end date
+  const diffTime = end.getTime() - start.getTime();
+  const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  return days > 0 ? days : 0;
+}
+
 export function getDuration(
   startDate: string,
   endDate: string | null | undefined,
