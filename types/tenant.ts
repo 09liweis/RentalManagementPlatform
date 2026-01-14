@@ -6,4 +6,5 @@ export interface Tenant {
     endDate?: string;
     totalRent?: number;
     isCurrent?: boolean;
+    rentDays?: number;
   }
