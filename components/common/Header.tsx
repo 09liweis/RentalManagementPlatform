@@ -20,6 +20,11 @@ export default function Header() {
 
           {/* Navigation section */}
           <nav className="flex items-center space-x-4 sm:space-x-6">
+            <LinkText
+              href="/blogs"
+            >
+              {t('home.Blogs') || 'Blogs'}
+            </LinkText>
             {loadingUser ? (
               <div className="w-8 h-8 flex items-center justify-center bg-gray-500">
                 <svg className="size-5 animate-spin" viewBox="0 0 24 24">
@@ -28,20 +33,20 @@ export default function Header() {
                 </svg>
               </div>
             ) : loginUser._id ? (
-              <LinkText 
-                href="/dashboard" 
+              <LinkText
+                href="/dashboard"
               >
                 {t('home.Dashboard')}
               </LinkText>
             ) : (
               <>
-                <LinkText 
-                  href="/signup" 
+                <LinkText
+                  href="/signup"
                 >
                   {t('home.Signup')}
                 </LinkText>
-                <LinkText 
-                  href="/login" 
+                <LinkText
+                  href="/login"
                 >
                   {t('home.Login')}
                 </LinkText>
