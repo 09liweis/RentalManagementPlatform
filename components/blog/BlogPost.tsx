@@ -8,19 +8,29 @@ interface BlogPostProps {
 }
 
 export default function BlogPost({ postId }: BlogPostProps) {
+  // Find post by ID
   const post = blogPosts.find(p => p.id === postId);
 
   if (!post) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="text-6xl mb-4">📭</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Blog Post Not Found
-          </h1>
-          <LinkText href="/blogs" className="text-blue-600 hover:underline">
-            Back to Blogs
-          </LinkText>
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="text-center max-w-md px-4">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="text-8xl mb-6">📭</div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">
+              Blog Post Not Found
+            </h1>
+            <p className="text-gray-600 mb-8">
+              The blog post you're looking for doesn't exist or has been removed.
+            </p>
+            <LinkText href="/blogs" className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              Back to Blogs
+            </LinkText>
+          </motion.div>
         </div>
       </div>
     );
@@ -30,21 +40,34 @@ export default function BlogPost({ postId }: BlogPostProps) {
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
-        <LinkText href="/blogs" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-8">
-          ← Back to Blogs
-        </LinkText>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <LinkText href="/blogs" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-8 group">
+            <span className="mr-2 transition-transform group-hover:-translate-x-1">←</span>
+            Back to Blogs
+          </LinkText>
+        </motion.div>
 
         <motion.article
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
           className="bg-white rounded-2xl shadow-lg overflow-hidden"
         >
           {/* Featured Image */}
-          <div className="h-96 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+          <div className="h-96 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center relative">
             <div className="text-center">
               <div className="text-8xl mb-4">📖</div>
               <p className="text-gray-500">Blog Image</p>
+            </div>
+            {/* Category Badge */}
+            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-md">
+              <span className="text-sm font-medium text-blue-600">
+                {post.category}
+              </span>
             </div>
           </div>
 
@@ -53,21 +76,19 @@ export default function BlogPost({ postId }: BlogPostProps) {
             {/* Header */}
             <div className="mb-8 pb-8 border-b border-gray-200">
               <div className="flex items-center gap-3 mb-4">
-                <span className="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-medium">
-                  {post.category}
-                </span>
-                <span className="text-gray-500 text-sm">
+                <span className="text-gray-500 text-sm flex items-center gap-1">
+                  <span>📖</span>
                   {post.readTime}
                 </span>
               </div>
 
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
                 {post.title}
               </h1>
 
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
                     {post.author.charAt(0)}
                   </div>
                   <div>
@@ -90,8 +111,8 @@ export default function BlogPost({ postId }: BlogPostProps) {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="text-xl text-gray-700 leading-relaxed mb-8 italic border-l-4 border-blue-300 pl-6"
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="text-xl text-gray-700 leading-relaxed mb-8 italic border-l-4 border-blue-300 pl-6 bg-blue-50 py-4 rounded-r"
             >
               "{post.excerpt}"
             </motion.p>
@@ -100,7 +121,7 @@ export default function BlogPost({ postId }: BlogPostProps) {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
               className="prose prose-lg max-w-none"
             >
               <p className="text-gray-700 leading-relaxed mb-6">
@@ -121,7 +142,7 @@ export default function BlogPost({ postId }: BlogPostProps) {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.7, duration: 0.5 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
               className="mt-12 pt-8 border-t border-gray-200"
             >
               <p className="text-sm font-medium text-gray-600 mb-4">
@@ -166,7 +187,12 @@ export default function BlogPost({ postId }: BlogPostProps) {
         </motion.article>
 
         {/* Related Posts */}
-        <div className="mt-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="mt-12"
+        >
           <h2 className="text-2xl font-bold text-gray-900 mb-6">
             Related Articles
           </h2>
@@ -179,7 +205,7 @@ export default function BlogPost({ postId }: BlogPostProps) {
                   key={relatedPost.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
                 >
                   <LinkText href={`/blogs/${relatedPost.id}`} className="block group">
                     <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
@@ -188,7 +214,7 @@ export default function BlogPost({ postId }: BlogPostProps) {
                           {relatedPost.category}
                         </span>
                       </div>
-                      <h3 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                      <h3 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                         {relatedPost.title}
                       </h3>
                     </div>
@@ -196,7 +222,7 @@ export default function BlogPost({ postId }: BlogPostProps) {
                 </motion.div>
               ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
