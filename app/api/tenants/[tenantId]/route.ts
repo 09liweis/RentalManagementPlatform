@@ -5,6 +5,7 @@ import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
 import connect from "@/config/db";
+import { calculateDays } from "@/utils/tenant";
 
 interface ParamsProps {
   params: Promise<{
@@ -46,6 +47,14 @@ export async function PUT(request: NextRequest, props: ParamsProps) {
     tenant.endDate = endDate;
     tenant.isCurrent = isCurrent;
     tenant.rent = rent;
+
+    // Calculate rentDays
+    const rentDays = calculateDays({
+      startDate,
+      endDate,
+    });
+    tenant.rentDays = rentDays;
+
     await tenant.save();
     return NextResponse.json({ msg: "updated" }, { status: 200 });
   } catch (err) {

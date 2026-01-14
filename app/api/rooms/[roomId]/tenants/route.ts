@@ -5,6 +5,7 @@ import { ROOM_TP_MAP } from "@/types/room";
 import connect from "@/config/db";
 import Room from "@/models/room";
 import Property from "@/models/property";
+import { calculateDays } from "@/utils/tenant";
 
 interface ParamsProps {
   params: Promise<{
@@ -65,6 +66,14 @@ export async function POST(request: NextRequest, props: ParamsProps) {
       landlord: verified.userId,
       property: room.property
     });
+
+    // Calculate rentDays
+    const rentDays = calculateDays({
+      startDate,
+      endDate,
+    });
+    newTenant.rentDays = rentDays;
+
     await newTenant.save();
     return NextResponse.json({ msg: "added" }, { status: 200 });
   } catch (err) {
