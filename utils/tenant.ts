@@ -39,26 +39,8 @@ export function calculateDays(params: CalculateDaysParams): number {
   return days > 0 ? days : 0;
 }
 
-export function getDuration(
-  startDate: string,
-  endDate: string | null | undefined,
-): DurationResult {
-  // Parse the start date (yyyy-mm-dd format)
-  const start = new Date(startDate);
-
-  // Handle null/empty endDate by using current date
-  const end = endDate ? new Date(endDate) : new Date();
-
-  // Format current date as yyyy-mm-dd if endDate was null/empty
-  if (!endDate) {
-    const year = end.getFullYear();
-    const month = String(end.getMonth() + 1).padStart(2, '0');
-    const day = String(end.getDate()).padStart(2, '0');
-    endDate = `${year}-${month}-${day}`; // Optional: store formatted date
-  }
-
-  // Validate dates
-  if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+export function getDuration(rentDays: number): DurationResult {
+  if (rentDays <= 0) {
     return {
       value: 0,
       unit: "days",
@@ -66,37 +48,10 @@ export function getDuration(
     };
   }
 
-  // Ensure start date is before end date
-  if (start > end) {
-    console.log("Tenant didnt start yet");
-    return {
-      value: 0,
-      unit: "days",
-      formatted: ''
-    };
-  }
-
-  // Calculate differences (rest of the logic remains the same)
-  const diffMs = end.getTime() - start.getTime();
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-  let years = end.getFullYear() - start.getFullYear();
-  let months = end.getMonth() - start.getMonth();
-
-  if (months < 0) {
-    years--;
-    months += 12;
-  }
-
-  if (end.getDate() < start.getDate()) {
-    months--;
-    if (months < 0) {
-      years--;
-      months += 12;
-    }
-  }
-
-  const totalMonths = years * 12 + months;
+  const years = Math.floor(rentDays / 365);
+  const remainingDaysAfterYears = rentDays % 365;
+  const months = Math.floor(remainingDaysAfterYears / 30);
+  const days = remainingDaysAfterYears % 30;
 
   if (years >= 2) {
     return {
@@ -104,17 +59,17 @@ export function getDuration(
       unit: "years",
       formatted: `${years} year${years !== 1 ? "s" : ""}`,
     };
-  } else if (totalMonths >= 2) {
+  } else if (months >= 2) {
     return {
-      value: totalMonths,
+      value: months,
       unit: "months",
-      formatted: `${totalMonths} month${totalMonths !== 1 ? "s" : ""}`,
+      formatted: `${months} month${months !== 1 ? "s" : ""}`,
     };
   } else {
     return {
-      value: diffDays,
+      value: days,
       unit: "days",
-      formatted: `${diffDays} day${diffDays !== 1 ? "s" : ""}`,
+      formatted: `${days} day${days !== 1 ? "s" : ""}`,
     };
   }
 }

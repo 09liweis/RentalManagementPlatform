@@ -3,6 +3,7 @@ import LinkText from "../common/LinkText";
 import usePropertyStore from "@/stores/propertyStore";
 import { motion } from "framer-motion";
 import { getDuration } from "@/utils/tenant";
+import { useMemo } from "react";
 
 // 卡片动画变体
 const cardVariants = {
@@ -36,6 +37,11 @@ export default function TenantCard({
   const { curTenant } = usePropertyStore();
   const isCurrent = curTenant?._id == tenant._id;
   const hasCurTenant = curTenant?._id;
+
+  const duration = useMemo(() => {
+    return getDuration(tenant.rentDays || 0);
+  }, [tenant.rentDays]);
+
   return (
     <motion.article
       className={`bg-white rounded shadow hover:shadow-md p-3 border ${isCurrent ? "border-blue-500" : "border-gray-200"} group`}
@@ -150,27 +156,12 @@ export default function TenantCard({
               {tenant.endDate || t("dashboard.Ongoing")}
             </motion.div>
             <motion.div
-              className=""
+              className="flex items-center gap-2 font-medium text-purple-600"
               whileHover={{ x: 8 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              {getDuration(tenant.startDate, tenant.endDate).formatted || ""}
+              {duration.formatted || ""}
             </motion.div>
-            {tenant.rentDays !== undefined && (
-              <motion.div
-                className="flex items-center gap-2 text-xs font-medium text-purple-600"
-                whileHover={{ x: 8 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <motion.span
-                  className="w-2 h-2 bg-purple-500 rounded-full"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.6 }}
-                />
-                {tenant.rentDays} days
-              </motion.div>
-            )}
           </div>
         </motion.div>
 
