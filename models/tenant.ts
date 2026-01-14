@@ -23,6 +23,7 @@ const tenantSchema = new mongoose.Schema({
   endDate: {
     type: String,
   },
+  rentDays: Number,
   isCurrent: Boolean
 });
 
