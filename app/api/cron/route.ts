@@ -6,6 +6,7 @@ import Room from "@/models/room";
 import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
 import { sendEmail } from "@/lib/email";
+import { calculateDays } from "@/utils/tenant";
 
 interface EmailResult {
   userId: string;
@@ -18,6 +19,29 @@ interface EmailResult {
 export async function GET() {
   try {
     await dbConnect();
+
+    // Update all tenants' rentDays
+    const allTenants = await Tenant.find();
+    const updatedTenants = [];
+
+    for (const tenant of allTenants) {
+      if (tenant.startDate) {
+        const rentDays = calculateDays({
+          startDate: tenant.startDate,
+          endDate: tenant.endDate,
+        });
+
+        if (rentDays > 0 && tenant.rentDays !== rentDays) {
+          tenant.rentDays = rentDays;
+          await tenant.save();
+          updatedTenants.push({
+            id: tenant._id,
+            name: tenant.name,
+            rentDays,
+          });
+        }
+      }
+    }
 
     const users = await User.find({isAdmin:true});
 
@@ -169,12 +193,19 @@ export async function GET() {
 
     return NextResponse.json({
       success: true,
-      message: "Successfully processed user emails",
+      message: "Successfully processed cron jobs",
       scanDate: new Date().toISOString(),
-      totalUsers: users.length,
-      emailsSent: emailResults.filter(r => r.success).length,
-      emailsFailed: emailResults.filter(r => !r.success).length,
-      results: emailResults,
+      tenantStats: {
+        totalTenants: allTenants.length,
+        updatedTenants: updatedTenants.length,
+        updates: updatedTenants,
+      },
+      emailStats: {
+        totalUsers: users.length,
+        emailsSent: emailResults.filter(r => r.success).length,
+        emailsFailed: emailResults.filter(r => !r.success).length,
+        results: emailResults,
+      },
     });
   } catch (error) {
     console.error("Cron job error:", error);
