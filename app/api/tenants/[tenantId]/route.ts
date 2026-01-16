@@ -38,7 +38,10 @@ export async function PUT(request: NextRequest, props: ParamsProps) {
     const { name, startDate, endDate, deposit, isCurrent, rent } = await request.json();
     const tenant = await Tenant.findOne({ _id: tenantId });
 
-    await Tenant.updateOne({isCurrent:true, room: tenant.room}, {$set:{isCurrent: false}});
+    await Tenant.updateOne(
+      {isCurrent: true, room: tenant.room, _id: {$ne: tenantId}},
+      {$set:{isCurrent: false}}
+    );
 
     //update tenant
     tenant.name = name;
