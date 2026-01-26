@@ -169,7 +169,7 @@ export async function GET() {
 
           await sendEmail({
             to: user.email,
-            subject: `Landlord Master - Property Report - ${new Date().toLocaleDateString()}`,
+            subject: `Landlord Master - Property Daily Report - ${new Date().toLocaleDateString()}`,
             html: emailContent,
           });
 
