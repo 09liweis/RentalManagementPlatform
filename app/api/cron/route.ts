@@ -16,6 +16,8 @@ interface EmailResult {
   error?: string;
 }
 
+const UNKNOWN_ERROR = 'Unknown error';
+
 export async function GET() {
   try {
     await dbConnect();
@@ -231,7 +233,7 @@ export async function GET() {
           name: user.name || "",
           email: user.email || "",
           success: false,
-          error: error instanceof Error ? error.message : "Unknown error",
+          error: error instanceof Error ? error.message : UNKNOWN_ERROR,
         });
       }
     }
@@ -258,7 +260,7 @@ export async function GET() {
       {
         success: false,
         message: "Failed to send user emails",
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : UNKNOWN_ERROR,
       },
       { status: 500 }
     );
