@@ -79,6 +79,27 @@ export async function GET() {
           const totalIncome = paidRents.reduce((sum, r) => sum + (r.amount || 0), 0);
           const unpaidAmount = unpaidRents.reduce((sum, r) => sum + (r.amount || 0), 0);
 
+          // Get current tenants with their room details
+          const currentTenants = tenants.filter(t => t.isCurrent);
+          const currentTenantsWithRooms = [];
+
+          for (const tenant of currentTenants) {
+            const room = await Room.findById(tenant.room);
+            const property = room ? await Property.findById(room.property) : null;
+
+            if (room && property) {
+              currentTenantsWithRooms.push({
+                name: tenant.name,
+                roomName: room.name,
+                propertyName: property.name,
+                rent: tenant.rent || 0,
+                startDate: tenant.startDate,
+                endDate: tenant.endDate,
+                rentDays: tenant.rentDays || 0,
+              });
+            }
+          }
+
           const emailContent = `
             <html>
               <head>
@@ -144,6 +165,30 @@ export async function GET() {
                         <span class="stat-value warning-value">$${unpaidAmount.toFixed(2)}</span>
                       </div>
                     </div>
+
+                    ${currentTenantsWithRooms.length > 0 ? `
+                      <h3>👥 Current Tenants</h3>
+                      <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                        ${currentTenantsWithRooms.map((tenant, index) => `
+                          <div style="padding: 15px; ${index < currentTenantsWithRooms.length - 1 ? 'border-bottom: 1px solid #eee;' : ''}">
+                            <div style="font-weight: 600; font-size: 16px; color: #333; margin-bottom: 8px;">
+                              ${tenant.name}
+                            </div>
+                            <div style="font-size: 14px; color: #666; line-height: 1.8;">
+                              <div><strong>🏠 Property:</strong> ${tenant.propertyName}</div>
+                              <div><strong>🚪 Room:</strong> ${tenant.roomName}</div>
+                              <div><strong>💵 Monthly Rent:</strong> $${tenant.rent.toFixed(2)}</div>
+                              <div><strong>📅 Lease Period:</strong> ${tenant.startDate}${tenant.endDate ? ` - ${tenant.endDate}` : ' - Present'}</div>
+                              <div><strong>⏱️ Rent Days:</strong> ${tenant.rentDays} days</div>
+                            </div>
+                          </div>
+                        `).join('')}
+                      </div>
+                    ` : `
+                      <div style="background: #e5e7eb; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center; color: #666;">
+                        <strong>No current tenants</strong>
+                      </div>
+                    `}
 
                     <p>This is an automated report sent by our cron job system.</p>
                     <p>You can view more details in your <strong>dashboard</strong>.</p>
