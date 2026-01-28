@@ -176,7 +176,7 @@ export async function GET() {
                             <div style="font-weight: 600; font-size: 16px; color: #333; margin-bottom: 8px;">
                               ${tenant.name}
                             </div>
-                            <div style="font-size: 14px; color: #666; line-height: 1.8;">
+                            <div style="font-size: 16px; color: #666; line-height: 1.8;">
                               <div><strong>🏠 Property:</strong> ${tenant.propertyName}</div>
                               <div><strong>🚪 Room:</strong> ${tenant.roomName}</div>
                               <div><strong>💵 Monthly Rent:</strong> $${tenant.rent.toFixed(2)}</div>
