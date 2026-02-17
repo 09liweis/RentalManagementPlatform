@@ -85,7 +85,7 @@ export default function FacebookCallbackPage() {
           <p className="text-gray-600 mb-6">{error}</p>
           <button
             onClick={() => router.push(`/${curLocale}/login`)}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
           >
             Back to Login
           </button>
