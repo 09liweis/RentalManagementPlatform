@@ -59,7 +59,7 @@ body {
 }
 
 .select-option {
-  @apply cursor-pointer p-2 duration-300 rounded-lg border-2 hover:bg-gray-200;
+  @apply cursor-pointer p-2 duration-300 border-2 hover:bg-gray-200;
 }
 
 .select-option.active {
