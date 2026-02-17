@@ -14,7 +14,7 @@ export default function ResetPassword() {
       </div>
 
       <div
-        className="relative z-10 flex flex-col items-center bg-white p-4 md:p-6 rounded-lg shadow-lg mt-30 md:mt-22 w-11/12 max-w-sm md:max-w-md">
+        className="relative z-10 flex flex-col items-center bg-white p-4 md:p-6 rounded shadow-lg mt-30 md:mt-22 w-11/12 max-w-sm md:max-w-md">
         <h2 className="text-lg md:text-xl font-bold text-center mb-2 text-gray-800">
           Please check your email to reset your password.
         </h2>
