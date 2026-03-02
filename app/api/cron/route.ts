@@ -181,27 +181,6 @@ export async function GET() {
                         <span class="stat-value warning-value">$${currentMonthUnpaidAmount.toFixed(2)}</span>
                       </div>
 
-                      <h3 style="margin-top: 30px;">💰 All-Time Rent Statistics</h3>
-                      <div class="stat-item">
-                        <span class="stat-label">Total Rent Records:</span>
-                        <span class="stat-value">${rentCount}</span>
-                      </div>
-                      <div class="stat-item">
-                        <span class="stat-label">Total Paid Rents:</span>
-                        <span class="stat-value success-value">${paidRentCount}</span>
-                      </div>
-                      <div class="stat-item">
-                        <span class="stat-label">Total Pending Rents:</span>
-                        <span class="stat-value warning-value">${unpaidRentCount}</span>
-                      </div>
-                      <div class="stat-item">
-                        <span class="stat-label">Total Income:</span>
-                        <span class="stat-value success-value">$${totalIncome.toFixed(2)}</span>
-                      </div>
-                      <div class="stat-item">
-                        <span class="stat-label">Total Unpaid Amount:</span>
-                        <span class="stat-value warning-value">$${unpaidAmount.toFixed(2)}</span>
-                      </div>
                     </div>
 
                     ${currentTenantsWithRooms.length > 0 ? `
