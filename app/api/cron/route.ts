@@ -7,6 +7,7 @@ import Tenant from "@/models/tenant";
 import Rent from "@/models/rent";
 import { sendEmail } from "@/lib/email";
 import { calculateDays } from "@/utils/tenant";
+import { PAID, PENDING, RENT_STATUS } from "@/types/rent";
 
 interface EmailResult {
   userId: string;
@@ -82,13 +83,13 @@ export async function GET() {
           });
 
           // Calculate rent statistics
-          const paidRents = rents.filter(r => r.status === "paid");
-          const unpaidRents = rents.filter(r => r.status === "pending");
+          const paidRents = rents.filter(r => RENT_STATUS[r.status] === PAID);
+          const unpaidRents = rents.filter(r => RENT_STATUS[r.status] === PENDING);
           const paidRentCount = paidRents.length;
           const unpaidRentCount = unpaidRents.length;
 
-          const currentMonthPaidRents = currentMonthRents.filter(r => r.status === "paid");
-          const currentMonthUnpaidRents = currentMonthRents.filter(r => r.status === "pending");
+          const currentMonthPaidRents = currentMonthRents.filter(r => RENT_STATUS[r.status] === PAID);
+          const currentMonthUnpaidRents = currentMonthRents.filter(r => RENT_STATUS[r.status] === PENDING);
           const currentMonthPaidRentCount = currentMonthPaidRents.length;
           const currentMonthUnpaidRentCount = currentMonthUnpaidRents.length;
 
