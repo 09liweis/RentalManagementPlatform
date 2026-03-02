@@ -72,14 +72,31 @@ export async function GET() {
           const rents = await Rent.find({ tenant: { $in: tenantIds } });
           const rentCount = rents.length;
 
+          // Get current month's rents
+          const now = new Date();
+          const currentMonth = now.getMonth();
+          const currentYear = now.getFullYear();
+          const currentMonthRents = rents.filter(r => {
+            const rentDate = new Date(r.startDate);
+            return rentDate.getMonth() === currentMonth && rentDate.getFullYear() === currentYear;
+          });
+
           // Calculate rent statistics
           const paidRents = rents.filter(r => r.status === "paid");
           const unpaidRents = rents.filter(r => r.status === "pending");
           const paidRentCount = paidRents.length;
           const unpaidRentCount = unpaidRents.length;
 
+          const currentMonthPaidRents = currentMonthRents.filter(r => r.status === "paid");
+          const currentMonthUnpaidRents = currentMonthRents.filter(r => r.status === "pending");
+          const currentMonthPaidRentCount = currentMonthPaidRents.length;
+          const currentMonthUnpaidRentCount = currentMonthUnpaidRents.length;
+
           const totalIncome = paidRents.reduce((sum, r) => sum + (r.amount || 0), 0);
           const unpaidAmount = unpaidRents.reduce((sum, r) => sum + (r.amount || 0), 0);
+
+          const currentMonthIncome = currentMonthPaidRents.reduce((sum, r) => sum + (r.amount || 0), 0);
+          const currentMonthUnpaidAmount = currentMonthUnpaidRents.reduce((sum, r) => sum + (r.amount || 0), 0);
 
           // Get current tenants with their room details
           const currentTenants = tenants.filter(t => t.isCurrent);
@@ -145,17 +162,35 @@ export async function GET() {
                         <span class="stat-value">${tenantCount}</span>
                       </div>
 
-                      <h3 style="margin-top: 30px;">💰 Rent Statistics</h3>
+                      <h3 style="margin-top: 30px;">💰 This Month's Rent (${now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })})</h3>
+                      <div class="stat-item">
+                        <span class="stat-label">Paid Rents:</span>
+                        <span class="stat-value success-value">${currentMonthPaidRentCount}</span>
+                      </div>
+                      <div class="stat-item">
+                        <span class="stat-label">Pending Rents:</span>
+                        <span class="stat-value warning-value">${currentMonthUnpaidRentCount}</span>
+                      </div>
+                      <div class="stat-item">
+                        <span class="stat-label">This Month Income:</span>
+                        <span class="stat-value success-value">$${currentMonthIncome.toFixed(2)}</span>
+                      </div>
+                      <div class="stat-item">
+                        <span class="stat-label">This Month Unpaid:</span>
+                        <span class="stat-value warning-value">$${currentMonthUnpaidAmount.toFixed(2)}</span>
+                      </div>
+
+                      <h3 style="margin-top: 30px;">💰 All-Time Rent Statistics</h3>
                       <div class="stat-item">
                         <span class="stat-label">Total Rent Records:</span>
                         <span class="stat-value">${rentCount}</span>
                       </div>
                       <div class="stat-item">
-                        <span class="stat-label">Paid Rents:</span>
+                        <span class="stat-label">Total Paid Rents:</span>
                         <span class="stat-value success-value">${paidRentCount}</span>
                       </div>
                       <div class="stat-item">
-                        <span class="stat-label">Pending Rents:</span>
+                        <span class="stat-label">Total Pending Rents:</span>
                         <span class="stat-value warning-value">${unpaidRentCount}</span>
                       </div>
                       <div class="stat-item">
@@ -163,7 +198,7 @@ export async function GET() {
                         <span class="stat-value success-value">$${totalIncome.toFixed(2)}</span>
                       </div>
                       <div class="stat-item">
-                        <span class="stat-label">Unpaid Amount:</span>
+                        <span class="stat-label">Total Unpaid Amount:</span>
                         <span class="stat-value warning-value">$${unpaidAmount.toFixed(2)}</span>
                       </div>
                     </div>
@@ -195,9 +230,9 @@ export async function GET() {
                     <p>This is an automated report sent by our cron job system.</p>
                     <p>You can view more details in your <strong>dashboard</strong>.</p>
 
-                    ${unpaidRentCount > 0 ? `
+                    ${currentMonthUnpaidRentCount > 0 ? `
                       <p style="background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b;">
-                        <strong>⚠️ Action Required:</strong> You have ${unpaidRentCount} unpaid rent record(s) totaling $${unpaidAmount.toFixed(2)}. Please follow up with your tenants.
+                        <strong>⚠️ Action Required:</strong> You have ${currentMonthUnpaidRentCount} unpaid rent record(s) for ${now.toLocaleDateString('en-US', { month: 'long' })} totaling $${currentMonthUnpaidAmount.toFixed(2)}. Please follow up with your tenants.
                       </p>
                     ` : ''}
 
