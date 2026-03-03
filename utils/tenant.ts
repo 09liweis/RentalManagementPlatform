@@ -53,23 +53,41 @@ export function getDuration(rentDays: number): DurationResult {
   const months = Math.floor(remainingDaysAfterYears / 30);
   const days = remainingDaysAfterYears % 30;
 
-  if (years >= 2) {
-    return {
-      value: years,
-      unit: "years",
-      formatted: `${years} year${years !== 1 ? "s" : ""}`,
-    };
-  } else if (months >= 2) {
-    return {
-      value: months,
-      unit: "months",
-      formatted: `${months} month${months !== 1 ? "s" : ""}`,
-    };
-  } else {
-    return {
-      value: days,
-      unit: "days",
-      formatted: `${days} day${days !== 1 ? "s" : ""}`,
-    };
+  // Build formatted string with years, months, and days together
+  const parts: string[] = [];
+
+  if (years > 0) {
+    parts.push(`${years} year${years !== 1 ? "s" : ""}`);
   }
+
+  if (months > 0) {
+    parts.push(`${months} month${months !== 1 ? "s" : ""}`);
+  }
+
+  if (days > 0) {
+    parts.push(`${days} day${days !== 1 ? "s" : ""}`);
+  }
+
+  const formatted = parts.length > 0 ? parts.join(' ') : '0 days';
+
+  // Determine the main unit for sorting/display purposes
+  let mainUnit: "days" | "months" | "years";
+  let mainValue: number;
+
+  if (years > 0) {
+    mainUnit = "years";
+    mainValue = years;
+  } else if (months > 0) {
+    mainUnit = "months";
+    mainValue = months;
+  } else {
+    mainUnit = "days";
+    mainValue = days;
+  }
+
+  return {
+    value: mainValue,
+    unit: mainUnit,
+    formatted,
+  };
 }
