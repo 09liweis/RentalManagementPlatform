@@ -71,7 +71,6 @@ export async function GET() {
           // Get user's rents
           const tenantIds = tenants.map(t => t._id);
           const rents = await Rent.find({ tenant: { $in: tenantIds } });
-          const rentCount = rents.length;
 
           // Get current month's rents
           const now = new Date();
@@ -81,10 +80,6 @@ export async function GET() {
             const rentDate = new Date(r.startDate);
             return rentDate.getMonth() === currentMonth && rentDate.getFullYear() === currentYear;
           });
-
-          // Calculate rent statistics
-          const paidRents = rents.filter(r => RENT_STATUS[r.status] === PAID);
-          const unpaidRents = rents.filter(r => RENT_STATUS[r.status] === PENDING);
 
           const currentMonthPaidRents = currentMonthRents.filter(r => RENT_STATUS[r.status] === PAID);
           const currentMonthUnpaidRents = currentMonthRents.filter(r => RENT_STATUS[r.status] === PENDING);
