@@ -85,16 +85,11 @@ export async function GET() {
           // Calculate rent statistics
           const paidRents = rents.filter(r => RENT_STATUS[r.status] === PAID);
           const unpaidRents = rents.filter(r => RENT_STATUS[r.status] === PENDING);
-          const paidRentCount = paidRents.length;
-          const unpaidRentCount = unpaidRents.length;
 
           const currentMonthPaidRents = currentMonthRents.filter(r => RENT_STATUS[r.status] === PAID);
           const currentMonthUnpaidRents = currentMonthRents.filter(r => RENT_STATUS[r.status] === PENDING);
           const currentMonthPaidRentCount = currentMonthPaidRents.length;
           const currentMonthUnpaidRentCount = currentMonthUnpaidRents.length;
-
-          const totalIncome = paidRents.reduce((sum, r) => sum + (r.amount || 0), 0);
-          const unpaidAmount = unpaidRents.reduce((sum, r) => sum + (r.amount || 0), 0);
 
           const currentMonthIncome = currentMonthPaidRents.reduce((sum, r) => sum + (r.amount || 0), 0);
           const currentMonthUnpaidAmount = currentMonthUnpaidRents.reduce((sum, r) => sum + (r.amount || 0), 0);
