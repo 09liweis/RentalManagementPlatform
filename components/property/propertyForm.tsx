@@ -18,7 +18,7 @@ import FormTitle from "../common/form/FormTitle";
 import useAppStore from "@/stores/appStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { PROPERTY_LIST } from "@/constants/apis";
+import { PROPERTY_DETAIL, PROPERTY_LIST } from "@/constants/apis";
 
 interface PropertyFormProps {
   showPropertyForm: Function;
@@ -56,7 +56,7 @@ export default function PropertyForm({
     e.preventDefault();
     const method = curProperty._id ? "PUT" : "POST";
     const url = curProperty._id
-      ? `/api/properties/${curProperty._id}`
+      ? PROPERTY_DETAIL(curProperty._id)
       : PROPERTY_LIST;
     const { msg, property, err } = await fetchData({ url, method, body: curProperty });
     showPropertyForm(false);
