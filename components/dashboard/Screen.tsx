@@ -14,7 +14,7 @@ import usePropertyStore from "@/stores/propertyStore";
 import Properties from "./Properties";
 import RoomList from "../room/RoomList";
 import RoomForm from "../room/RoomForm";
-import { PROPERTY_ROOMS } from "@/constants/apis";
+import { PROPERTY_ROOMS, ROOM_DETAIL } from "@/constants/apis";
 
 interface ScreenProps {
   propertyId?: string;
@@ -77,7 +77,7 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
     e.preventDefault();
     const method = room?._id ? "PUT" : "POST";
     const url = room?._id
-      ? `/api/rooms/${room._id}`
+      ? ROOM_DETAIL(room._id)
       : PROPERTY_ROOMS(propertyId!);
     const { err, msg } = await fetchData({
       url,

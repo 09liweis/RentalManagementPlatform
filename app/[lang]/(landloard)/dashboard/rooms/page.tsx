@@ -8,6 +8,7 @@ import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import RoomList from "@/components/room/RoomList";
+import { ROOM_LIST } from "@/constants/apis";
 
 export default function Rooms() {
   const {t} = useAppStore();
@@ -17,7 +18,7 @@ export default function Rooms() {
 
   const fetchRooms = async() => {
     setLoading(true);
-    const {rooms, err} = await fetchData({url:'/api/rooms'});
+    const {rooms, err} = await fetchData({url: ROOM_LIST});
     setLoading(false);
     if (err) {
       showToast(err);
