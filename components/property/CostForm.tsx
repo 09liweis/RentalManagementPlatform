@@ -16,6 +16,7 @@ import FormTitle from "@/components/common/form/FormTitle";
 import FormWrapper from "@/components/common/form/FormWrapper";
 import { Cost, COST_TP_ARRAY } from "@/types/cost";
 import useAppStore from "@/stores/appStore";
+import { PROPERTY_COSTS } from "@/constants/apis";
 
 interface PropertyFormProps {
   showCostForm: Function;
@@ -36,7 +37,7 @@ export default function CostForm({ showCostForm, cost }: PropertyFormProps) {
     const method = curCost?._id ? "PUT" : "POST";
     const url = curCost?._id
       ? `/api/properties/${propertyId}/costs/${curCost?._id}`
-      : `/api/properties/${propertyId}/costs`;
+      : PROPERTY_COSTS(propertyId!);
     const { msg, err } = await fetchData({ url, method, body: curCost });
     showCostForm(false);
     showToast(err || msg);

@@ -7,3 +7,4 @@ export const PROPERTY_LIST = '/api/properties';
 export const PROPERTY_DETAIL = (propId: string) => `/api/properties/${propId}`;
 
 export const PROPERTY_ROOMS = (propId: string) => `/api/properties/${propId}/rooms`;
+export const PROPERTY_COSTS = (propId: string) => `/api/properties/${propId}/costs`;
