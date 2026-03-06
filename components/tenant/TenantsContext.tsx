@@ -42,6 +42,7 @@ export default function TenantsContext({ curProperty, curRoom }: TenantsContextP
               <RoomInfoCard
                 name={curRoom.name || ""}
                 tpTxt={curRoom.tpTxt || ""}
+                stat={curRoom.stat}
               />
             )}
           </div>

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 interface RoomInfoCardProps {
   name: string;
   tpTxt: string;
+  stat?: Record<number, number>;
 }
 
 const cardVariants = {
@@ -25,7 +26,7 @@ const cardVariants = {
   },
 };
 
-export default function RoomInfoCard({ name, tpTxt }: RoomInfoCardProps) {
+export default function RoomInfoCard({ name, tpTxt, stat }: RoomInfoCardProps) {
   return (
     <motion.div
       className="relative group"
@@ -61,6 +62,19 @@ export default function RoomInfoCard({ name, tpTxt }: RoomInfoCardProps) {
             <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
               {tpTxt}
             </div>
+            {stat && Object.keys(stat).length > 0 && (
+              <div className="mt-3 space-y-1">
+                <p className="text-xs text-gray-500 font-medium">Yearly Rent Income:</p>
+                {Object.entries(stat)
+                  .sort(([a], [b]) => Number(b) - Number(a))
+                  .map(([year, amount]) => (
+                    <div key={year} className="flex items-center justify-between text-sm">
+                      <span className="text-gray-600">{year}</span>
+                      <span className="font-medium text-emerald-600">${amount.toLocaleString()}</span>
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
