@@ -7,6 +7,7 @@ export interface Room {
   tp?: string;
   tpTxt?: string;
   tenant?: any;
+  stat?: {[key:number]:number}
 }
 
 interface ROOM_TP_MAP_TYPE {
