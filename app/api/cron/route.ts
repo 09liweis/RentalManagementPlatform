@@ -46,6 +46,43 @@ export async function GET() {
       }
     }
 
+    // Update all rooms' yearly rent statistics
+    const allRooms = await Room.find();
+    const updatedRooms = [];
+
+    for (const room of allRooms) {
+      // Get all rents for this room
+      const roomRents = await Rent.find({ room: room._id });
+
+      // Calculate total rent by year
+      const yearlyRent: Record<number, number> = {};
+
+      for (const rent of roomRents) {
+        if (rent.amount) {
+          const rentDate = new Date(rent.startDate);
+          const year = rentDate.getFullYear();
+
+          if (!yearlyRent[year]) {
+            yearlyRent[year] = 0;
+          }
+          yearlyRent[year] += rent.amount;
+        }
+      }
+
+      // Check if stat needs to be updated
+      const currentStat = room.stat || {};
+      const statChanged = JSON.stringify(currentStat) !== JSON.stringify(yearlyRent);
+
+      if (statChanged) {
+        room.stat = yearlyRent;
+        await room.save();
+        updatedRooms.push({
+          id: room._id,
+          yearlyRent,
+        });
+      }
+    }
+
     const users = await User.find({isAdmin:true});
 
     const emailResults: EmailResult[] = [];
@@ -251,6 +288,11 @@ export async function GET() {
         totalTenants: allTenants.length,
         updatedTenants: updatedTenants.length,
         updates: updatedTenants,
+      },
+      roomStats: {
+        totalRooms: allRooms.length,
+        updatedRooms: updatedRooms.length,
+        updates: updatedRooms,
       },
       emailStats: {
         totalUsers: users.length,

@@ -9,6 +9,9 @@ const roomSchema = new mongoose.Schema({
   },
   tp: {
     type: String
+  },
+  stat: {
+    type: Object
   }
 });
 
