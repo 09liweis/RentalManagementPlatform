@@ -8,7 +8,7 @@ export const decodeToken = (request: NextRequest) => {
     return null;
   }
   const tokenSecret = process.env.TOKEN_SECRET!;
-  const decoded = jwt.verify(authToken, tokenSecret) as { userId: string };
+  const decoded = jwt.verify(authToken, tokenSecret) as { userId: string, email?: string };
   return decoded;
 };
 

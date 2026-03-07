@@ -1,10 +1,10 @@
 // api/sendemail/resetdata/route.ts
 
 import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs'; 
 import dbConnect from '../../../config/db';
 import User from '../../../models/user';
+import { decodeToken } from '@/utils/jwt';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     let decoded;
     try {
       // 验证 token 并检查其有效期
-      decoded = jwt.verify(token, JWT_SECRET) as { email: string };
+      decoded = decodeToken(token);
     } catch (error) {
       return NextResponse.json({ message: 'Invalid or expired token' }, { status: 400 });
     }
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     await dbConnect();
 
     // 使用 email 查找用户
-    const user = await User.findOne({ email: decoded.email });
+    const user = await User.findOne({ email: decoded?.email });
 
     if (!user) {
       return NextResponse.json({ message: 'User not found' }, { status: 400 });
