@@ -53,7 +53,7 @@ A professional, full-stack rental property management system designed for landlo
 | **Mongoose** | 8.21.0 | ODM for MongoDB |
 | **JWT** | 9.0.2 | Authentication tokens |
 | **bcryptjs** | 2.4.3 | Password hashing |
-| **Resend** | 4.0.0 | Email service (Brevo) |
+| **Brevo** | 4.0.0 | Email service (Brevo) |
 | **httpsms** | 0.0.4 | SMS service |
 
 ### Development Tools
