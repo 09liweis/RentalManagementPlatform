@@ -10,6 +10,9 @@ const propertySchema = new mongoose.Schema({
   ptype:{//property type: 1: house, 2: apartment, 3: condo etc
     type:String,
   },
+  stat: {
+    type: Object
+  },
   address: {
     type: String,
   },
