@@ -1,4 +1,5 @@
 import { showToast } from "@/components/common/Toast";
+import { PROPERTY_LIST, ROOM_TENANTS } from "@/constants/apis";
 import { Cost } from "@/types/cost";
 import { EMPTY_PROPERTY, Property } from "@/types/property";
 import { Rent } from "@/types/rent";
@@ -70,7 +71,7 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
   rents: [],
   propertiesFetched: false,
   fetchProperties: async () => {
-    const { properties, err } = await fetchData({ url: "/api/properties" });
+    const { properties, err } = await fetchData({ url: PROPERTY_LIST });
     if (err) {
       showToast(err);
     } else {
@@ -88,7 +89,7 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
       ? `/api/properties/${propertyId}?date=${selectDate || ""}`
       : `/api/overview?date=${selectDate || ""}`;
     if (roomId) {
-      apiUrl = `/api/rooms/${roomId}/tenants`;
+      apiUrl = ROOM_TENANTS(roomId);
     } else if (tenantId) {
       apiUrl = `/api/tenants/${tenantId}/rents`;
     }

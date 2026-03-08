@@ -12,3 +12,5 @@ export const PROPERTY_COSTS = (propId: string) => `/api/properties/${propId}/cos
 export const ROOM_LIST = '/api/rooms';
 
 export const ROOM_DETAIL = (roomId: string) => `/api/rooms/${roomId}`;
+
+export const ROOM_TENANTS = (roomId: string) => `/api/rooms/${roomId}/tenants`;
