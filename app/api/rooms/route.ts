@@ -5,6 +5,7 @@ import Property from "@/models/property";
 import connect from "@/config/db";
 import Tenant from "@/models/tenant";
 import { ROOM_TP_MAP } from "@/types/room";
+import { sendResponse } from "@/utils/http";
 
 
 export async function GET(request: NextRequest) {
@@ -37,8 +38,8 @@ export async function GET(request: NextRequest) {
         _id,name,tp,property: propertyMap[property],tenant:tenantMap[_id],tpTxt: ROOM_TP_MAP[tp],
       }
     });
-    return NextResponse.json({ rooms }, { status: 200 });
+    return sendResponse({response: {rooms}, status: 200});
   } catch (err) {
-    return NextResponse.json({ err }, { status: 500 });
+    return sendResponse({ response: { err }, status: 500 });
   }
 }
