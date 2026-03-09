@@ -4,6 +4,7 @@ import Room from "@/models/room";
 import Property from "@/models/property";
 import connect from "@/config/db";
 import Tenant from "@/models/tenant";
+import { ROOM_TP_MAP } from "@/types/room";
 
 
 export async function GET(request: NextRequest) {
@@ -33,7 +34,7 @@ export async function GET(request: NextRequest) {
 
     const rooms = roomsResult.map(({_id,name,tp,property})=> {
       return {
-        _id,name,tp,property: propertyMap[property],tenant:tenantMap[_id]
+        _id,name,tp,property: propertyMap[property],tenant:tenantMap[_id],tpTxt: ROOM_TP_MAP[tp],
       }
     });
     return NextResponse.json({ rooms }, { status: 200 });
