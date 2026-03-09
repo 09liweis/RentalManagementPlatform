@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
 
     const refreshToken = generateToken(verified.userId);
 
-    return NextResponse.json({ user, refreshToken }, { status: 200 });
+    return sendResponse({ response: { user, refreshToken }, status: 200 });
   } catch (err) {
     return sendResponse({ response: { err }, status: 500 });
   }
