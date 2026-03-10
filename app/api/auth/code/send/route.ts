@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
       // For security, still return success even if user doesn't exist
       // This prevents email enumeration attacks
       return NextResponse.json(
-        { message: "If the email exists, a login code has been sent" },
-        { status: 200 }
+        { message: "We can not find you here, please check your email." },
+        { status: 404 }
       );
     }
 
