@@ -59,6 +59,7 @@ export const getStats = async ({
       name: p.name,
       address: p.address,
       ptype: p.ptype,
+      stat: p.stat,
       ptypeTxt: PROPERTY_PTYPE_MAP[p.ptype] || p.ptype,
     };
   });

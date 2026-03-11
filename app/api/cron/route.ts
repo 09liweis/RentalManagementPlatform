@@ -83,6 +83,43 @@ export async function GET() {
       }
     }
 
+    // Update all properties' yearly rent statistics by fetching from rent model
+    const allProperties = await Property.find();
+    const updatedProperties = [];
+
+    for (const property of allProperties) {
+      // Get all rents directly by property from rent model
+      const propertyRents = await Rent.find({ property: property._id });
+
+      // Calculate total rent by year from rents
+      const yearlyRent: Record<number, number> = {};
+
+      for (const rent of propertyRents) {
+        if (rent.amount) {
+          const rentDate = new Date(rent.startDate);
+          const year = rentDate.getFullYear();
+
+          if (!yearlyRent[year]) {
+            yearlyRent[year] = 0;
+          }
+          yearlyRent[year] += rent.amount;
+        }
+      }
+
+      // Check if stat needs to be updated
+      const currentStat = property.stat || {};
+      const statChanged = JSON.stringify(currentStat) !== JSON.stringify(yearlyRent);
+
+      if (statChanged) {
+        property.stat = yearlyRent;
+        await property.save();
+        updatedProperties.push({
+          id: property._id,
+          yearlyRent,
+        });
+      }
+    }
+
     const users = await User.find({isAdmin:true});
 
     const emailResults: EmailResult[] = [];
@@ -293,6 +330,11 @@ export async function GET() {
         totalRooms: allRooms.length,
         updatedRooms: updatedRooms.length,
         updates: updatedRooms,
+      },
+      propertyStats: {
+        totalProperties: allProperties.length,
+        updatedProperties: updatedProperties.length,
+        updates: updatedProperties,
       },
       emailStats: {
         totalUsers: users.length,
