@@ -1,4 +1,4 @@
-import Screen from "@/components/dashboard/Screen";
+import PropertyDetail from "@/components/property/PropertyDetail";
 
 export default async function PropertyPage(
   props: {
@@ -7,5 +7,5 @@ export default async function PropertyPage(
 ) {
   const params = await props.params;
   const {propertyId} = params;
-  return <Screen propertyId={propertyId} />
+  return <PropertyDetail propertyId={propertyId} />
 }
