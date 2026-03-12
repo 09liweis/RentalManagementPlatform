@@ -4,14 +4,15 @@ import { motion } from "framer-motion";
 import Button from "@/components/common/Button";
 import { Cost } from "@/types/cost";
 import { showToast } from "@/components/common/Toast";
+import useAppStore from "@/stores/appStore";
 
 interface CostListProps {
   costs: Cost[];
   onAddCost: () => void;
-  t: (key: string) => string;
 }
 
-export default function CostList({ costs, onAddCost, t }: CostListProps) {
+export default function CostList({ costs, onAddCost }: CostListProps) {
+  const {t} = useAppStore();
   return (
     <motion.section
       className="mt-8 pt-4 border-t-4 border-purple-700"

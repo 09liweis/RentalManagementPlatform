@@ -116,7 +116,6 @@ export default function Screen({ propertyId, roomId, tenantId }: ScreenProps) {
           <CostList
             costs={costs}
             onAddCost={() => setShowCostForm(true)}
-            t={t}
           />
         </motion.div>
       )}
