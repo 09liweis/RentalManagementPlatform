@@ -4,7 +4,6 @@ import { fetchData } from "@/utils/http";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Room } from "@/types/room";
-import Button from "@/components/common/Button";
 import { showToast } from "@/components/common/Toast";
 import RentCards from "@/components/dashboard/RentCards";
 import CostForm from "@/components/property/CostForm";
