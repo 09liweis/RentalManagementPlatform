@@ -1,6 +1,7 @@
 import { Property } from "@/types/property";
 import Button from "../common/Button";
 import LinkText from "../common/LinkText";
+import YearlyRentIncome from "../common/YearlyRentIncome";
 import useAppStore from "@/stores/appStore";
 import usePropertyStore from "@/stores/propertyStore";
 
@@ -74,6 +75,7 @@ export default function PropertyCard({
             </svg>
             <span className="text-sm max-w-xs">{p.address}</span>
           </div>
+          <YearlyRentIncome stat={p.stat} />
         </div>
         {(isSelected || !hasSelected) && handlePropertyEdit && (
           <Button

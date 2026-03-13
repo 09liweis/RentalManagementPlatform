@@ -5,7 +5,8 @@ export interface Property {
   ptypeTxt?: string,
   address?:string,
   loc?:Array<number>,
-  mapbox_id?:string
+  mapbox_id?:string,
+  stat?: Record<number, number>
 }
 
 export const EMPTY_PROPERTY: Property = {
