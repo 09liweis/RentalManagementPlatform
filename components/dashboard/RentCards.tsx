@@ -99,12 +99,14 @@ export default function RentCards({
         animate="show"
         variants={inputVariants}
       >
+        <div className="max-w-xs">
         <Input
           type="month"
           value={rentStats.date || ""}
           placeholder={""}
           onChange={(e) => setDate(e.target.value)}
         />
+        </div>
       </motion.div>
       <motion.section 
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4"
