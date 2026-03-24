@@ -141,6 +141,8 @@ const usePropertyStore = create<PropertyState>((set, get) => ({
     const curShowRentForm = get()?.showRentForm;
     if (curShowRentForm) {
       set({ curRent: { status: "1", amount: get()?.curTenant.rent || get()?.curTenant.deposit } });
+    } else {
+      set({ curRent: { status: "1", amount: ''}});
     }
     set({ showRentForm: !curShowRentForm });
   },
