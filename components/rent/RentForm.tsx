@@ -13,6 +13,10 @@ export default function RentForm() {
   const { t } = useAppStore();
   const { curRent, setCurRent, curTenant, handleRentSubmit, setShowRentForm } =
     usePropertyStore();
+  
+  if (!curRent.amount) {
+    setCurRent({...curRent,amount: curTenant.rent || curTenant.deposit || 0})
+  }
 
   const RENT_FIELDS = [
     {
@@ -20,23 +24,21 @@ export default function RentForm() {
       name: "amount",
       required: true,
       inputType: "number",
-      value: curTenant.rent || curTenant.deposit || 0
     },
     { placeholder: "Date", name: "startDate", inputType: "date" },
   ];
-  console.log(RENT_FIELDS);
 
   return (
     <FormBackdrop>
       <FormWrapper onSubmit={handleRentSubmit}>
         <FormTitle title="Add New Rent" />
         {RENT_FIELDS.map(
-          ({ placeholder, required = false, inputType, name, value }) => (
+          ({ placeholder, required = false, inputType, name }) => (
             <Input
               key={name}
               required={required}
               placeholder={placeholder}
-              value={curRent[name] || value}
+              value={curRent[name]}
               type={inputType}
               onChange={(e) =>
                 setCurRent({ ...curRent, [name]: e.target.value })
