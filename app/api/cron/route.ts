@@ -190,7 +190,7 @@ export async function GET() {
                 <style>
                   body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
                   .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                  .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; color: white; }
+                  .header { background: #667eea; padding: 30px; text-align: center; color: white; }
                   .content { background: #f9f9f9; padding: 30px; border-radius: 8px; margin-top: 20px; }
                   .stats { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
                   .stat-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
