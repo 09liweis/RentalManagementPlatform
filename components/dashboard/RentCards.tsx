@@ -115,7 +115,7 @@ export default function RentCards({
         animate="show"
       >
         <motion.article 
-          className="bg-yellow-100 shadow-md rounded-lg p-3 hover:shadow-lg transition-all"
+          className="bg-yellow-100 shadow-md rounded p-3 hover:shadow-lg transition-all"
           variants={cardVariants}
           whileHover={{ scale: 1.02 }}
         >
@@ -130,7 +130,7 @@ export default function RentCards({
           </motion.p>
         </motion.article>
         <motion.article 
-          className="bg-green-100 shadow-md rounded-lg p-3 hover:shadow-lg transition-all"
+          className="bg-green-100 shadow-md rounded p-3 hover:shadow-lg transition-all"
           variants={cardVariants}
           whileHover={{ scale: 1.02 }}
         >
@@ -145,7 +145,7 @@ export default function RentCards({
           </motion.p>
         </motion.article>
         <motion.article 
-          className="bg-red-100 shadow-md rounded-lg p-3 hover:shadow-lg transition-all"
+          className="bg-red-100 shadow-md rounded p-3 hover:shadow-lg transition-all"
           variants={cardVariants}
           whileHover={{ scale: 1.02 }}
         >
@@ -160,7 +160,7 @@ export default function RentCards({
           </motion.p>
         </motion.article>
         <motion.article 
-          className="bg-red-200 shadow-md rounded-lg p-3 hover:shadow-lg transition-all"
+          className="bg-red-200 shadow-md rounded p-3 hover:shadow-lg transition-all"
           variants={cardVariants}
           whileHover={{ scale: 1.02 }}
         >
