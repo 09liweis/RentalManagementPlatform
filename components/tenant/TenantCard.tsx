@@ -36,7 +36,6 @@ export default function TenantCard({
   const { t } = useAppStore();
   const { curTenant } = usePropertyStore();
   const isCurrent = curTenant?._id == tenant._id;
-  const hasCurTenant = curTenant?._id;
 
   const duration = useMemo(() => {
     return getDuration(tenant.rentDays || 0);
