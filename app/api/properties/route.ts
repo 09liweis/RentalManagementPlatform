@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     const user = await User.findById(verified.userId);
     if (user.plan === 'free') {
       const propertyCount = await Property.countDocuments({ user: verified.userId });
-      if (propertyCount >= 1) {
+      if (propertyCount > 3) {
         return NextResponse.json(
           { err: "Free plan users can only have one property. Upgrade to add more." },
           { status: 403 }
