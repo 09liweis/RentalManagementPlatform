@@ -83,13 +83,14 @@ export default function Properties() {
         </div>
         <Button
           className="whitespace-nowrap"
-          // onClick={() => {
-          //   if (loginUser?.plan === 'free' && properties.length >= 1) {
-          //     showToast("Free plan users can only have one property. Upgrade to add more.");
-          //   } else {
-          //     setShowPropertyForm(true);
-          //   }
-          // }}
+          onClick={() => {
+            // if (loginUser?.plan === 'free' && properties.length >= 1) {
+            //   showToast("Free plan users can only have one property. Upgrade to add more.");
+            // } else {
+            //   setShowPropertyForm(true);
+            // }
+            setShowPropertyForm(true);
+          }}
         >
           {t("dashboard.AddNew")}
         </Button>
