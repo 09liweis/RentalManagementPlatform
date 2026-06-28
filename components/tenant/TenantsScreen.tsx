@@ -82,7 +82,7 @@ export default function TenantsScreen({ roomId }: { roomId: string }) {
   const setCurrentTenant = async (tenant: Tenant) => {
     const { err, msg } = await fetchData({
       url: `/api/tenants/${tenant._id}`,
-      body: { ...tenant, isCurrent: true },
+      body: { ...tenant, isCurrent: !tenant.isCurrent },
       method: "PUT",
     });
     showToast(err || msg);
