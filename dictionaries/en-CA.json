@@ -41,6 +41,13 @@
     "Room": "Room",
     "Add": "Add",
     "BackToProperty": "Back to Property",
-    "RoomDetails": "Room Details"
+    "RoomDetails": "Room Details",
+    "Name": "Name",
+    "Deposit": "Deposit",
+    "Rent": "Rent",
+    "StartDate": "Start Date",
+    "EndDate": "End Date",
+    "NumberOfPeople": "Number of People",
+    "Note": "Note"
   }
 }

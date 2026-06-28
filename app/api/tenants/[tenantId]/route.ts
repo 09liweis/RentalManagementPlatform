@@ -35,7 +35,7 @@ export async function PUT(request: NextRequest, props: ParamsProps) {
   try {
     await connect();
 
-    const { name, startDate, endDate, deposit, isCurrent, rent } = await request.json();
+    const { name, startDate, endDate, deposit, isCurrent, rent, numberOfPeople, note } = await request.json();
     const tenant = await Tenant.findOne({ _id: tenantId });
 
     await Tenant.updateOne(
@@ -50,6 +50,8 @@ export async function PUT(request: NextRequest, props: ParamsProps) {
     tenant.endDate = endDate;
     tenant.isCurrent = isCurrent;
     tenant.rent = rent;
+    tenant.numberOfPeople = numberOfPeople;
+    tenant.note = note;
 
     // Calculate rentDays
     const rentDays = calculateDays({

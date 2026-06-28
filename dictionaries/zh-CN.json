@@ -41,6 +41,13 @@
     "Room": "房间",
     "Add": "添加",
     "BackToProperty": "返回物业",
-    "RoomDetails": "房间详情"
+    "RoomDetails": "房间详情",
+    "Name": "姓名",
+    "Deposit": "押金",
+    "Rent": "租金",
+    "StartDate": "开始日期",
+    "EndDate": "结束日期",
+    "NumberOfPeople": "人数",
+    "Note": "备注"
   }
 }

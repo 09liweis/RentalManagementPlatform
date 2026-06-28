@@ -52,7 +52,7 @@ export async function POST(request: NextRequest, props: ParamsProps) {
 
   try {
     await connect();
-    const { name, deposit, startDate, endDate } = await request.json();
+    const { name, deposit, rent, startDate, endDate, numberOfPeople, note } = await request.json();
     if (!name) return NextResponse.json({ err: "Name is required" });
 
     const room = await Room.findOne({_id:roomId});
@@ -60,8 +60,11 @@ export async function POST(request: NextRequest, props: ParamsProps) {
     const newTenant = new Tenant({
       name,
       deposit,
+      rent,
       startDate,
       endDate,
+      numberOfPeople,
+      note,
       room: roomId,
       landlord: verified.userId,
       property: room.property

@@ -16,6 +16,8 @@ const tenantSchema = new mongoose.Schema({
   },
   deposit: Number,
   rent: Number,
+  numberOfPeople: Number,
+  note: String,
   totalRent: Number,
   startDate: {
     type: String,
