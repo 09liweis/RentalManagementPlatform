@@ -164,6 +164,27 @@ export default function TenantCard({
           </div>
         </motion.div>
 
+        {(tenant.note || tenant.numberOfPeople != null) && (
+          <motion.div
+            className="text-sm text-gray-600 bg-gray-50 rounded-lg p-2.5 space-y-2"
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            {tenant.numberOfPeople != null && (
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-blue-500 rounded-full" />
+                {tenant.numberOfPeople} {t("dashboard.People") || "People"}
+              </div>
+            )}
+            {tenant.note && (
+              <div className="flex items-start gap-2">
+                <span className="w-2 h-2 bg-amber-500 rounded-full mt-1.5 shrink-0" />
+                <span className="text-gray-500 italic">{tenant.note}</span>
+              </div>
+            )}
+          </motion.div>
+        )}
+
         <div className="flex gap-2">
           {onEditClick && (
             <motion.button
