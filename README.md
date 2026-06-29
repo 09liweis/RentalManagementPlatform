@@ -492,6 +492,11 @@ Routes are prefixed with locale: `/en-CA/dashboard`, `/zh-CN/dashboard`
 - [ ] Click to generate next month rent
 - [ ] Chart bar for monthly total rent
 - [ ] Calendar to show rooms availability
+- [x] In tenant form, add number of people/notes
+- [ ] create property address and type not saved
+- [ ] update form UI, save/cancle switch
+- [x] add customization cost category
+- [ ] bulk add rooms and rents
 
 ## License
 
