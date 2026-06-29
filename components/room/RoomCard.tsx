@@ -87,7 +87,7 @@ export default function RoomCard({ room, handleEditRoom }: any) {
         <LinkText
           href={`/dashboard/rooms/${room._id}`}
         >{room?.name || ""}</LinkText>
-        {(isSelected || !hasSelected) && handleEditRoom &&
+        {handleEditRoom &&
         <Button
           buttonType="primary"
           outline={true}
