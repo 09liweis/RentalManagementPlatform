@@ -32,7 +32,7 @@ export async function GET(request: NextRequest, props: ParamsProps) {
 export async function POST(request: NextRequest, props:ParamsProps) {
   const params = await props.params;
 
-  const { date, amount, tp } = await request.json();
+  const { date, amount, tp, cusTp } = await request.json();
 
   const verified = decodeToken(request);
   if (!verified) {
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest, props:ParamsProps) {
 
   try {
     await connect();
-    const newCost = new Cost({ amount, tp,  date, property: params.propertyId, user:verified.userId });
+    const newCost = new Cost({ amount, tp, date, cusTp, property: params.propertyId, user:verified.userId });
   
     await newCost.save();
     return NextResponse.json({ msg: "added" }, { status: 200 });
@@ -60,11 +60,12 @@ export async function PUT(request: NextRequest, props: ParamsProps) {
 
   try {
     await connect();
-    const { date, amount, tp, _id } = await request.json();
+    const { date, amount, tp, cusTp, _id } = await request.json();
     const updateCost = await Cost.findOne({ _id });
     updateCost.date = date;
     updateCost.amount = amount;
     updateCost.tp = tp;
+    updateCost.cusTp = cusTp;
 
     await updateCost.save();
     return NextResponse.json({ msg: "updated" }, { status: 200 });

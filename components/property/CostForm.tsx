@@ -70,6 +70,12 @@ export default function CostForm({ showCostForm, cost }: PropertyFormProps) {
           options={COST_TP_ARRAY}
           handleSelect={(value) => setCurCost({ ...curCost, tp: value })}
         />
+        <Input
+          type="text"
+          placeholder="Custom Type"
+          value={curCost?.cusTp || ""}
+          onChange={(e) => setCurCost({ ...curCost, cusTp: e.target.value })}
+        />
         <div className="flex justify-between">
           <Button type="submit">{t(`dashboard.Add`)}</Button>
           <Button onClick={() => showCostForm(false)} buttonType="danger">

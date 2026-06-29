@@ -57,7 +57,7 @@ export default function CostList({ costs, onAddCost }: CostListProps) {
                 <div className="col-span-3 flex items-center">
                   <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center mr-2">
                     <span className="text-purple-600 text-xs font-bold">
-                      {(t(cost.tpTxt || "").charAt(0) || "C").toUpperCase()}
+                      {cost.cusTp || (t(cost.tpTxt || "").charAt(0) || "C").toUpperCase()}
                     </span>
                   </div>
                   <span className="font-medium">{t(cost.tpTxt || "")}</span>

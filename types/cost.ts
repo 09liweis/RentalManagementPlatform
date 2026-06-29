@@ -6,6 +6,7 @@ export interface Cost {
   tpTxt?:string;
   user?:string;
   property?:string;
+  cusTp?:string;
 } 
 
 interface COST_TP_MAP_TYPE {

@@ -99,6 +99,7 @@ export const getStats = async ({
       amount: cost.amount,
       date: cost.date,
       tp: cost.tp,
+      cusTp: cost.cusTp,
       tpTxt: COST_TP_MAP[cost.tp] || cost.tp,
     };
   });
