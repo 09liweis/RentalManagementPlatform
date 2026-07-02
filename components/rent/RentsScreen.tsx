@@ -5,9 +5,9 @@ import Button from "@/components/common/Button";
 import { useEffect, useState } from "react";
 import usePropertyStore from "@/stores/propertyStore";
 import RentForm from "@/components/rent/RentForm";
+import RentTable from "@/components/rent/RentTable";
 import useAppStore from "@/stores/appStore";
 import LinkText from "@/components/common/LinkText";
-import RentCard from "@/components/rent/RentCard";
 import { motion } from "framer-motion";
 import TenantCard from "../tenant/TenantCard";
 import RoomCard from "../room/RoomCard";
@@ -111,28 +111,16 @@ export default function RentsScreen({ tenantId }: { tenantId: string }) {
             </div>
 
             <LoadingSection loading={loading}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {rents.map((rent, index) => (
-                  <motion.div
-                    key={rent._id}
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="show"
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <RentCard
-                      rent={rent}
-                      handleClick={() => {
-                        setShowRentForm();
-                        setCurRent(rent);
-                      }}
-                      handleDeleteRent={() =>
-                        handleDeleteRent({ tenantId, rentId: rent._id })
-                      }
-                    />
-                  </motion.div>
-                ))}
-              </div>
+              <RentTable
+                rents={rents}
+                onEdit={(rent) => {
+                  setShowRentForm();
+                  setCurRent(rent);
+                }}
+                onDelete={(rent) =>
+                  handleDeleteRent({ tenantId, rentId: rent._id })
+                }
+              />
             </LoadingSection>
           </div>
         </motion.div>
