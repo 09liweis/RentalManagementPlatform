@@ -7,6 +7,10 @@ export interface Room {
   tp?: string;
   tpTxt?: string;
   tenant?: any;
+  rent?: {
+    amount?: number;
+    status?: string;
+  };
   stat?: {[key:number]:number}
 }
 
