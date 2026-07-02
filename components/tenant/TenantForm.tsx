@@ -17,6 +17,7 @@ const tenantFields = [
     field: "numberOfPeople",
     inputType: "number",
     placeholder: "dashboard.NumberOfPeople",
+    value: 1
   },
   { field: "startDate", inputType: "date", placeholder: "dashboard.StartDate" },
   { field: "endDate", inputType: "date", placeholder: "dashboard.EndDate" },
@@ -35,7 +36,7 @@ export default function TenantForm({
   return (
     <FormBackdrop>
       <FormWrapper onSubmit={handleSubmit}>
-        {tenantFields.map(({ field, inputType, placeholder }) =>
+        {tenantFields.map(({ field, inputType, placeholder, value="" }) =>
           inputType === "textarea" ? (
             <div key={field} className="text-left w-full">
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -45,7 +46,7 @@ export default function TenantForm({
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-400 text-gray-900 transition-all duration-300 min-h-[96px]"
                 rows={3}
                 placeholder={t(placeholder)}
-                value={tenant[field] || ""}
+                value={tenant[field] || value}
                 onChange={(e) => setTenant({ ...tenant, [field]: e.target.value })}
               />
             </div>
@@ -55,7 +56,7 @@ export default function TenantForm({
               key={field}
               type={inputType}
               placeholder={t(placeholder)}
-              value={tenant[field] || ""}
+              value={tenant[field] || value}
               onChange={(e) => setTenant({ ...tenant, [field]: e.target.value })}
             />
           ),
