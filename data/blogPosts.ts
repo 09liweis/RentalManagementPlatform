@@ -3,7 +3,7 @@ import { BlogPost } from "@/types/blog";
 // Sample blog posts data
 export const blogPosts: BlogPost[] = [
   {
-    id: "1",
+    id: "essential-tips-managing-rental-properties",
     title: "5 Essential Tips for Managing Your Rental Properties Efficiently",
     excerpt: "Discover proven strategies to streamline your rental management process and maximize your rental income.",
     content: "Managing rental properties can be challenging, but with the right strategies, you can streamline your operations and maximize returns...",
@@ -15,7 +15,7 @@ export const blogPosts: BlogPost[] = [
     featured: true,
   },
   {
-    id: "2",
+    id: "understanding-tenant-rights-landlords-guide",
     title: "Understanding Tenant Rights: A Complete Guide for Landlords",
     excerpt: "Learn about tenant rights and responsibilities to maintain a fair and legal landlord-tenant relationship.",
     content: "As a landlord, understanding tenant rights is crucial for maintaining a fair and legal relationship...",
@@ -26,7 +26,7 @@ export const blogPosts: BlogPost[] = [
     image: "/blog/tenant-rights.jpg",
   },
   {
-    id: "3",
+    id: "how-to-screen-tenants-effectively",
     title: "How to Screen Tenants Effectively",
     excerpt: "Follow these best practices to find reliable tenants who will pay rent on time and take care of your property.",
     content: "Finding the right tenants is one of the most important aspects of successful property management...",
@@ -37,7 +37,7 @@ export const blogPosts: BlogPost[] = [
     image: "/blog/tenant-screening.jpg",
   },
   {
-    id: "4",
+    id: "rent-collection-strategies-that-work",
     title: "Rent Collection Strategies That Work",
     excerpt: "Implement these proven rent collection methods to reduce late payments and improve cash flow.",
     content: "Consistent rent collection is vital for maintaining healthy cash flow in your rental business...",
@@ -48,7 +48,7 @@ export const blogPosts: BlogPost[] = [
     image: "/blog/rent-collection.jpg",
   },
   {
-    id: "5",
+    id: "property-maintenance-checklist-landlords",
     title: "Property Maintenance Checklist for Landlords",
     excerpt: "A comprehensive guide to keeping your rental properties in top condition throughout the year.",
     content: "Regular maintenance is key to preserving your property value and keeping tenants satisfied...",
@@ -59,7 +59,7 @@ export const blogPosts: BlogPost[] = [
     image: "/blog/maintenance.jpg",
   },
   {
-    id: "6",
+    id: "digital-tools-every-landlord-should-use",
     title: "Digital Tools Every Landlord Should Use",
     excerpt: "Explore the top digital tools and software that can simplify your rental management tasks.",
     content: "In today's digital age, leveraging the right tools can dramatically improve your efficiency...",
