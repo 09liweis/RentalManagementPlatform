@@ -1,12 +1,12 @@
-'use client';
 import { getDictionary } from "../dictionaries";
 import HeroSection from "@/components/home/HeroSection";
-import TrustBadges from "@/components/home/TrustBadges";
-import FeaturesSection from "@/components/home/FeaturesSection";
-import Screenshots from "@/components/home/Screenshots";
-import HowItWorks from "@/components/home/HowItWorks";
-import Testimonials from "@/components/home/Testimonials";
-import CTASection from "@/components/home/CTASection";
+import StatsBar from "@/components/home/StatsBar";
+import FeatureGrid from "@/components/home/FeatureGrid";
+import ProductShowcase from "@/components/home/ProductShowcase";
+import WorkflowSteps from "@/components/home/WorkflowSteps";
+import TestimonialCards from "@/components/home/TestimonialCards";
+import BottomCTA from "@/components/home/BottomCTA";
+import BlogPreview from "@/components/home/BlogPreview";
 
 export default async function Home(
   props: {
@@ -14,22 +14,19 @@ export default async function Home(
   }
 ) {
   const params = await props.params;
-
-  const {
-    lang
-  } = params;
-
+  const { lang } = params;
   const dict = await getDictionary(lang);
 
   return (
     <div className="w-full">
       <HeroSection dict={dict} lang={lang} />
-      <TrustBadges lang={lang} />
-      <FeaturesSection dict={dict} />
-      <Screenshots dict={dict} lang={lang} />
-      <HowItWorks dict={dict} />
-      <Testimonials dict={dict} />
-      <CTASection dict={dict} lang={lang} />
+      <StatsBar lang={lang} />
+      <FeatureGrid dict={dict} />
+      <ProductShowcase dict={dict} lang={lang} />
+      <WorkflowSteps dict={dict} />
+      <TestimonialCards dict={dict} />
+      <BlogPreview lang={lang} />
+      <BottomCTA dict={dict} lang={lang} />
     </div>
   );
 }
