@@ -120,7 +120,7 @@ export async function GET() {
       }
     }
 
-    const users = await User.find({isAdmin:true});
+    const users = await User.find({});
 
     const emailResults: EmailResult[] = [];
 
