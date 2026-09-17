@@ -6,12 +6,15 @@ import { useEffect, useState } from "react";
 import usePropertyStore from "@/stores/propertyStore";
 import RentForm from "@/components/rent/RentForm";
 import RentTable from "@/components/rent/RentTable";
+import TenantForm from "@/components/tenant/TenantForm";
 import useAppStore from "@/stores/appStore";
+import { showToast } from "@/components/common/Toast";
 import LinkText from "@/components/common/LinkText";
 import { motion } from "framer-motion";
 import TenantCard from "../tenant/TenantCard";
 import RoomCard from "../room/RoomCard";
 import PropertyCard from "../property/PropertyCard";
+import { fetchData } from "@/utils/http";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -49,6 +52,8 @@ export default function RentsScreen({ tenantId }: { tenantId: string }) {
   } = usePropertyStore();
 
   const [loading, setLoading] = useState(true);
+  const [showTenantForm, setShowTenantForm] = useState(false);
+  const [upsertTenantLoading, setUpsertTenantLoading] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -58,6 +63,32 @@ export default function RentsScreen({ tenantId }: { tenantId: string }) {
     };
     loadData();
   }, [tenantId]);
+
+  const handleTenantEdit = () => {
+    setShowTenantForm(true);
+  };
+
+  const handleTenantSubmit = async (e: any) => {
+    e.preventDefault();
+    setUpsertTenantLoading(true);
+    const { msg, err } = await fetchData({
+      url: `/api/tenants/${tenantId}`,
+      method: "PUT",
+      body: curTenant,
+    });
+    setUpsertTenantLoading(false);
+    if (err) {
+      showToast(err);
+    } else {
+      showToast(msg);
+      await fetchRents(tenantId);
+      setShowTenantForm(false);
+    }
+  };
+
+  const handleTenantChange = (updated: any) => {
+    usePropertyStore.setState({ curTenant: updated });
+  };
 
   return (
     <motion.div
@@ -88,7 +119,7 @@ export default function RentsScreen({ tenantId }: { tenantId: string }) {
           {/* Room Card */}
           <RoomCard room={curRoom} />
 
-          <TenantCard tenant={curTenant} />
+          <TenantCard tenant={curTenant} onEditClick={handleTenantEdit} />
         </motion.div>
 
         {/* Right Column - Rents List */}
@@ -127,6 +158,17 @@ export default function RentsScreen({ tenantId }: { tenantId: string }) {
       </div>
 
       {showRentForm && <RentForm />}
+
+      {showTenantForm && (
+        <TenantForm
+          tenant={curTenant}
+          loading={upsertTenantLoading}
+          required
+          handleSubmit={handleTenantSubmit}
+          setShowTenantForm={setShowTenantForm}
+          setTenant={handleTenantChange}
+        />
+      )}
     </motion.div>
   );
 }

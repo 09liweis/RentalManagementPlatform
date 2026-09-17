@@ -69,7 +69,7 @@ export default function TenantForm({
           <Button
             onClick={() => {
               setShowTenantForm(false);
-              setTenant({});
+              // setTenant({});
             }}
             buttonType="danger"
           >
