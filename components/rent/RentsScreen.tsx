@@ -163,7 +163,6 @@ export default function RentsScreen({ tenantId }: { tenantId: string }) {
         <TenantForm
           tenant={curTenant}
           loading={upsertTenantLoading}
-          required
           handleSubmit={handleTenantSubmit}
           setShowTenantForm={setShowTenantForm}
           setTenant={handleTenantChange}
